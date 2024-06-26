@@ -37,7 +37,7 @@ const Questionnaire = () => {
   const handleSubmit = () => {
     const totalScore = calculateTotalScore();
     // You can save the totalScore to a state or send it to another component/page
-    navigate("/QuizScore", { state: { totalScore } }); // Navigate to QuizScore component
+    navigate("/QuizScore", { state: { totalScore } });
   };
 
   return (

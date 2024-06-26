@@ -10,10 +10,12 @@ import Header from "./Components/Header";
 import Questionnaire from './Components/Questionnaire';
 import QuizScore from './Components/QuizScore';
 import GamePage from './Components/GamePage';
+import Navbar from './Components/Navbar';
 function App() {
   return (
     <div className="App">
         <Header />
+        <Navbar/>
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
