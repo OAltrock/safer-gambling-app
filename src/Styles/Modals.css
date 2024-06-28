@@ -6,12 +6,14 @@
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  z-index: 1000; /* Adjust as needed */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 1);
+  /* Give an order to the layers, so a high z score will be closer to the user */
+  z-index: 1000;
 }
 
 .modal-content {
   /* Style your modal content (text, buttons, etc.) */
+  /* Will need inter font and the correct font size for FDM Branding */
 }
 
 .overlay {
@@ -20,8 +22,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
-  z-index: 999; /* Make sure it's below the modal */
+   /* Make sure it's below the modal so it looks like it's behind the popup*/
+  z-index: 999;
 }
 
 .close-button {
