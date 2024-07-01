@@ -54,3 +54,24 @@ button {
   border-radius: 5px;
   cursor: pointer;
 }
+
+.progress-bar {
+  background-color: #ddd;
+  height: 10px;
+  margin-top: 10px;
+}
+
+.progress-filled {
+  background-color: #c5ff00;
+  height: 100%;
+}
+
+.arrow-buttons button {
+  font-size: 3rem;
+  
+}
+
+.arrow-buttons{
+  display: flex;
+  
+}
