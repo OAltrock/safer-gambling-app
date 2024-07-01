@@ -1,0 +1,13 @@
+.navbar{
+    background-color: #c5ff00;
+    border-top: 5px solid;
+    border-color: black;
+    border-width: 5px;
+}
+.navbar-buttons 
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    align-items: right;
+}

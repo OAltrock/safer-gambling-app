@@ -6,3 +6,7 @@
     width: 100%;
     border-bottom: 5px solid #c5ff00;
 }
+
+.logo {
+  cursor: pointer;
+}
