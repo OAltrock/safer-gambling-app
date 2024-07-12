@@ -16,7 +16,7 @@ function Home() {
         <div className="text-container">
       <h1>Welcome to the Safer Gambling App</h1>
       <p>
-        This application is aimed to test your risk appitite based on a number
+        This application is aimed to test your risk appetite based on a number
         of factors.
       </p>
       <p>
