@@ -1,13 +1,35 @@
 .navbar{
-    background-color: #c5ff00;
+    background-color: black;
     border-top: 5px solid;
     border-color: black;
-    border-width: 5px;
+    border-width: 5px;   
 }
+
+img {
+    scale: 60%;
+}
+
+img:hover {
+    cursor: pointer;
+}
+
 .navbar-buttons 
-{
+{    
     display: flex;
     flex-direction: row;
     justify-content: right;
     align-items: right;
+}
+
+.navbar-button {
+    color: white;
+    background-color: black;
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.navbar-button:hover{
+    color: var(--fdm-button);    
 }

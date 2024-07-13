@@ -1,35 +1,48 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../Styles/Home.css";
+import Footer from "./Footer";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function Home() {
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleQuestionnaireClick = () =>
-        navigate("/Questionnaire");
+  const handleGetStartedClick = () =>
+    navigate("/GetStarted")  
 
-    const handleGameClick = () =>
-        navigate("GamePage");
   return (
-    <div className="container">
+    <div id="home-page">
+      <div className="header-container">
+        <h1>Play smart,</h1>
+        <h1>Stay safe</h1>
+        <button onClick={handleGetStartedClick}>Let's get started</button>
+      </div>
+      <h3 style={{textAlign: "center", color: "#3FE03F"}} >Safer gambling app is for:</h3>
+      <div className="container">        
         <div className="text-container">
-      <h1>Welcome to the Safer Gambling App</h1>
-      <p>
-        This application is aimed to test your risk appetite based on a number
-        of factors.
-      </p>
-      <p>
-        {" "}
-        First we will look at a short questionnaire which will then be followed
-        by a risk based diving game.
-      </p>
-      </div>
-      <div className="button-container">
-        <button onClick={handleQuestionnaireClick}>Questionnaire</button>
-        <button onClick={handleGameClick}>Deep Diving Game</button>
-      </div>
-    </div>
+          <FontAwesomeIcon className="fa-icon" icon="fa-regular fa-pen-to-square" size="3x" />
+          <p>
+            Early detection and intervention by identifying problematic gambling early.
+          </p>          
+        </div>
+
+        <div className="text-container">
+          <FontAwesomeIcon className="fa-icon" icon="fa-regular fa-message"  size="3x" />
+          <p>
+            Enhance self awareness and control with detailded insights into their gambling insights.
+          </p>          
+        </div>
+
+        <div className="text-container">
+          <FontAwesomeIcon className="fa-icon" icon="fa-solid fa-bars-staggered" size="3x"/>
+          <p>
+            Support and resources with educational content about the risk of gambling addiction.
+          </p>          
+        </div>
+      </div>      
+      <Footer />
+    </div >
   );
 }
 

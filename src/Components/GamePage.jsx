@@ -26,12 +26,13 @@ const GamePage = () => {
 
    
     useEffect(() => {
-      console.log("Loading game");
+      
       if (isFirstRun.current){
+        console.log("Loading game");
         loadGame();
         isFirstRun.current = false;     
       }
-  }, [loadGame]);
+  }, []);
 
   const playAgain = () => {
     loadGame();
