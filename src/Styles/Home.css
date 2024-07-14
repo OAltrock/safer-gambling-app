@@ -52,6 +52,17 @@
     align-items: center;
     justify-content:space-between;
   }
+
+  .imgContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .imgContainer img {
+    scale: 50%;
+  }
+
   .container * {
     text-align: left;    
   }

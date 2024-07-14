@@ -11,6 +11,7 @@ img {
 
 img:hover {
     cursor: pointer;
+    scale: 65%;
 }
 
 .navbar-buttons {    

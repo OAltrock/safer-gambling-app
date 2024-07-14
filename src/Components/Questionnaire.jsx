@@ -47,11 +47,11 @@ const Questionnaire = () => {
     "Strongly Agree",
   ];  
 
-  //can be moved to where we want to evaluate the questionnaire since we can access the redux store from anywhere where
-  //the score is stored
+  //can be moved to where we want to evaluate the questionnaire since we can access the redux store from anywhere 
   /* const calculateTotalScore = () => {
     return Object.values(scores).reduce((total, score) => total + score, 0);
   }; */
+  
 
   /**result is being stored in redux store accessible from anywhere (useSelector(state => state.questionnaire))
   * questionnaire is an object,eg: {question1: 1,question2: 3,...}

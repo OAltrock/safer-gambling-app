@@ -4,6 +4,7 @@ import "../Styles/Home.css";
 import Footer from "./Footer";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from "react-redux";
+import checkMark from '../Assets/checkMark.png';
 
 function Home() {
 
@@ -32,7 +33,7 @@ function Home() {
             helps you understand your gambling behaviour by asking a series of carefully crafted questions.
           </p>
           {!questionnaireDone ? (<button onClick={handleQuestionnaire}>Let's get started</button>)
-            : (<div className="doneContainer"> <FontAwesomeIcon icon="fa-solid fa-check" size="3x" className="doneIcon" /></div>)}
+            : (<div className='imgContainer'> <img src={checkMark} alt='done' /> </div>) }
         </div>
 
         <div className="text-container">
@@ -47,7 +48,7 @@ function Home() {
             (<button style={{ visibility: "hidden" }}>Let's get started</button>)
             : !gameDone ?
               (<button onClick={handleGame}>Let's get started</button>)
-              : (<div className="doneContainer"> <FontAwesomeIcon icon="fa-solid fa-check" size="3x" className="doneIcon" /></div>)             
+              : (<div className='imgContainer'> <img src={checkMark} alt='done' /> </div> )            
           }
         </div>
 
@@ -62,7 +63,7 @@ function Home() {
           </p>
           {gameDone ?
             (<button onClick={handleGame}>Let's get started</button>)
-            : evalDone ? (<div className="doneContainer"> <FontAwesomeIcon icon="fa-solid fa-check" size="3x" className="doneIcon" /></div>)
+            : evalDone ? (<div className='imgContainer'> <img src={checkMark} alt='done' /> </div>)
               : (<button style={{ visibility: "hidden" }}>Let's get started</button>)
           }
         </div>
