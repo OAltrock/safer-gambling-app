@@ -17,19 +17,18 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 
 library.add(fas, far)
 
+
 function App() {
   return (
     <div className="App">
-      <Router>
-        {/* <Header /> */}
+      <Router>       
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/Questionnaire" element={<Questionnaire />} />
           <Route path="/Guidance" element={<HelpPage />} />
           <Route path="/GamePage" element={<GamePage />} />
-          <Route path="/QuizScore" element={<QuizScore />} />
-          <Route path="/GetStarted" />
+          <Route path="/QuizScore" element={<QuizScore />} />          
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router>

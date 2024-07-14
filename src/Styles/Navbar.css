@@ -13,12 +13,10 @@ img:hover {
     cursor: pointer;
 }
 
-.navbar-buttons 
-{    
+.navbar-buttons {    
     display: flex;
     flex-direction: row;
-    justify-content: right;
-    align-items: right;
+    justify-content: right;    
 }
 
 .navbar-button {
@@ -28,6 +26,7 @@ img:hover {
     font-optical-sizing: auto;
     font-weight: 300;
     font-style: normal;
+    border: solid 0px;
 }
 
 .navbar-button:hover{

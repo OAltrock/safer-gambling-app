@@ -1,7 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {toggle} from '../slices/gameDoneSlice.js';
 
 const GamePage = () => {
+  let dispatch = useDispatch();
   const navigate = useNavigate();
   const [gameLoaded, setGameLoaded] = useState(false);
   const [gameLoading, setGameLoading] = useState(false);
@@ -15,6 +18,7 @@ const GamePage = () => {
         .then((data) => {
           console.log(data);
           setGameLoaded(true);
+          dispatch(toggle());
           setGameLoading(false);
         })
         .catch((error) => {

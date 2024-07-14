@@ -2,12 +2,15 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../Styles/Home.css";
 import Footer from "./Footer";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useSelector } from "react-redux";
 
 function Home() {
-  const questionnaireDone = false
-  const gameDone = false
-  const evalDone = false
+
+  let questionnaireDone = useSelector(state => state.questionnaireDone.done);  
+  let gameDone = useSelector(state=> state.gameDone.done);    
+
+  const evalDone = false;
 
   const navigate = useNavigate();
 
@@ -28,8 +31,8 @@ function Home() {
           <p>Begin your journey to safer gambling with our insightful Questionaire. This quick and easy step
             helps you understand your gambling behaviour by asking a series of carefully crafted questions.
           </p>
-          {!questionnaireDone && <button onClick={handleQuestionnaire}>Let's get started</button>}
-          {questionnaireDone && <div className="doneContainer"> <FontAwesomeIcon icon="fa-solid fa-check" size="3x" className="doneIcon" /></div>}
+          {!questionnaireDone ? (<button onClick={handleQuestionnaire}>Let's get started</button>)
+            : (<div className="doneContainer"> <FontAwesomeIcon icon="fa-solid fa-check" size="3x" className="doneIcon" /></div>)}
         </div>
 
         <div className="text-container">
@@ -40,10 +43,11 @@ function Home() {
             Dive into our interactive Assesment Game, where fun meets insight. This engaging and dynamic
             game is designed to estimate your gambling tendencies in a playful yet accurate way.
           </p>
-          {questionnaireDone ?
-            (<button onClick={handleQuestionnaire}>Let's get started</button>)
-            : gameDone ? (<div className="doneContainer"> <FontAwesomeIcon icon="fa-solid fa-check" size="3x" className="doneIcon" /></div>)
-              : (<button style={{ visibility: "hidden" }}>Let's get started</button>)
+          {!questionnaireDone ?
+            (<button style={{ visibility: "hidden" }}>Let's get started</button>)
+            : !gameDone ?
+              (<button onClick={handleGame}>Let's get started</button>)
+              : (<div className="doneContainer"> <FontAwesomeIcon icon="fa-solid fa-check" size="3x" className="doneIcon" /></div>)             
           }
         </div>
 
@@ -53,7 +57,7 @@ function Home() {
           </h3>
           <p>
             After the questionnaire and interactive game, receive a comprehensive analysis of your gambling behaviour.
-            Our detailed feedback is tailored to you, providing clear insights and actionable advice to help you 
+            Our detailed feedback is tailored to you, providing clear insights and actionable advice to help you
             stay in control.
           </p>
           {gameDone ?
