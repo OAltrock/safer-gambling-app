@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../Styles/Navbar.css";
 import HelpModal from './HelpModal';
 import SettingsModal from './SettingsModal';
+import logo from "../Assets/fdm_logo.png";
 
 
 function Navbar() {
@@ -25,6 +26,7 @@ function Navbar() {
 
   return (
     <nav className="navbar">
+      <img className="logo" alt=" logo" onClick={() => navigate("/")} src={logo} width={150} height={75} />
       <div className="navbar-buttons">
         <button className="navbar-button" onClick={handleGuidanceClick} >Advice & Guidance</button>
         <button className="navbar-button" onClick={handleHelpClick}>Help</button>

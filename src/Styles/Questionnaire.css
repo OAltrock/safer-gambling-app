@@ -1,33 +1,29 @@
+.carousel-indicators [data-bs-target] {
+  background-color: black;
+}
+
+.carousel-control-next-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='black' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+}
+
+.carousel-control-prev-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='black' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+}
+
+.carousel-inner {
+  color:black;
+}
+
 .questionnaire-container {
   /* background-color: #c5ff00; */
   padding: 20px;
   border-radius: 10px;
 }
 
-.question-card-container {
-  border: 1px solid #000;
-  background-color: #dedad4;
-  border-radius: 5px;
-  width: 80%;
-  margin: 0 auto;
-}
-
-.question-card {
-  background-color: #efecea;
-  border: 1px solid #1e1e1e;
-  padding: 10px;
-  margin: 20px auto;
-  /* margin-bottom: 20px; */
-  border-radius: 5px;
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.question-card p {
-  font-size: 18px;
-  font-weight: bold;
+.carousel {
+  background-color: #E9EDF6;
+  height: 25vh;
+  padding: 15px;
 }
 
 .options {
@@ -37,41 +33,18 @@
   justify-content: center;
 }
 
-.button-container {
-  background-color: #efecea;
-  border: 1px solid #1e1e1e;
-  width: 40%;
-  margin: 0 auto;
-  margin-top: 10px;
+.submit-button {
+  background-image: var(--fdm-button-gradient);
+  border-radius: 30px;
+  width: fit-content;
+  height: fit-content;
+  margin-top: 1rem;
 }
 
-button {
-  background-color: #dedad4;
-  color: #1e1e1e;
-  border: none;
-  margin: 10px;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
+.submit-button:disabled {
+  opacity: 0.5;
 }
 
-.progress-bar {
-  background-color: #ddd;
-  height: 10px;
-  margin-top: 10px;
-}
-
-.progress-filled {
-  background-color: #c5ff00;
-  height: 100%;
-}
-
-.arrow-buttons button {
-  font-size: 3rem;
-  
-}
-
-.arrow-buttons{
-  display: flex;
-  
+.container-fluid {
+  padding: 10px;
 }

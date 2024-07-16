@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../Styles/Questionnaire.css";
+import { useDispatch, useSelector } from "react-redux";
+import { setQuestion } from '../slices/questionnaireSlice.js';
+import { toggle } from '../slices/questionnaireDoneSlice.js';
+import { Container } from "react-bootstrap";
+import Carousel from "react-bootstrap/Carousel";
+import Form from 'react-bootstrap/Form';
 
 const Questionnaire = () => {
-  const navigate = useNavigate();
-  const [scores, setScores] = useState({});
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [isSubmit, setIsSubmit] = useState(false);
+
+  let dispatch = useDispatch();
+  let questionnaire = useSelector(state => state.questionnaire)  
+  const navigate = useNavigate();  
 
   const questions = [
     "You feel very strong negative emotions when you lose a bet.",
@@ -22,8 +28,16 @@ const Questionnaire = () => {
   ];
 
   const totalQuestions = questions.length;
-  const answeredQuestions = Object.keys(scores).length;
+  //checks if questions has been answered (has a postive value)
+  const answeredQuestions = Object.values(questionnaire)
+    .reduce((acc, value, index) => {
+      if (value > 0) {
+        return acc += 1
+      }
+      else return acc
+    }, 0);
   const progress = (answeredQuestions / totalQuestions) * 100;
+  const [index, setIndex] = useState(0);
 
   const options = [
     "Strongly Disagree",
@@ -31,92 +45,79 @@ const Questionnaire = () => {
     "Neutral",
     "Agree",
     "Strongly Agree",
-  ];
+  ];  
 
-  const handleAnswer = (questionId, score) => {
-    setScores((prevScores) => ({ ...prevScores, [questionId]: score }));
-    checkSubmitButton();
-  };
-
-  const checkSubmitButton = () => {
-    const allQuestionsAnswered =
-      Object.keys(scores).length === questions.length;
-    setIsSubmit(allQuestionsAnswered);
-  };
-
-  const handleNextQuestion = () => {
-    setCurrentQuestion((prevQuestion) => (prevQuestion + 1) %questions.length);
-  };
-
-  const handlePreviousQuestion = () => {
-    setCurrentQuestion((prevQuestion) => prevQuestion === 0 ? questions.length- 1 : prevQuestion -1);
-  };
-
-  const calculateTotalScore = () => {
+  //can be moved to where we want to evaluate the questionnaire since we can access the redux store from anywhere 
+  /* const calculateTotalScore = () => {
     return Object.values(scores).reduce((total, score) => total + score, 0);
+  }; */
+  
+
+  /**result is being stored in redux store accessible from anywhere (useSelector(state => state.questionnaire))
+  * questionnaire is an object,eg: {question1: 1,question2: 3,...}
+  * questions can be set by dispatch {@link handleAnswer}
+  */
+  const handleSubmit = () => {    
+    dispatch(toggle())
+    console.log(questionnaire)    
+    navigate("/");
   };
 
-  const handleSubmit = () => {
-    const totalScore = calculateTotalScore();
-    // You can save the totalScore to a state or send it to another component/page
-    navigate("/QuizScore", { state: { totalScore } });
+  const handleSelect = (selectedIndex, e) => {    
+    setIndex(selectedIndex)
+  }
+
+  /**
+   * uses redux reducers (dispatch {@link useDispatch}) to update questionnaire {@link questionnaire}
+   * @param {*} e SyntheticBaseEvent containing target, nativeEvent etc.
+   */
+  const handleAnswer = (e) => {           
+    dispatch(setQuestion({
+      id: index + 1,
+      data: parseInt(e.target.value)
+    }))    
   };
 
-  const validateAnswers = () => {
-    // Check if all questions have been answered
-    return Object.keys(scores).length === questions.length;
-  };
   return (
-    <div className="questionnaire-container">
-      <h1>Questionnaire</h1>
-      <p>
-        Question {currentQuestion + 1} of {questions.length}
-      </p>
-      <div className="question-card-container">
-        <div className="arrow-buttons">
-          {/* {currentQuestion > 0 && ( */}
-            <button onClick={handlePreviousQuestion}>←</button>
-          {/* )} */}
-
-          <div className="question-card">
-            <p>{questions[currentQuestion]}</p>
-            <div className="options">
-              {options.map((option, score) => (
-                <label key={score}>
-                  <input
-                    type="radio"
-                    name={`q${currentQuestion + 1}`}
-                    value={score + 1}
-                    onChange={() =>
-                      handleAnswer(`q${currentQuestion + 1}`, score + 1)
-                    }
-                    checked={scores[`q${currentQuestion + 1}`] === score + 1}
-                  />
-                  {option}
-                </label>
-              ))}
-            </div>
-          </div>
-
-          {/* {currentQuestion < questions.length - 1 ? ( */}
-            <button onClick={handleNextQuestion}>→</button>
-          {/* ) : (
-            <button onClick={handleSubmit} disabled={!validateAnswers()}>
-              {isSubmit ? "Submit" : "Next"}
-            </button>
-          )} */}
-        </div>
-        <div className="progress-bar">
-          <div
-            className="progress-filled"
-            style={{ width: `${progress}%` }}
-          ></div>
-        </div>
-        {validateAnswers() && (
-        <button onClick={handleSubmit}>Submit</button>
-      )}
+    <Container fluid>
+      <div>
+        <h3>Questionnaire</h3>
+        <h4 key={'questionCount' + index}>Question {index + 1} of {questions.length} </h4>
       </div>
-    </div>
-  );
-};
+      <Carousel activeIndex={index} interval={null} onSelect={handleSelect}>
+        {questions.map(question => {
+          return (
+            <Carousel.Item key={`citem${questions.indexOf(question)}`}>
+              <p key={`pquest${questions.indexOf(question)}`}>{question}</p>
+              <Form key={`radio${questions.indexOf(question)}`}>
+                {options.map((option, score) => (
+                  <Form.Check
+                    inline
+                    label={option}
+                    name={questions.indexOf(question)}
+                    type='radio'                    
+                    value={questionnaire['question' + (index + 1)] !== -1 ? questionnaire['question' + (index + 1)] : score + 1}
+                    onChange={handleAnswer}                    
+                    key={`q${(score + 1)}`}
+                  />
+                ))}
+              </Form>
+            </Carousel.Item>
+          )
+        })}
+      </Carousel>
+      <div className="progress">
+        <div
+          className="progress-bar progress-bar-striped progress-bar-animated"
+          role="progressbar"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          style={{ width: `${progress}%` }}
+        ></div>
+      </div>
+      <button onClick={handleSubmit} className="submit-button" disabled={answeredQuestions !== questions.length}>Submit</button>
+    </Container>
+  )
+}
+
 export default Questionnaire;
