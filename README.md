@@ -7,7 +7,7 @@
 npm install
 npm install react-router-dom
 npm install react-redux
-npm-install react-fontawesome
+npm install react-fontawesome
  
 ## Make sure you have the library installed:
 pip install pygame

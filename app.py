@@ -12,7 +12,7 @@ CORS(app, origins='*')
 def start_game():    
     try:        
         # Execute the game file (game_take_8.py)
-        subprocess.Popen(['python', 'game_take_9.py'])
+        subprocess.Popen(['python', 'game take 14.py'])
             
         return jsonify({"message": "Game started successfully!"}), 200
     except Exception as e:
