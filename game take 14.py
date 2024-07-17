@@ -12,15 +12,15 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Treasure Dive")
 
 # Load images
-background_img = pygame.image.load('background.png').convert()
-ingame_img = pygame.image.load('background_800x711.png').convert()
-character_img = pygame.image.load('diver.png')
-coin_img = pygame.image.load('gold coin.png')
-oxygen_img = pygame.image.load('oxygen.png')
+background_img = pygame.image.load('imagefiles/background.png').convert()
+ingame_img = pygame.image.load('imagefiles/background_800x711.png').convert()
+character_img = pygame.image.load('imagefiles/diver.png')
+coin_img = pygame.image.load('imagefiles/gold coin.png')
+oxygen_img = pygame.image.load('imagefiles/oxygen.png')
 
 # Load and resize obstacle images
-images = [pygame.image.load('prop1.png').convert_alpha(), pygame.image.load('prop2.png').convert_alpha(),
-          pygame.image.load('prop3.png').convert_alpha(), pygame.image.load('prop4.png').convert_alpha()]
+images = [pygame.image.load('imagefiles/prop1.png').convert_alpha(), pygame.image.load('imagefiles/prop2.png').convert_alpha(),
+          pygame.image.load('imagefiles/prop3.png').convert_alpha(), pygame.image.load('imagefiles/prop4.png').convert_alpha()]
 for i in range(len(images)):
     images[i] = pygame.transform.scale(images[i], (images[i].get_width() // 2, images[i].get_height() // 2))
 
@@ -107,8 +107,8 @@ class Player(pygame.sprite.Sprite):
         self.facing_left = False
 
     def load_images(self):
-        self.idle_images = self.load_animation_images('idle', 6)
-        self.moving_images = self.load_animation_images('moving', 6)
+        self.idle_images = self.load_animation_images('imagefiles/idle', 6)
+        self.moving_images = self.load_animation_images('imagefiles/moving', 6)
 
     def load_animation_images(self, prefix, num_frames):
         images = []
