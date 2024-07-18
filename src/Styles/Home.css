@@ -26,6 +26,13 @@
   justify-self: center;
 }
 
+.thirdContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 13vh;
+}
+
 .header-container {
     display: flex;
     flex-direction: column;
@@ -68,7 +75,9 @@
   }
   
   .text-container {        
-    display: grid;    
+    display: flex;    
+    flex-direction: column;
+    justify-content: space-evenly;
     height: 80%;
     width: 30%;    
     margin:0 auto;    

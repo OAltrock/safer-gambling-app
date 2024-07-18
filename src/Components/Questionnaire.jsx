@@ -21,8 +21,8 @@ const Questionnaire = () => {
     "You lie to family members or friends about how much you gamble.​",
     "You gamble to escape problems or relieve feelings of anxiety or depression.​",
     "You feel restless or irritable when you try to cut down on gambling.​​​​",
-    "You have had financial problems due to gambling (e.g., needing to borrow money, unpaid bills).​",
-    "You often think about gambling (e.g., reliving past gambling and/ or planning future gambling).​",
+    "You have had financial problems due to gambling (e.g. needing to borrow money, unpaid bills).​",
+    "You often think about gambling (e.g. reliving past gambling and/ or planning future gambling).​",
     "You have gambled to try to win back money you have lost (chasing losses).​",
     "You have neglected work, school, or family responsibilities because of gambling.",
   ];
