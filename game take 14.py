@@ -7,30 +7,31 @@ import math
 pygame.init()
 
 # Screen dimensions
-WIDTH, HEIGHT = 800, 800
+WIDTH, HEIGHT = 800, 400
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Treasure Dive")
 
-background_img = pygame.image.load('imagefilesgame/background.png').convert()
-ingame_img = pygame.image.load('imagefilesgame/background_800x711.png').convert()
-character_img = pygame.image.load('imagefilesgame/diver.png')
-coin_img = pygame.image.load('imagefilesgame/gold_coin.jpg')
-oxygen_img = pygame.image.load('imagefilesgame/oxygen.png')
 # Load images
+background_img = pygame.image.load('imagefiles/background.png').convert()
+ingame_img = pygame.image.load('imagefiles/background_800x711.png').convert()
+character_img = pygame.image.load('imagefiles/diver.png')
+coin_img = pygame.image.load('imagefiles/gold coin.png')
+oxygen_img = pygame.image.load('imagefiles/oxygen.png')
+
+# Load and resize obstacle images
+images = [pygame.image.load('imagefiles/prop1.png').convert_alpha(), pygame.image.load('imagefiles/prop2.png').convert_alpha(),
+          pygame.image.load('imagefiles/prop3.png').convert_alpha(), pygame.image.load('imagefiles/prop4.png').convert_alpha()]
+for i in range(len(images)):
+    images[i] = pygame.transform.scale(images[i], (images[i].get_width() // 2, images[i].get_height() // 2))
+
+# Get image heights
 bg_height = ingame_img.get_height()
 bg_rect = ingame_img.get_rect()
 
-original_widthc, original_heightc = character_img.get_size()
-original_widthco, original_heightco = coin_img.get_size()
-# Define the new size
-new_widthc = original_widthc // 2
-new_heightc = original_heightc // 2
-new_widthco = original_widthco // 20
-new_heightco = original_heightco // 20
+# Define the new size for character and coins
+character_img = pygame.transform.scale(character_img, (character_img.get_width() // 0.5, character_img.get_height() // 0.5))
+coin_img = pygame.transform.scale(coin_img, (coin_img.get_width() // 6, coin_img.get_height() // 6))
 
-# Scale the image
-character_img_new = pygame.transform.scale(character_img, (new_widthc, new_heightc))
-coin_img_new = pygame.transform.scale(coin_img, (new_widthco, new_heightco))
 # Load font
 font = pygame.font.Font('Pixeltype.ttf', 50)
 
@@ -40,20 +41,63 @@ WHITE = (255, 255, 255)
 # Game variables
 coins = []
 oxygen_level = 100
-depth_value = 0
 gold_coins_count = 0
 start_time = pygame.time.get_ticks()
 scroll = 0
-total_scroll = 0  # New variable to track the total scroll amount
+total_scroll = 0  # Track total scroll amount
+depth_value = 0
 tiles = math.ceil(HEIGHT / bg_height) + 1
 game_over_flag = False
+
+
+class Obstacle(pygame.sprite.Sprite):
+    def __init__(self, screen_width, images):
+        super().__init__()
+        self.image = random.choice(images)
+        self.rect = self.image.get_bounding_rect()
+        self.rect.x = random.randint(0, screen_width - self.rect.width)
+        self.rect.y = HEIGHT
+
+    def update(self, speed):
+        self.rect.y -= speed
+        if self.rect.y < -self.rect.height:
+            self.kill()
+
+
+def spawn_obstacle(depth_value, screen_width, obstacle_group, images):
+    spawn_chance = 0
+    if 0 <= depth_value <= 50:
+        spawn_chance = 0.002
+    elif 50 < depth_value <= 100:
+        spawn_chance = 0.005
+    elif depth_value > 100:
+        spawn_chance = 0.01
+
+    if random.random() < spawn_chance:
+        obstacle = Obstacle(screen_width, images)
+        obstacle_group.add(obstacle)
+
+
+class Coin(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        super().__init__()
+        self.image = coin_img
+        self.rect = self.image.get_bounding_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+    def update(self, speed):
+        self.rect.y -= speed
+        if self.rect.y < -self.rect.height:
+            self.kill()
+
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.load_images()
         self.image = self.idle_images[0]
-        self.rect = self.image.get_rect()
+        self.rect = self.image.get_bounding_rect()
         self.rect.topleft = [WIDTH // 10, HEIGHT // 10]
         self.frame_index = 0
         self.update_time = pygame.time.get_ticks()
@@ -63,23 +107,19 @@ class Player(pygame.sprite.Sprite):
         self.facing_left = False
 
     def load_images(self):
-        self.idle_images = self.load_animation_images('idle', 6)
-        self.moving_images = self.load_animation_images('moving', 6)
-    
+        self.idle_images = self.load_animation_images('imagefiles/idle', 6)
+        self.moving_images = self.load_animation_images('imagefiles/moving', 6)
+
     def load_animation_images(self, prefix, num_frames):
         images = []
         for i in range(1, num_frames + 1):
-            
-            img = pygame.image.load(f'imagefilesgame/{prefix}{i}.png').convert_alpha()
-            original_width, original_height = img.get_size()
-            new_width = int(original_width / 0.5)
-            new_height = int(original_height / 0.5)
-            img = pygame.transform.scale(img, (new_width, new_height))
+            img = pygame.image.load(f'{prefix}{i}.png').convert_alpha()
+            img = pygame.transform.scale(img, (img.get_width() // 0.5, img.get_height() // 0.5))
             images.append(img)
         return images
 
     def update(self):
-        animation_cooldown = 100  # Milliseconds between frames
+        animation_cooldown = 100
         current_time = pygame.time.get_ticks()
         if current_time - self.update_time > animation_cooldown:
             self.frame_index += 1
@@ -88,13 +128,17 @@ class Player(pygame.sprite.Sprite):
                 self.frame_index = 0
 
             self.image = self.get_current_images()[self.frame_index]
-            
+
             # Flip image if facing left
             if self.facing_left:
                 self.image = pygame.transform.flip(self.image, True, False)
-        
+
         # Update position
         self.handle_keys()
+
+        # Check for collision with obstacles before moving
+        self.check_collision()
+
         self.rect.x += self.speed[0]
         self.rect.y += self.speed[1]
 
@@ -132,11 +176,39 @@ class Player(pygame.sprite.Sprite):
         else:
             self.speed[1] += self.gravity
 
+    def check_collision(self):
+        global oxygen_level
+
+        # Predict the new position
+        new_rect = self.rect.move(self.speed[0], self.speed[1])
+
+        # Check collision with obstacles
+        for obstacle in obstacle_group:
+            if new_rect.colliderect(obstacle.rect):
+                if self.speed[0] > 0:  # Moving right
+                    self.rect.right = obstacle.rect.left
+                elif self.speed[0] < 0:  # Moving left
+                    self.rect.left = obstacle.rect.right
+                if self.speed[1] > 0:  # Moving down
+                    self.rect.bottom = obstacle.rect.top
+                elif self.speed[1] < 0:  # Moving up
+                    self.rect.top = obstacle.rect.bottom
+
+                # Apply penalty
+                oxygen_level -= 2
+                if oxygen_level <= 0:
+                    game_over_flag = True
+
+                # Reset speed
+                self.speed = [0, 0]
+                break
+
     def get_current_images(self):
         if self.moving:
             return self.moving_images
         else:
             return self.idle_images
+
 
 # Function to draw the initial start screen
 def draw_start_screen():
@@ -147,93 +219,85 @@ def draw_start_screen():
     screen.blit(start_text, (WIDTH // 2 - start_text.get_width() // 2, HEIGHT // 2))
     pygame.display.flip()
 
+
 # Function to draw the main game screen
 def draw_game_screen():
-    global scroll, total_scroll, tiles, bg_height
+    global scroll, total_scroll, tiles, bg_height, depth_value
+
     # Draw scrolling background
     for i in range(0, tiles):
         screen.blit(ingame_img, (0, i * bg_height + scroll))
-    
+
     # Scroll background
-    scroll -= 5
-    total_scroll -= 5
-    
+    scroll -= 10
+    total_scroll -= 10
+
     # Reset scroll
     if abs(scroll) > bg_height:
         scroll = 0
 
+    # Update depth_value
+    depth_value = -total_scroll // 50
+
     # Draw player
     player_group.draw(screen)
-    
+
     # Draw coins
-    for coin in coins:
-        screen.blit(coin_img_new, (coin[0], coin[1] + scroll))
-    
-    #calc_oxy_dep_rate(depth_value)
-    
-    # Draw HUD including depth counter
+    coin_group.draw(screen)
+
+    # Draw obstacles
+    obstacle_group.draw(screen)
+
+    # Draw HUD
     draw_hud()
-    
+
     pygame.display.flip()
+
 
 # Function to draw the HUD
 def draw_hud():
     global oxygen_level, gold_coins_count, total_scroll
     oxygen_text = font.render(f"Oxygen: {int(oxygen_level)}", True, WHITE)
     coins_text = font.render(f"Coins: {gold_coins_count}", True, WHITE)
-    
+
     # Draw text on screen
     screen.blit(oxygen_text, (10, 40))
     screen.blit(coins_text, (10, 70))
-    
+
     # Depth in meters
-    depth_value = -total_scroll // 50  # Convert total_scroll to depth in meters
     depth_text = font.render(f"Depth: {depth_value}m", True, WHITE)
     screen.blit(depth_text, (10, 100))
 
-    screen.blit(calc_oxy_dep_disp(depth_value), (10, 130))
 
-    
-# Function to update the character position and check collisions
 def update_character():
-    global oxygen_level, gold_coins_count, game_over_flag, depth_value
+    global oxygen_level, gold_coins_count, game_over_flag
     player_group.update()
 
     # Collision detection with coins
-    for coin in coins[:]:
-        # Ensure the coin_rect is correctly positioned and sized
-        coin_rect = pygame.Rect(coin[0], coin[1] + scroll, new_widthco, new_heightco)
-        if player.rect.colliderect(coin_rect):
-            coins.remove(coin)
+    for coin in coin_group:
+        if player.rect.colliderect(coin.rect):
+            coin.kill()
             gold_coins_count += 1
-    
-    
-   # end game if out of oxygen
+
+    # Oxygen depletion
+    oxygen_level -= 0.1
     if oxygen_level <= 0:
         game_over_flag = True
 
-def calc_oxy_dep_disp(depth_value):
-    global oxygen_level
-    if depth_value < 50:
-        oxygen_level -= 0.1
-        speed_text = font.render("Speed: 1", True, WHITE)
-        return speed_text
-    elif depth_value >= 50 and depth_value < 100:
-        oxygen_level -= 0.2
-        speed_text = font.render("Speed: 2", True, WHITE)
-        return speed_text
-    elif depth_value >= 100:
-        oxygen_level -= 0.3
-        speed_text = font.render("Speed: 3", True, WHITE)
-        return speed_text
-
 
 # Function to spawn coins
-def spawn_coins():
-    if random.randint(1, 100) > 96:
-        coin_x = random.randint(0, WIDTH - new_widthco)
-        coin_y = random.randint(0, HEIGHT - new_heightco) - scroll  # Spawn coin relative to scroll position
-        coins.append([coin_x, coin_y])
+def spawn_coins(obstacle_group, coin_group):
+    if random.randint(1, 100) > 98:
+        while True:
+            coin_x = random.randint(0, WIDTH - coin_img.get_width())
+            coin_y = HEIGHT  # Spawn at the bottom
+            coin_rect = pygame.Rect(coin_x, coin_y, coin_img.get_width(), coin_img.get_height())
+            collision = any(coin_rect.colliderect(obstacle.rect) for obstacle in obstacle_group)
+            if not collision:
+                coin = Coin(coin_x, coin_y)
+                coin_group.add(coin)
+                break
+
 
 # Function to draw the game over screen
 def draw_game_over_screen():
@@ -246,24 +310,29 @@ def draw_game_over_screen():
     screen.blit(restart_text, (WIDTH // 2 - restart_text.get_width() // 2, HEIGHT // 2 + 50))
     pygame.display.flip()
 
+
 # Function to reset the game
 def reset_game():
-    global coins, oxygen_level, gold_coins_count, start_time, scroll, total_scroll, game_over_flag, player
+    global coins, oxygen_level, gold_coins_count, start_time, scroll, total_scroll, game_over_flag, player, coin_group
     coins = []
     oxygen_level = 100
     gold_coins_count = 0
     start_time = pygame.time.get_ticks()
     scroll = 0
-    total_scroll = 0  # Reset total_scroll
+    total_scroll = 0
     game_over_flag = False
     player = Player()
     player_group.empty()
     player_group.add(player)
+    obstacle_group.empty()
+    coin_group.empty()
 
-# Initialize player and sprite group
+# Initialize player, obstacle group, coin group, and sprite group
 player = Player()
 player_group = pygame.sprite.Group()
 player_group.add(player)
+obstacle_group = pygame.sprite.Group()
+coin_group = pygame.sprite.Group()
 
 # Main loop
 running = True
@@ -285,10 +354,12 @@ while running:
     elif game_over_flag:
         draw_game_over_screen()
     else:
-        spawn_coins()
+        spawn_coins(obstacle_group, coin_group)
+        spawn_obstacle(depth_value, screen.get_width(), obstacle_group, images)
         update_character()
+        obstacle_group.update(5)  # Update obstacle positions to move upwards
+        coin_group.update(5)  # Update coin positions to move upwards
         draw_game_screen()
-
 
     pygame.time.delay(30)
 

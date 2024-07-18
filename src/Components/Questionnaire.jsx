@@ -26,6 +26,7 @@ const Questionnaire = () => {
     "You have gambled to try to win back money you have lost (chasing losses).​",
     "You have neglected work, school, or family responsibilities because of gambling.",
   ];
+  
 
   const totalQuestions = questions.length;
   //checks if questions has been answered (has a postive value)
