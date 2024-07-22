@@ -1,13 +1,33 @@
+:root {
+  --fdm-button: #C5FF00;
+  --fdm-header-background: linear-gradient(to right, #1E1E1E, #EBEBEB);
+  --fdm-button-gradient: linear-gradient(to right, #C4FE00, #5DE000);   
+  --fdm-button-gradient-light: linear-gradient(to right, #d5ff4d, #80e339);
+  --fdm-normal-font-size:1rem;
+  --fdm-headings-font-size:2rem;
+  --fdm-background: white;
+  --fdm-font-color: black;
+  --fdm-dark-background: #0d0d0d;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -moz-osx-font-smoothing: grayscale;  
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+* h1, h3, h4, label, p, button, li {
+  font-size: var(--fdm-normal-font-size);
+  font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal; 
 }

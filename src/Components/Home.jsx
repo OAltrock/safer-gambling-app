@@ -9,8 +9,8 @@ import checkMark from '../Assets/checkMark.png';
 function Home() {
 
   let questionnaireDone = useSelector(state => state.questionnaireDone.done);
-  let gameDone = useSelector(state => state.gameDone.done);
-
+  let gameDone = useSelector(state => state.gameScores.done);
+  //questionnaireDone = true;
   const evalDone = false;
 
   const navigate = useNavigate();
@@ -21,9 +21,12 @@ function Home() {
   const handleGame = () =>
     navigate("/GamePage")
 
+  const handleEval = () => 
+    navigate("/Evaluation")
+
   return (
     <div id="home-page">
-      <h1 style={{ textAlign: "center", color: "#3FE03F", marginTop: "3vh" }} >How the Safer Gambling App works:</h1>
+      <h1 style={{ textAlign: "center", color: "#3FE03F", marginTop: "3vh", fontSize: "var(--fdm-headings-font-size)" }} >How the Safer Gambling App works:</h1>
       <div className="container">
         <div className="text-container">
           <h3 style={{ marginBottom: "10px" }}>
@@ -67,7 +70,7 @@ function Home() {
           </p>
           <div className='thirdContainer'>
             {gameDone ?
-              (<button onClick={handleGame}>Let's get started</button>)
+              (<button onClick={handleEval}>Let's get started</button>)
               : evalDone ? (<div className='imgContainer'> <img src={checkMark} alt='done' /> </div>)
                 : (<button style={{ visibility: "hidden" }}>Let's get started</button>)
             }

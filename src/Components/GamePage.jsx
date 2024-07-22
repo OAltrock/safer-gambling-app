@@ -1,54 +1,40 @@
-import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import {toggle} from '../slices/gameDoneSlice.js';
+import { useDispatch, useSelector } from "react-redux";
+//import { setTrue, setFalse } from '../slices/gameDoneSlice.js';
+import { setGameScore, increaseAmountPlayed, resetAmount, setDone } from "../slices/gameSlice.js";
+import { useQuery } from "react-query";
+import axios from "axios";
 
 const GamePage = () => {
   let dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [gameLoaded, setGameLoaded] = useState(false);
-  const [gameLoading, setGameLoading] = useState(false);
-  const isFirstRun = useRef(true);
+  const navigate = useNavigate();  
+  const gameDone = useSelector(state => state.gameScores);
+  //const gameScore = useSelector(state => state.gameScores.score);
 
-  const loadGame = () => {
-    if (!gameLoading) {
-      setGameLoading(true);
-      fetch("http://localhost:5000/start_game")
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          setGameLoaded(true);
-          dispatch(toggle());
-          setGameLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          setGameLoading(false);
-        });
+  async function playAgain() {    
+    let promise = await axios.get('http://localhost:5000/start_game');
+    let data = promise.data;
+    if (data) {      
+      dispatch(setDone(true))
+      dispatch(setGameScore(data));
+      dispatch(increaseAmountPlayed());
+      console.log(gameDone);
     }
+    return promise;
   };
-
-   
-    useEffect(() => {
-      
-      if (isFirstRun.current){
-        console.log("Loading game");
-        loadGame();
-        isFirstRun.current = false;     
-      }
-  }, []);
-
-  const playAgain = () => {
-    loadGame();
-  };
+  const { isFetching, data, refetch, error, isError } = useQuery('StartGame', playAgain, {
+    refetchOnWindowFocus: false
+  })
 
   return (
     <div>
+      {console.log({ data })}
       <div>Work in progress</div>
       <div className="button-container">
-        <button onClick={() => navigate(-1)}>Go Back</button>
-        <button onClick={playAgain}>Play Again</button>
+        <button onClick={() => navigate('/')}>Go Back</button>
+        <button disabled={isFetching} onClick={() => refetch()}>Play Again</button>
       </div>
+      <div> {(isFetching) ? 'Playing the game...' : (isError) ? `${ error }` : null} </div>
     </div>
   );
 };

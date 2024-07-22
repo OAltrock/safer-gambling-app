@@ -1,0 +1,23 @@
+.evalContainer {
+    margin: 0 15vh;
+}
+
+.evalContainer p {
+    text-align: start;
+}
+
+.evalContainer li {
+    text-align: start;
+}
+
+.evalContainer li strong {
+    font-weight: 700;    
+}
+
+.evalContainer p strong {
+    font-weight: 700;    
+}
+
+.evalContainer ol {
+    padding: 15px;
+}

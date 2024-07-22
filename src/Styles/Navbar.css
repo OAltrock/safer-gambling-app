@@ -20,6 +20,16 @@ img:hover {
     justify-content: right;    
 }
 
+.svg-inline--fa {
+    color: white;
+    scale: 2;
+    margin: 1rem;    
+}
+
+.svg-inline--fa:hover {
+    cursor: pointer;
+}
+
 .navbar-button {
     color: white;
     background-color: black;

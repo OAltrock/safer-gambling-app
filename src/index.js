@@ -6,15 +6,17 @@ import reportWebVitals from './reportWebVitals';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import questionnaireDoneReducer from './slices/questionnaireDoneSlice.js';
-import gameDoneReducer from './slices/gameDoneSlice.js';
+import gameScoresReducer from './slices/gameSlice.js';
 import questionnaireReducer from './slices/questionnaireSlice.js';
+import darkModeReducer from './slices/darkModeSlice.js';
 
 
 const store = configureStore({
   reducer: {
     questionnaireDone: questionnaireDoneReducer,
-    gameDone: gameDoneReducer,
-    questionnaire: questionnaireReducer 
+    gameScores: gameScoresReducer,
+    questionnaire: questionnaireReducer,    
+    toggleDarkMode: darkModeReducer
   }
 })
 
