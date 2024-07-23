@@ -1,27 +1,32 @@
-import React from "react";
-import "../Styles/Modals.css";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
-const HelpModal = ({ onClose }) => {
+const HelpModal = ({showHelpPopup, setShowHelpPopup}) => {  
+
+  const handleClose = () => setShowHelpPopup(false);  
+
   return (
-    <div className="modal">
-      <div className="modal-content">
-        <button className="close-button" onClick={onClose}>
-          X
-        </button>
-        <h2>Help</h2>
-        <p>
-          This page is designed to help users understand their risk appetite
-        </p>
-        <p>
-          Click on either the 'Questionnaire' or 'Deep Diver' buttons to get
-          started on understanding your risk appetite
-        </p>
-        <p>
-          Risk is assessed based on how strongly you agree with question
-          statements as well as how well you do in the risk based game
-        </p>
-      </div>
-    </div>
+    <>
+      <Modal
+        show={showHelpPopup}
+        onHide={handleClose}
+        animation={false}        
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Modal title</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          I will not close if you click outside me. Do not even try to press
+          escape key.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary">Understood</Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 };
 

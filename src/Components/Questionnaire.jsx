@@ -13,19 +13,9 @@ const Questionnaire = () => {
   let dispatch = useDispatch();
   let questionnaire = useSelector(state => state.questionnaire)  
   const navigate = useNavigate();  
-
-  const questions = [
-    "You feel very strong negative emotions when you lose a bet.",
-    "You often gamble with more money than you originally planned.",
-    "You have tried to cut back on gambling but have been unsuccessful.​​​​",
-    "You lie to family members or friends about how much you gamble.​",
-    "You gamble to escape problems or relieve feelings of anxiety or depression.​",
-    "You feel restless or irritable when you try to cut down on gambling.​​​​",
-    "You have had financial problems due to gambling (e.g. needing to borrow money, unpaid bills).​",
-    "You often think about gambling (e.g. reliving past gambling and/ or planning future gambling).​",
-    "You have gambled to try to win back money you have lost (chasing losses).​",
-    "You have neglected work, school, or family responsibilities because of gambling.",
-  ];
+  let [header, question, preposition, button] = useSelector(state => state.languages[state.languages.current].questionnaire.text)
+  
+  const questions = useSelector(state => state.languages[state.languages.current].questionnaire.questions);
   
 
   const totalQuestions = questions.length;
@@ -40,13 +30,7 @@ const Questionnaire = () => {
   const progress = (answeredQuestions / totalQuestions) * 100;
   const [index, setIndex] = useState(0);
 
-  const options = [
-    "Strongly Disagree",
-    "Disagree",
-    "Neutral",
-    "Agree",
-    "Strongly Agree",
-  ];  
+  const options = useSelector(state => state.languages[state.languages.current].questionnaire.options); 
 
   //can be moved to where we want to evaluate the questionnaire since we can access the redux store from anywhere 
   /* const calculateTotalScore = () => {
@@ -82,8 +66,8 @@ const Questionnaire = () => {
   return (
     <Container fluid>
       <div>
-        <h3>Questionnaire</h3>
-        <h4 key={'questionCount' + index}>Question {index + 1} of {questions.length} </h4>
+        <h3>{header}</h3>
+        <h4 key={'questionCount' + index}>{question} {index + 1} {preposition} {questions.length} </h4>
       </div>
       <Carousel activeIndex={index} interval={null} onSelect={handleSelect}>
         {questions.map(question => {
@@ -116,7 +100,7 @@ const Questionnaire = () => {
           style={{ width: `${progress}%` }}
         ></div>
       </div>
-      <button onClick={handleSubmit} className="submit-button" disabled={answeredQuestions !== questions.length}>Submit</button>
+      <button onClick={handleSubmit} className="submit-button" disabled={answeredQuestions !== questions.length}>{button}</button>
     </Container>
   )
 }

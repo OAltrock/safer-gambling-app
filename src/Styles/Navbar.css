@@ -20,6 +20,11 @@ img:hover {
     justify-content: right;    
 }
 
+.modal-content {
+    background-color: var(--fdm-background);
+    color: var(--fdm-font-color);
+}
+
 .svg-inline--fa {
     color: white;
     scale: 2;

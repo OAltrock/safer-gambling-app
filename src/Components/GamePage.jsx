@@ -7,14 +7,14 @@ import axios from "axios";
 
 const GamePage = () => {
   let dispatch = useDispatch();
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
   const gameDone = useSelector(state => state.gameScores);
-  //const gameScore = useSelector(state => state.gameScores.score);
+  let [back, again, playing] = useSelector(state => state.languages[state.languages.current].gamePage);
 
-  async function playAgain() {    
+  async function playAgain() {
     let promise = await axios.get('http://localhost:5000/start_game');
     let data = promise.data;
-    if (data) {      
+    if (data) {
       dispatch(setDone(true))
       dispatch(setGameScore(data));
       dispatch(increaseAmountPlayed());
@@ -27,14 +27,13 @@ const GamePage = () => {
   })
 
   return (
-    <div>
-      {console.log({ data })}
+    <div >      
       <div>Work in progress</div>
       <div className="button-container">
-        <button onClick={() => navigate('/')}>Go Back</button>
-        <button disabled={isFetching} onClick={() => refetch()}>Play Again</button>
+        <button onClick={() => navigate('/')}>{back}</button>
+        <button disabled={isFetching} onClick={() => refetch()}>{again}</button>
       </div>
-      <div> {(isFetching) ? 'Playing the game...' : (isError) ? `${ error }` : null} </div>
+      <div> {(isFetching) ? `${playing}` : (isError) ? `${error}` : null} </div>
     </div>
   );
 };

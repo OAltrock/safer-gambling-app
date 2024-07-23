@@ -17,6 +17,7 @@ function Navbar() {
   const [showSettingsPopup, setShowSettingsPopup] = useState(false);
 
   const darkMode = useSelector(state => state.toggleDarkMode)
+  let [advice, help, settings] = useSelector(state => state.languages[state.languages.current].navBar)
 
   const handleHelpClick = () => {
     setShowHelpPopup(true);
@@ -50,15 +51,13 @@ function Navbar() {
       <div className="navbar-buttons">
         {darkMode.darkMode ? <FontAwesomeIcon onClick={changeTheme} icon="fa-regular fa-sun" />
         : <FontAwesomeIcon onClick={changeTheme} icon="fa-regular fa-moon" />}
-        <button className="navbar-button" onClick={handleGuidanceClick} >Advice & Guidance</button>
-        <button className="navbar-button" onClick={handleHelpClick}>Help</button>
-        <button className="navbar-button" onClick={handleSettingsClick}>Settings</button>
+        <button className="navbar-button" onClick={handleGuidanceClick} >{advice}</button>
+        <button className="navbar-button" onClick={handleHelpClick}>{help}</button>
+        <button className="navbar-button" onClick={handleSettingsClick}>{settings}</button>
       </div>
-      {console.log(showHelpPopup)}
-      {showHelpPopup && <HelpModal onClose={() =>
-        setShowHelpPopup(false)} />}
-      {showSettingsPopup && <SettingsModal onClose={() =>
-        setShowSettingsPopup(false)} />}
+      {console.log(showSettingsPopup)}
+      {showHelpPopup && <HelpModal showHelpPopup={showHelpPopup} setShowHelpPopup={setShowHelpPopup} />}
+      {showSettingsPopup && <SettingsModal showSettingsPopup={showSettingsPopup} setShowSettingsPopup={setShowSettingsPopup} />}
     </nav>
   );
 };

@@ -3,7 +3,9 @@ import '../Styles/EvaluationPage.css';
 import { useSelector } from 'react-redux';
 
 const EvaluationPage = () => {
-    let questionnaire = useSelector(state => state.questionnaire)
+    let questionnaire = useSelector(state => state.questionnaire);
+    let [header, paragraph1, paragraph2Strong, paragraph2, li1Strong, li1
+        ,li2Strong, li2, li3Strong, li3] = useSelector(state => state.languages[state.languages.current].evaluationPage)
     let answered = 0;
     let average = Object.values(questionnaire).reduce((acc, value) => {
         if (value>0) {
@@ -16,21 +18,18 @@ const EvaluationPage = () => {
     console.log(average);
     return (
         <div className='evalContainer'>
-            <h1 style={{ textAlign: "center", color: "#3FE03F", marginTop: "3vh", marginBottom: "5vh", fontSize: "var(--fdm-headings-font-size)" }}>Your Personalised Evaluation Results</h1>
+            <h1 style={{ textAlign: "center", color: "#3FE03F", marginTop: "3vh", marginBottom: "5vh", fontSize: "var(--fdm-headings-font-size)" }}>{header}</h1>
             <p>
-                Thank you for taking the time to complete our questionnaire and participate in the simulated coin-based game.
-                The purpose of this evaluation is to assess your gambling behavior and identify any potential risks associated with
-                problem gambling. Based on your responses and game performance, we have compiled the following report.
+                {paragraph1}
             </p>
             <p>
-                <strong>Questionnaire Analysis:</strong><br />                
-                The questionnaire consisted of several questions designed to gauge your gambling habits,
-                emotional responses, and self-control levels. Your responses indicate the following:
+                <strong>{paragraph2Strong}</strong><br />                
+                {paragraph2}
             </p>
             <ol>
-                <li><strong>Frequency of Gambling: </strong>You reported engaging in gambling activities multiple times per week.</li>
-                <li><strong>Chasing Losses: </strong>You admitted to frequently attempting to win back money after a loss.</li>
-                <li><strong>Emotional Responses: </strong>You often feel anxious or stressed when thinking about gambling.</li>
+                <li><strong>{li1Strong} </strong>{li1[0]}</li>
+                <li><strong>{li2Strong} </strong>{li2[0]}</li>
+                <li><strong>{li3Strong} </strong>{li3[0]}</li>
             </ol>
         </div>
     )

@@ -9,6 +9,7 @@ import questionnaireDoneReducer from './slices/questionnaireDoneSlice.js';
 import gameScoresReducer from './slices/gameSlice.js';
 import questionnaireReducer from './slices/questionnaireSlice.js';
 import darkModeReducer from './slices/darkModeSlice.js';
+import languagesReducer from './slices/languageSlice.js';
 
 
 const store = configureStore({
@@ -16,7 +17,8 @@ const store = configureStore({
     questionnaireDone: questionnaireDoneReducer,
     gameScores: gameScoresReducer,
     questionnaire: questionnaireReducer,    
-    toggleDarkMode: darkModeReducer
+    toggleDarkMode: darkModeReducer,
+    languages: languagesReducer
   }
 })
 
