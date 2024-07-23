@@ -4,7 +4,7 @@ import "../Styles/Navbar.css";
 import HelpModal from './HelpModal';
 import SettingsModal from './SettingsModal';
 import logo from "../Assets/fdm_logo.png";
-
+import Help from './Help';
 
 function Navbar() {
   const navigate = useNavigate();
@@ -13,7 +13,8 @@ function Navbar() {
   const [showSettingsPopup, setShowSettingsPopup] = useState(false);
 
   const handleHelpClick = () => {
-    setShowHelpPopup(true);
+    //setShowHelpPopup(true);
+    navigate("/Help");
   };
 
   const handleSettingsClick = () => {
@@ -32,7 +33,7 @@ function Navbar() {
         <button className="navbar-button" onClick={handleHelpClick}>Help</button>
         <button className="navbar-button" onClick={handleSettingsClick}>Settings</button>
       </div>
-      {showHelpPopup && <HelpModal onClose={() =>
+      {showHelpPopup && < Help onClose={() =>
         setShowHelpPopup(false)} />}
       {showSettingsPopup && <SettingsModal onClose={() =>
         setShowSettingsPopup(false)} />}

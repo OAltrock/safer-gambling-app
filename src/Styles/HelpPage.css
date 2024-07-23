@@ -16,3 +16,19 @@
     flex-direction: row;
     justify-content: space-evenly;
 }
+
+/* CSS */
+.search-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .search-label,
+  .search-input {
+    display: block; /* This ensures that the label and input take up the full width */
+  }
+  
+  .search-label {
+    margin-bottom: 8px; /* Adjust as needed */
+  }
+  
