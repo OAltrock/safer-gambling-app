@@ -1,23 +1,45 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Dropdown from 'react-bootstrap/Dropdown';
+import Form from 'react-bootstrap/Form';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import GermanFlag from '../Assets/Germany-Flag-icon.png';
 import UKFlag from '../Assets/United-Kingdom-Flag-1-icon.png';
 import '../Styles/Modals.css';
 import { useDispatch, useSelector } from 'react-redux';
+import { setSize } from '../slices/fontSlice';
 import { setLanguage } from '../slices/languageSlice';
+import { useEffect, useState } from 'react';
 
 const SettingsModal = ({ showSettingsPopup, setShowSettingsPopup }) => {
 
+  let fontSize = useSelector(state => state.setFontSize);
+  const [tempFontSize, setTempFontSize] = useState(1);
+  console.log(fontSize)
+
   const handleClose = () => setShowSettingsPopup(false);
   //const handleShow = () => setShow(true);
-  let current = useSelector(state => state.languages.current);
+  let current = useSelector(state => state.languages.current);  
   let languages = {
     german: GermanFlag,
     english: UKFlag
   }
   let dispatch = useDispatch();
+
+  const handleChange = (e) => {        
+    console.log(tempFontSize);
+    document.documentElement.style.setProperty('--fdm-normal-font-size', e.target.value+'rem'); 
+    document.documentElement.style.setProperty('--fdm-headings-font-size', e.target.value*2+'rem');
+    dispatch(setSize({
+      normalSize: e.target.value+'rem',
+      headerSize: e.target.value*2+'rem'
+    }));
+  }
+
+  /* useEffect(()=> {
+    
+    
+  }, [tempFontSize]); */
 
   return (
     <>
@@ -31,7 +53,9 @@ const SettingsModal = ({ showSettingsPopup, setShowSettingsPopup }) => {
           <Modal.Title>Settings Menu</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>
+          <Form.Label>Font size: {fontSize.normalSize.split('rem')[0]}</Form.Label>
+          <Form.Range value={fontSize.normalSize.split('rem')[0]} min={0.5} max={1.5} step={0.1} onChange={handleChange} />
+          <div>
             Language:
             <Dropdown className="d-inline mx-2" autoClose="inside">
               <Dropdown.Toggle id="dropdown-autoclose-inside">
@@ -40,17 +64,17 @@ const SettingsModal = ({ showSettingsPopup, setShowSettingsPopup }) => {
               <Dropdown.Menu>
                 {Object.keys(languages).map(language => {
                   return (
-                    <Dropdown.Item onClick={() => dispatch(setLanguage(language))}>{language} <img src={languages[language]} /></Dropdown.Item>
+                    <Dropdown.Item key={language} onClick={() => dispatch(setLanguage(language))}>{language} <img src={languages[language]} /></Dropdown.Item>
                   )
                 })}
               </Dropdown.Menu>
             </Dropdown>
-          </p>
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
-          </Button>          
+          </Button>
         </Modal.Footer>
       </Modal>
     </>

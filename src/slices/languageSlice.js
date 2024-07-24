@@ -80,7 +80,7 @@ const initialState =
         homePage:
             [
                 "So funktioniert die Safer Gambling App:",
-                "Schritt Eins",
+                "Schritt 1",
                 "Aufschlussreicher Fragebogen:",
                 `Beginnen Sie Ihre Reise zu sicherem Glücksspiel mit unserem aufschlussreichen Fragebogen. 
                  Dieser schnelle und einfache Schritt hilft Ihnen, Ihr Glücksspielverhalten zu verstehen, indem er eine Reihe sorgfältig ausgearbeiteter Fragen stellt.`,
@@ -110,7 +110,7 @@ const initialState =
                     "Sie haben gespielt, um zu versuchen, verlorenes Geld zurückzugewinnen (Verlustjagd).",
                     "Sie haben wegen des Glücksspiels berufliche, schulische oder familiäre Pflichten vernachlässigt."
                 ],
-            options: ["Stimme überhaupt nicht zu", "Stimme nicht zu", "Neutral", "Stimme zu", "Stimme voll zu"]
+            options: ["Stimme gar nicht zu", "Stimme nicht zu", "Neutral", "Stimme zu", "Stimme voll zu"]
         },
         gamePage: [
             "Zurück",
@@ -135,7 +135,7 @@ const initialState =
             ["Sie fühlen sich oft ängstlich oder gestresst, wenn Sie ans Glücksspiel denken."]
         ]
     },
-    current: "german"
+    current: "english"
 }
 
 const languages = createSlice({

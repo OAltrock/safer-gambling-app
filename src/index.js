@@ -10,6 +10,7 @@ import gameScoresReducer from './slices/gameSlice.js';
 import questionnaireReducer from './slices/questionnaireSlice.js';
 import darkModeReducer from './slices/darkModeSlice.js';
 import languagesReducer from './slices/languageSlice.js';
+import setFontSizeReducer from './slices/fontSlice.js';
 
 
 const store = configureStore({
@@ -18,7 +19,8 @@ const store = configureStore({
     gameScores: gameScoresReducer,
     questionnaire: questionnaireReducer,    
     toggleDarkMode: darkModeReducer,
-    languages: languagesReducer
+    languages: languagesReducer,
+    setFontSize: setFontSizeReducer
   }
 })
 

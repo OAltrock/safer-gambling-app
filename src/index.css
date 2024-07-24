@@ -24,8 +24,16 @@ code {
     monospace;
 }
 
-* h1, h3, h4, label, p, button, li {
+* label, p, button, li {
   font-size: var(--fdm-normal-font-size);
+  font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal; 
+}
+
+* h1, h2, h3, h4, h5, h6 {
+  font-size: var(--fdm-headings-font-size);
   font-family: "Open Sans", sans-serif;
   font-optical-sizing: auto;
   font-weight: 300;

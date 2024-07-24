@@ -5,9 +5,15 @@
 ######  Notes for setup ######
 ## Make sure node_modules is present when you clone the project, if not then run
 npm install
-npm install react-router-dom
-npm install react-redux
-npm install react-fontawesome
+## if you have Docker installed, you can build the image with
+docker build -t react .
+## 'react' is the name of the image which must be used in the second command
+## and then run the image with 
+docker run -it -p 3000:3000 react 
+## the second '3000' would be the port the react page responds to (the first is the outgoing port - 3000 is the default for react)
+
+## right now the docker image isn't viable for development since changes aren't being refreshed (but this will be changed in the future)
+## there is no image for the flask/pygame since container can't easily access graphics output
  
 ## Make sure you have the library installed:
 pip install pygame
@@ -20,10 +26,5 @@ pip install flask-cors
 ## Terminal 1: Python - This executes Flask making the game have an API call:
 python app.py
  
-## Terminal 2: React - This opens the react app. All being well, when you go to the deep diver game the game will open up:
+## Terminal 2: React - This opens the react app. All being well, when you go to the deep diver game the game will open up (the docker image will start the react app automatically):
 npm run start
- 
- 
- 
-## Known bug(s):
-## As react renders pages twice, the game will appear twice when you move to the page, but will render once when a user clicks 'Play Again'
