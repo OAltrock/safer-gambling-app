@@ -8,7 +8,7 @@ function HelpPage() {
 
     return (
         <div id='helpContainer'>
-            <h1>Help Page</h1>
+            <h1>Advice & Guidance</h1>
             <p>If you are experiencing gambling addiction, there are many resources available to help you.</p>
             <p>Please note that gambling addiction is a serious condition that can lead to financial ruin and other negative consequences. It is important to seek help from a qualified professional.</p>
             <p>Here are some resources to help you:</p>
