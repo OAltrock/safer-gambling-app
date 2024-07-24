@@ -9,10 +9,9 @@ npm install
 docker build -t react .
 ## 'react' is the name of the image which must be used in the second command
 ## and then run the image with 
-docker run -it -p 3000:3000 react 
+docker-compose up --watch 
 ## the second '3000' would be the port the react page responds to (the first is the outgoing port - 3000 is the default for react)
 
-## right now the docker image isn't viable for development since changes aren't being refreshed (but this will be changed in the future)
 ## there is no image for the flask/pygame since container can't easily access graphics output
  
 ## Make sure you have the library installed:
