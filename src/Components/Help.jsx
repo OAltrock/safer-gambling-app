@@ -24,7 +24,6 @@ const SearchBar = ({ onSearch }) => {
       />
     );
   };
-  
   function Help() {
     const handleSearch = (searchTerm) => {
       // Implement your search logic here
