@@ -7,7 +7,11 @@
   --fdm-headings-font-size:2rem;
   --fdm-background: white;
   --fdm-font-color: black;
-  --fdm-dark-background: #0d0d0d;
+  --fdm-dark-background: #0d0d0d;    
+}
+
+div#root {
+  height: -webkit-fill-available;
 }
 
 body {
@@ -17,6 +21,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;  
+  height: -webkit-fill-available;
+  background-color: var(--fdm-background);
 }
 
 code {

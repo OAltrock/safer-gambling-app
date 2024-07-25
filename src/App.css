@@ -1,8 +1,7 @@
 .App {
   text-align: center;
   background-color: var(--fdm-background);
-  color: var(--fdm-font-color);
-  height: 100%;  
+  color: var(--fdm-font-color);  
 }
 
 .App-logo {
