@@ -14,17 +14,20 @@ import Help from './Components/Help';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
-import { far } from '@fortawesome/free-regular-svg-icons';
+import { far, faMoon, faSun } from '@fortawesome/free-regular-svg-icons';
+import {QueryClientProvider, QueryClient} from "react-query";
+import EvaluationPage from './Components/EvaluationPage';
 
 
-
-library.add(fas, far)
+library.add(fas, far, faMoon, faSun)
+const queryClient = new QueryClient();
 
 
 function App() {
   return (
     <div className="App">
-      <Router>       
+      <Router>  
+        <QueryClientProvider client={queryClient}>
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -32,9 +35,11 @@ function App() {
           <Route path="/Guidance" element={<HelpPage />} />
           <Route path="/help" element={<Help />} />
           <Route path="/GamePage" element={<GamePage />} />
-          <Route path="/QuizScore" element={<QuizScore />} />          
+          <Route path="/QuizScore" element={<QuizScore />} />        
+          <Route path="/Evaluation" element={<EvaluationPage />} />  
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
+        </QueryClientProvider>
       </Router>
     </div>
   );

@@ -26,6 +26,13 @@
   justify-self: center;
 }
 
+.thirdContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 13vh;
+}
+
 .header-container {
     display: flex;
     flex-direction: column;
@@ -37,14 +44,9 @@
     background-image: var(--fdm-background);
     max-width: 100%;           
   }  
-  * h1, h3, h4, label, p, button {
-    font-family: "Open Sans", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 300;
-    font-style: normal; 
-  }
+  
 
-  .container {
+  .container {    
     height: 79vh;
     display: flex;
     flex-direction:row;
@@ -64,11 +66,21 @@
   }
 
   .container * {
-    text-align: left;    
+    text-align: left;        
+  }
+
+  .container h1,h2,h3,h4,h5,h6 {
+    font-size: var(--fdm-headings-font-size);
+  }
+
+  .container p, button {
+    font-size: var(--fdm-normal-font-size);
   }
   
   .text-container {        
-    display: grid;    
+    display: flex;    
+    flex-direction: column;
+    justify-content: space-evenly;
     height: 80%;
     width: 30%;    
     margin:0 auto;    

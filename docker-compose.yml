@@ -1,0 +1,11 @@
+services:
+  node-server:
+      build: .
+      ports:
+        - 3000:3000
+      command: npm start
+      develop: 
+        watch:
+          - action: sync
+            path: ./src      
+            target: /app/src                  

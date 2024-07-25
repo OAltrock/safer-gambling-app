@@ -8,11 +8,15 @@ const gameSlice= createSlice({
     name: "gameDone",
     initialState,
     reducers: {
-        toggle: (state)=> {
-            state.done = !state.done
+        setTrue: (state)=> {
+            console.log(state);
+            state.done = true;
+        },
+        setFalse: (state) => {
+            state.done = false;
         }
     }
 })
 
-export const {toggle} = gameSlice.actions
+export const {setTrue, setFalse} = gameSlice.actions
 export default gameSlice.reducer
