@@ -7,7 +7,6 @@ import logo from "../Assets/fdm_logo.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, useSelector } from 'react-redux';
 import {toggle} from '../slices/darkModeSlice';
-import Help from './Help';
 
 function Navbar() {
   const navigate = useNavigate();

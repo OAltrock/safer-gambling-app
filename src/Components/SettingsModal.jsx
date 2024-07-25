@@ -2,19 +2,17 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
-import DropdownButton from 'react-bootstrap/DropdownButton';
 import GermanFlag from '../Assets/Germany-Flag-icon.png';
 import UKFlag from '../Assets/United-Kingdom-Flag-1-icon.png';
 import '../Styles/Modals.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSize } from '../slices/fontSlice';
 import { setLanguage } from '../slices/languageSlice';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const SettingsModal = ({ showSettingsPopup, setShowSettingsPopup }) => {
 
-  let fontSize = useSelector(state => state.setFontSize);
-  const [tempFontSize, setTempFontSize] = useState(1);
+  let fontSize = useSelector(state => state.setFontSize); 
   console.log(fontSize)
 
   const handleClose = () => setShowSettingsPopup(false);
@@ -64,7 +62,7 @@ const SettingsModal = ({ showSettingsPopup, setShowSettingsPopup }) => {
               <Dropdown.Menu>
                 {Object.keys(languages).map(language => {
                   return (
-                    <Dropdown.Item key={language} onClick={() => dispatch(setLanguage(language))}>{language} <img src={languages[language]} /></Dropdown.Item>
+                    <Dropdown.Item key={language} onClick={() => dispatch(setLanguage(language))}>{language} <img src={languages[language]} alt={language} /></Dropdown.Item>
                   )
                 })}
               </Dropdown.Menu>

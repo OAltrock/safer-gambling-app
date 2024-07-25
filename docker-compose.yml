@@ -1,4 +1,4 @@
-vservices:
+services:
   node-server:
       build: .
       ports:
