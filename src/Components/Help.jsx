@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import 'reactjs-popup/dist/index.css';
 import '../Styles/HelpPage.css';
 import Settings from '../Assets/Settings.png';
 import Icon from  '../Assets/Icon.png';

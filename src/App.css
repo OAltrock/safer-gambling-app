@@ -1,18 +1,17 @@
-:root {
-  --fdm-button: #C5FF00;
-  --fdm-background: linear-gradient(to right, #1E1E1E, #EBEBEB);
-  --fdm-button-gradient: linear-gradient(to right, #C4FE00, #5DE000);   
-  --fdm-button-gradient-light: linear-gradient(to right, #d5ff4d, #80e339);
-}
-
 .App {
   text-align: center;
+  background-color: var(--fdm-background);
+  color: var(--fdm-font-color);
+  height: 100%;  
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
+
+
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

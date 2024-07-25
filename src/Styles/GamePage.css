@@ -1,0 +1,35 @@
+.headerLI {
+    font-weight: 700;
+}
+
+#gamePageContainer li {    
+    text-align: justify;    
+    font-size: 0.85rem;
+}
+
+.gamePageParagraph {    
+    text-align: justify;    
+    font-size: 0.85rem;
+}
+
+#gamePageContainer ol {
+    border: 5px solid var(--fdm-font-color);
+    border-radius: 20px;
+    padding: 3vh;
+}
+
+#gamePageContainer h4 {
+    margin: 1vh 1vh 0 0;
+}
+
+.button-container {
+    width: 95%;
+    margin: 0vh 5vh 0vh 5vh;
+}
+
+.gamePageListContainer {
+    margin: 2vh;
+    width: 90%;    
+    display: flex;
+    flex-direction: row;
+}

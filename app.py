@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
+import asyncio
 
 import subprocess
 
@@ -9,12 +10,12 @@ CORS(app, origins='*')
 
 
 @app.route('/start_game', methods=['GET'])
-def start_game():    
+async def start_game():    
     try:        
         # Execute the game file (game_take_8.py)
         subprocess.Popen(['python', 'game take 14.py'])
-            
-        return jsonify({"message": "Game started successfully!"}), 200
+        await asyncio.sleep(5)    
+        return jsonify({"score": 100}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
