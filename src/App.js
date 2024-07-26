@@ -10,7 +10,7 @@ import QuizScore from './Components/QuizScore';
 import GamePage from './Components/GamePage';
 import HelpPage from './Components/HelpPage';
 import Navbar from './Components/Navbar';
-import Help from './Components/Help';
+
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -33,7 +33,6 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/Questionnaire" element={<Questionnaire />} />
           <Route path="/Guidance" element={<HelpPage />} />
-          <Route path="/help" element={<Help />} />
           <Route path="/GamePage" element={<GamePage />} />
           <Route path="/QuizScore" element={<QuizScore />} />        
           <Route path="/Evaluation" element={<EvaluationPage />} />  

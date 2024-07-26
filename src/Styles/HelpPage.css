@@ -19,17 +19,17 @@
 }
 
 /* CSS */
-.search-container {
+/* .search-container {
     display: flex;
     flex-direction: column;
   }
   
   .search-label,
   .search-input {
-    display: block; /* This ensures that the label and input take up the full width */
+    display: block; 
   }
   
   .search-label {
-    margin-bottom: 8px; /* Adjust as needed */
-  }
-  
+    margin-bottom: 8px; 
+  } */
+ 
