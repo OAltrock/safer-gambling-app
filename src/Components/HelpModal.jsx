@@ -18,7 +18,7 @@ const SearchBar = ({ onSearch }) => {
   return (
     <input
       type="text"
-      placeholder="Text search..."
+      placeholder="search..."
       value={searchTerm}
       onChange={handleSearchChange}
     />
@@ -27,7 +27,6 @@ const SearchBar = ({ onSearch }) => {
 const HelpModal = ({ showHelpPopup, setShowHelpPopup }) => {
 
   const handleClose = () => setShowHelpPopup(false);
-
 
   const handleSearch = (searchTerm) => {
     // Implement your search logic here
@@ -55,11 +54,13 @@ const HelpModal = ({ showHelpPopup, setShowHelpPopup }) => {
               </div>
               <div className='linkContainer'>
                 <img src={Icon} alt='Navigation & Controls' style={{ scale: "65%", alignSelf: "center" }} />
-                <a href="/TechnicalSupport">Navigation & Controls</a>
+                {/* <a href="/Navigation & Controls">Navigation & Controls</a> */}
+                <label htmlFor="navigation-controls" className="nagivation-label">Navigation & Controls</label>
               </div>
               <div className='linkContainer'>
                 <img src={Troubleshooting} alt='Troubleshooting' style={{ scale: "71%", alignSelf: "center" }} />
-                <a href="https://gamblersanonymous.org.uk/">Troubleshooting</a>
+                {/* <a href="/Troubleshooting">Troubleshooting</a> */}
+                <label htmlFor="troubleshooting" className="troubleshooting-label">Troubleshooting </label>
               </div>
             </div>
           </>

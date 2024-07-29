@@ -34,9 +34,9 @@ const initialState =
             questions:
                 [
                     "Have you bet more than you could really afford to lose?",
-                    "Have you needed to gamble with larger amounts of money to get the same exitement?",
+                    "Have you needed to gamble with larger amounts of money to get the same excitement?",
                     "When you gambled, did you go back another day to try and win back the money you lost?",
-                    "Have you borrowed money or sld anything to get money to gamble?",
+                    "Have you borrowed money or sold anything to get money to gamble?",
                     "Have you felt that you might have a problem with gambling?",
                     "Has gambling caused you any mental health problems, including stress or anxiety?",
                     "Have people criticised your betting or told you that you had a gambling problem, regardless of whether or not you thought it was true?",
