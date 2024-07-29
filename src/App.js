@@ -17,6 +17,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far, faMoon, faSun } from '@fortawesome/free-regular-svg-icons';
 import {QueryClientProvider, QueryClient} from "react-query";
 import EvaluationPage from './Components/EvaluationPage';
+import Footer from './Components/Footer'
 
 
 library.add(fas, far, faMoon, faSun)
@@ -39,6 +40,7 @@ function App() {
           <Route path="/Evaluation" element={<EvaluationPage />} />  
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
+        <Footer />
         </QueryClientProvider>
       </Router>
     </div>

@@ -17,10 +17,10 @@ const initialState =
                 "Step 1",
                 "Insightful Questionnaire:",
                 `Begin your journey to safer gambling with our insightful questionnaire. 
-                This quick and easy step helps you understand your gambling behaviour by asking a series of carefully crafted questions`,
+                This quick and easy step helps you understand your gambling behaviour by asking a series of carefully crafted questions.`,
                 `Step 2`,
                 `Interactive Assessment Game:`,
-                `Dive into our interactive Assesment Game, where fun meets insight. This engaging
+                `Dive into our interactive Assessment Game, where fun meets insight. This engaging
                     and dynamic game is designed to estimate your gambling tendencies in a playful yet accurate way.`,
                 "Step 3",
                 "Personalised Evaluation:",
@@ -33,18 +33,17 @@ const initialState =
             text: ["Questionnaire", "Question", "of", "Submit"],
             questions:
                 [
-                    "You feel very strong negative emotions when you lose a bet.",
-                    "You often gamble with more money than you originally planned.",
-                    "You have tried to cut back on gambling but have been unsuccessful.",
-                    "You lie to family members or friends about how much you gamble.",
-                    "You gamble to escape problems or relieve feelings of anxiety or depression.",
-                    "You feel restless or irritable when you try to cut down on gambling.",
-                    "You have had financial problems due to gambling (e.g. needing to borrow money, unpaid bills.",
-                    "You often think about gambling (e.g. reliving past gambling and/ or planning future gambling.",
-                    "You have gambled to try to win back money you have lost (chasing losses.)",
-                    "You have neglected work, school, or family responsibilities because of gambling."
+                    "Have you bet more than you could really afford to lose?",
+                    "Have you needed to gamble with larger amounts of money to get the same exitement?",
+                    "When you gambled, did you go back another day to try and win back the money you lost?",
+                    "Have you borrowed money or sld anything to get money to gamble?",
+                    "Have you felt that you might have a problem with gambling?",
+                    "Has gambling caused you any mental health problems, including stress or anxiety?",
+                    "Have people criticised your betting or told you that you had a gambling problem, regardless of whether or not you thought it was true?",
+                    "Has your gambling caused any financial problems for you or your household?",
+                    "Have you felt guilty about the way you gamble or what happens when you gamble?"
                 ],
-            options: ["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"]
+            options: ["Never", "Sometimes", "Most of the time", "Almost always"]
         },
         gamePage: [
             ["Game Overview: Treasure Dive", "Game Rules:", "End of Game and Scoring:", "Player Assessment:"],
@@ -98,17 +97,17 @@ const initialState =
         evaluationPage: [
             "Your Personalised Evaluation Results",
             `Thank you for taking the time to complete our questionnaire and participate in the simulated
-coin - based game.The purpose of this evaluation is to assess your gambling behavior and identify
+             coin - based game.The purpose of this evaluation is to assess your gambling behavior and identify
              any potential risks associated with problem gambling.Based on your responses and game performance,
-    we have compiled the following report.`,
+             we have compiled the following report.`,
             "Questionnaire Analysis:",
             `The questionnaire consisted of several questions designed to gauge your gambling habits, emotional
-responses, and self - control levels.Your responses indicate the following: `,
-            "Frequency of Gambling:",
+             responses, and self - control levels.Your responses indicate the following: `,
+            "Behaviour",
             ["You reported engaging in gambling activities multiple times per week."],
-            "Chasing Losses:",
+            "Personal Consequences",
             ["You admitted to frequently attempting to win back money after a loss."],
-            "Emotional Responses:",
+            "Social Consequence",
             ["You often feel anxious or stressed when thinking about gambling."]
         ]
     },
@@ -142,18 +141,17 @@ responses, and self - control levels.Your responses indicate the following: `,
             text: ["Fragebogen", "Frage", "von", "Abschicken"],
             questions:
                 [
-                    "Sie empfinden sehr starke negative Gefühle, wenn Sie eine Wette verlieren.",
-                    "Sie spielen oft mit mehr Geld, als Sie ursprünglich geplant hatten.",
-                    "Sie haben versucht, das Glücksspiel einzuschränken, aber es ist Ihnen nicht gelungen.",
-                    "Sie lügen Familienmitglieder oder Freunde an, wie viel Sie spielen.",
-                    "Sie spielen, um Problemen zu entkommen oder um Ängste oder Depressionen zu überwinden.",
-                    "Sie fühlen sich unruhig oder reizbar, wenn Sie versuchen, das Glücksspiel einzuschränken.",
-                    "Sie hatten aufgrund des Glücksspiels finanzielle Probleme (z. B. wenn Sie sich Geld leihen mussten oder Rechnungen nicht bezahlt haben).",
-                    "Sie denken oft über Glücksspiele nach (z. B. wenn Sie vergangene Glücksspiele wieder erleben und/oder zukünftige Glücksspiele planen).",
-                    "Sie haben gespielt, um zu versuchen, verlorenes Geld zurückzugewinnen (Verlustjagd).",
-                    "Sie haben wegen des Glücksspiels berufliche, schulische oder familiäre Pflichten vernachlässigt."
+                    "Have you bet more than you could really afford to lose?",
+                    "Have you needed to gamble with larger amounts of money to get the same exitement?",
+                    "When you gambled, did you go back another day to try and win back the money you lost?",
+                    "Have you borrowed money or sld anything to get money to gamble?",
+                    "Have you felt that you might have a problem with gambling?",
+                    "Has gambling caused you any mental health problems, including stress or anxiety?",
+                    "Have people criticised your betting or told you that you had a gambling problem, regardless of whether or not you thought it was true?",
+                    "Has your gambling caused any financial problems for you or your household?",
+                    "Have you felt guilty about the way you gamble or what happens when you gamble?"
                 ],
-            options: ["Stimme gar nicht zu", "Stimme nicht zu", "Neutral", "Stimme zu", "Stimme voll zu"]
+            options: ["Niemals", "Manchmal", "Meistens", "Fast immer"]
         },
         gamePage: [
             ["Spielübersicht: Schatztauchen", "Spielregeln:", "Spielende und Wertung:", "Spielerbewertung:"],
@@ -196,7 +194,7 @@ responses, and self - control levels.Your responses indicate the following: `,
                 ["Ausgeglichener Spieler:", "Mäßige Punktzahl mit einigen Strafen, aber ausgeglichener Sauerstoffverbrauch."],
                 ["Risikofreudig:", "Hohe Punktzahl bei Tieftauchgängen, aber geringer Sauerstoffverbrauch."],
                 ["Rücksichtsloser Spieler:", "Niedrige Punktzahl aufgrund hoher Strafen und häufiger Risikobereitschaft ohne angemessenes Management."]
-            ],            
+            ],
             "Zurück",
             ["Spielen", "Nochmal spielen"],
             "Spiel läuft"

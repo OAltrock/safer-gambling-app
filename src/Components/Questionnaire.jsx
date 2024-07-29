@@ -16,13 +16,14 @@ const Questionnaire = () => {
   let [header, question, preposition, button] = useSelector(state => state.languages[state.languages.current].questionnaire.text)
   
   const questions = useSelector(state => state.languages[state.languages.current].questionnaire.questions);
-  
-
-  const totalQuestions = questions.length;
+  console.log(questionnaire);
+  const totalQuestions = questions.length;  
   //checks if questions has been answered (has a postive value)
   const answeredQuestions = Object.values(questionnaire)
     .reduce((acc, value, index) => {
-      if (value > 0) {
+      console.log(acc, value);
+      console.log(value.score);
+      if (value.score >= 0) {
         return acc += 1
       }
       else return acc
@@ -56,7 +57,8 @@ const Questionnaire = () => {
    * uses redux reducers (dispatch {@link useDispatch}) to update questionnaire {@link questionnaire}
    * @param {*} e SyntheticBaseEvent containing target, nativeEvent etc.
    */
-  const handleAnswer = (e) => {           
+  const handleAnswer = (e) => {     
+    console.log(questionnaire);
     dispatch(setQuestion({
       id: index + 1,
       data: parseInt(e.target.value)
@@ -81,9 +83,9 @@ const Questionnaire = () => {
                     label={option}
                     name={questions.indexOf(question)}
                     type='radio'                    
-                    value={questionnaire['question' + (index + 1)] !== -1 ? questionnaire['question' + (index + 1)] : score + 1}
+                    value={questionnaire['question' + (index + 1)].score !== -1 ? questionnaire['question' + (index + 1)].score : score}
                     onChange={handleAnswer}                    
-                    key={`q${(score + 1)}`}
+                    key={`q${(score)}`}
                   />
                 ))}
               </Form>

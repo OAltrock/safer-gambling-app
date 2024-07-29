@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../Styles/Home.css";
-import Footer from "./Footer";
 import { useSelector } from "react-redux";
 import checkMark from '../Assets/checkMark.png';
 
@@ -76,8 +75,7 @@ function Home() {
             }
           </div>
         </div>
-      </div>
-      <Footer />
+      </div>      
     </div >
   );
 }

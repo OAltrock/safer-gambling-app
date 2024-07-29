@@ -2,6 +2,7 @@
   text-align: center;
   background-color: var(--fdm-background);
   color: var(--fdm-font-color);  
+  min-height: 100vh;
 }
 
 .App-logo {
@@ -19,8 +20,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color: #282c34;  
   display: flex;
   flex-direction: column;
   align-items: center;
