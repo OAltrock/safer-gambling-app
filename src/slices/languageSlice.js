@@ -103,6 +103,13 @@ const initialState =
             "Questionnaire Analysis:",
             `The questionnaire consisted of several questions designed to gauge your gambling habits, emotional
              responses, and self - control levels.Your responses indicate the following: `,
+            "You scored:",
+            "overall.",
+            ["You're a Non-problem gambler", "You're experiencing a low level of gambling problems with a few or no negative consequences identified.", "You're experiencing a moderate level of gambling problems leading to some negative consequences.", "You're gambling with negative consequences and a possible lack of control."],
+            ["'Non-problem gamblers' (PGSI = 0)",
+                "'Low risk' (PGSI = 1-2) experiencing a low level of gambling problems with a few or no negative consequences identified.",
+                "'Moderate Risk' (PGSI = 3-7) experiencing a moderate level of gambling problems leading to some negative consequences",
+                "'Problem gamblers' (PGSI = 8+) gambling with negative consequences and a possible lack of control"],
             "Behaviour",
             ["You reported engaging in gambling activities multiple times per week."],
             "Personal Consequences",
@@ -141,15 +148,15 @@ const initialState =
             text: ["Fragebogen", "Frage", "von", "Abschicken"],
             questions:
                 [
-                    "Have you bet more than you could really afford to lose?",
-                    "Have you needed to gamble with larger amounts of money to get the same exitement?",
-                    "When you gambled, did you go back another day to try and win back the money you lost?",
-                    "Have you borrowed money or sld anything to get money to gamble?",
-                    "Have you felt that you might have a problem with gambling?",
-                    "Has gambling caused you any mental health problems, including stress or anxiety?",
-                    "Have people criticised your betting or told you that you had a gambling problem, regardless of whether or not you thought it was true?",
-                    "Has your gambling caused any financial problems for you or your household?",
-                    "Have you felt guilty about the way you gamble or what happens when you gamble?"
+                    "Haben Sie mehr gesetzt, als Sie sich wirklich leisten können zu verlieren?",
+                    "Mussten Sie schon mit größeren Geldbeträgen spielen, um die gleiche Befriedigung zu erzielen?",
+                    "Wenn Sie gespielt haben, versuchten Sie später, das verlorene Geld zurückzugewinnen?",
+                    "Haben Sie sich Geld geliehen oder etwas verkauft, um Geld zum Spielen zu bekommen?",
+                    "Haben Sie das Gefühl, dass Sie ein Problem mit dem Glücksspiel haben könnten?",
+                    "Hat das Glücksspiel bei Ihnen psychische Probleme verursacht, einschließlich Stress oder Angstzustände?",
+                    "Haben Menschen Ihr Wetten kritisiert oder Ihnen gesagt, dass Sie ein Glücksspielproblem haben, unabhängig davon, ob Sie das für wahr hielten oder nicht?",
+                    "Hat Ihr Glücksspiel finanzielle Probleme für Sie oder Ihren Haushalt verursacht?",
+                    "Hatten Sie schon einmal ein schlechtes Gewissen, weil Sie gespielt haben oder wegen den Konsequenzen Ihres Spielens?"
                 ],
             options: ["Niemals", "Manchmal", "Meistens", "Fast immer"]
         },
@@ -209,11 +216,21 @@ const initialState =
             "Analyse des Fragebogens:",
             `Der Fragebogen bestand aus mehreren Fragen, mit denen Ihre Spielgewohnheiten, Ihre emotionalen
             Reaktionen und Selbstkontrolle zu messen.Ihre Antworten geben Aufschluss über die folgenden Punkte: `,
-            "HäufigKeit des Spielens:",
+            "Sie haben folgende Punktzahl erreicht:",
+            "insgesamt.",
+            ["Ihr Spielen verursacht keine Probleme",
+                "Sie haben ein geringes Glücksspielproblem mit wenigen oder gar keinen negativen Folgen.",
+                "Sie haben mäßige Probleme mit dem Glücksspiel, die zu einigen negativen Konsequenzen führen.",
+                "Sie spielen mit negativen Folgen und einem möglichen Mangel an Kontrolle."],
+            ["'Unproblematischer Spieler' (PGSI = 0)",
+                "'Niedrieges Risiko' (PGSI = 1-2) experiencing a low level of gambling problems with a few or no negative consequences identified.",
+                "'Mäßiges Risiko' (PGSI = 3-7) mit einem mäßigen Ausmaß an Spielproblemen, die zu einigen negativen Folgen führen.",
+                "'Problematische Glücksspieler' (PGSI = 8+), die mit negativen Folgen und einem möglichen Mangel an Kontrolle spielen."],
+            "Verhalten:",
             ["Sie gaben an, mehrmals pro Woche an Glücksspielen teilzunehmen."],
-            "Die Jagd nach Verlusten:",
+            "Persönliche Konsequenzen:",
             ["Sie haben zugegeben, dass Sie häufig versucht haben, nach einem Verlust Geld zurückzugewinnen."],
-            "Emotionale Reaktionen:",
+            "Soziale Konsequenzen:",
             ["Sie fühlen sich oft ängstlich oder gestresst, wenn Sie ans Glücksspiel denken."]
         ]
     },

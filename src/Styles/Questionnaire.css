@@ -1,8 +1,29 @@
+.carousel-inner form {
+    display: flex;
+    justify-content: space-evenly;    
+}
+
 .form-check-input {
   scale: 1.5;
+  margin-right: 15px;
+  align-self: center;
+}
+
+.form-check-inline {
+  display: flex;
+}
+
+.carousel-control-prev {
+  width: 5%;
+}
+
+.carousel-control-next {
+  width: 5%;
 }
 
 .carousel.slide {
+  display: flex;
+  justify-content: space-evenly;
   background-color: var(--fdm-background);
 }
 
@@ -54,6 +75,13 @@
 }
 
 .container-fluid {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding: 10px;
   height: 90vh;
+}
+
+.container-fluid p, label {
+  font-size: var(--fdm-subHeader-font-size);
 }

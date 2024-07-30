@@ -13,8 +13,6 @@ import { useState } from 'react';
 const SettingsModal = ({ showSettingsPopup, setShowSettingsPopup }) => {
 
   let fontSize = useSelector(state => state.setFontSize); 
-  console.log(fontSize)
-
   const handleClose = () => setShowSettingsPopup(false);
   //const handleShow = () => setShow(true);
   let current = useSelector(state => state.languages.current);  
@@ -24,11 +22,13 @@ const SettingsModal = ({ showSettingsPopup, setShowSettingsPopup }) => {
   }
   let dispatch = useDispatch();
 
-  const handleChange = (e) => {
+  const handleChange = (e) => {    
     document.documentElement.style.setProperty('--fdm-normal-font-size', e.target.value+'rem'); 
+    document.documentElement.style.setProperty('--fdm-subHeader-font-size', new Intl.NumberFormat("en-GB", { maximumSignificantDigits: 3}).format(e.target.value*1.5)+'rem'); 
     document.documentElement.style.setProperty('--fdm-headings-font-size', e.target.value*2+'rem');
     dispatch(setSize({
       normalSize: e.target.value+'rem',
+      subHeaderSize: new Intl.NumberFormat("en-GB", { maximumSignificantDigits: 3}).format(e.target.value*1.5)+'rem',
       headerSize: e.target.value*2+'rem'
     }));
   }

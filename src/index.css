@@ -4,6 +4,7 @@
   --fdm-button-gradient: linear-gradient(to right, #C4FE00, #5DE000);   
   --fdm-button-gradient-light: linear-gradient(to right, #d5ff4d, #80e339);
   --fdm-normal-font-size:1rem;
+  --fdm-subHeader-font-size:1.5rem;
   --fdm-headings-font-size:2rem;
   --fdm-background: white;
   --fdm-font-color: black;

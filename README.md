@@ -17,6 +17,8 @@
 
 `docker-compose up --watch`
 
+**make sure the docker engine is running**
+
 **`--watch` enables life update for developing**
 
 **there is no image for the flask/pygame since container can't easily access graphics output**

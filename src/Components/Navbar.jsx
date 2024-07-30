@@ -54,8 +54,7 @@ function Navbar() {
         <button className="navbar-button" onClick={handleGuidanceClick} >{advice}</button>
         <button className="navbar-button" onClick={handleHelpClick}>{help}</button>
         <button className="navbar-button" onClick={handleSettingsClick}>{settings}</button>
-      </div>
-      {console.log(showSettingsPopup)}
+      </div>      
       {showHelpPopup && <HelpModal showHelpPopup={showHelpPopup} setShowHelpPopup={setShowHelpPopup} />}
       {showSettingsPopup && <SettingsModal showSettingsPopup={showSettingsPopup} setShowSettingsPopup={setShowSettingsPopup} />}
     </nav>

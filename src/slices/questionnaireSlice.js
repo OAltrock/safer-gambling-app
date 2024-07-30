@@ -52,8 +52,7 @@ const questionnaireSlice = createSlice({
     name: "questionnaire",
     initialState,
     reducers: {
-        setQuestion: (state, payload) => {
-            console.log(payload);
+        setQuestion: (state, payload) => {            
             state["question" + payload.payload['id']].score = payload.payload['data']
         }
     }

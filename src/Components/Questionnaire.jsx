@@ -15,14 +15,11 @@ const Questionnaire = () => {
   const navigate = useNavigate();  
   let [header, question, preposition, button] = useSelector(state => state.languages[state.languages.current].questionnaire.text)
   
-  const questions = useSelector(state => state.languages[state.languages.current].questionnaire.questions);
-  console.log(questionnaire);
+  const questions = useSelector(state => state.languages[state.languages.current].questionnaire.questions);  
   const totalQuestions = questions.length;  
   //checks if questions has been answered (has a postive value)
   const answeredQuestions = Object.values(questionnaire)
-    .reduce((acc, value, index) => {
-      console.log(acc, value);
-      console.log(value.score);
+    .reduce((acc, value, index) => {     
       if (value.score >= 0) {
         return acc += 1
       }
@@ -57,8 +54,7 @@ const Questionnaire = () => {
    * uses redux reducers (dispatch {@link useDispatch}) to update questionnaire {@link questionnaire}
    * @param {*} e SyntheticBaseEvent containing target, nativeEvent etc.
    */
-  const handleAnswer = (e) => {     
-    console.log(questionnaire);
+  const handleAnswer = (e) => {   
     dispatch(setQuestion({
       id: index + 1,
       data: parseInt(e.target.value)
@@ -102,7 +98,7 @@ const Questionnaire = () => {
           style={{ width: `${progress}%` }}
         ></div>
       </div>
-      <button onClick={handleSubmit} className="submit-button" disabled={answeredQuestions !== questions.length}>{button}</button>
+      <button style={{alignSelf:'center'}} onClick={handleSubmit} className="submit-button" disabled={answeredQuestions !== questions.length}>{button}</button>
     </Container>
   )
 }
