@@ -1,13 +1,8 @@
-.headerLI {
-    font-weight: 700;
+#gameRules {
+    height: 70vh;
 }
 
 #gamePageContainer li {    
-    text-align: justify;    
-    font-size: 0.85rem;
-}
-
-.gamePageParagraph {    
     text-align: justify;    
     font-size: 0.85rem;
 }
@@ -23,7 +18,38 @@
 }
 
 #gamePageContainer {
-    padding: 0 0 25px 0;
+    padding: 0 2vh 25px 2vh;
+}
+
+.carousel-item img {
+    scale: 1.2;
+    align-self: center;
+    height: 25vh;
+    margin-bottom: 5vh;
+}
+
+.carousel-item h4 {    
+    
+}
+
+.carousel-item ol {    
+    
+}
+
+.carousel-item img:hover {
+    scale: 1.2;
+    cursor:auto;
+}
+
+.active.carousel-item {
+    display:flex;    
+    min-height: 60vh;
+    margin-bottom: 4vh;
+    flex-direction: column;
+}
+
+.carousel-inner {
+    height: fit-content;
 }
 
 .button-container {
@@ -36,4 +62,17 @@
     width: 90%;    
     display: flex;
     flex-direction: row;
+}
+
+.carousel {
+    height: fit-content;
+}
+
+.headerLI {
+    font-weight: 700;
+}
+
+.gamePageParagraph {    
+    text-align: justify;    
+    font-size: 0.85rem;
 }

@@ -13,7 +13,7 @@ const Questionnaire = () => {
   let dispatch = useDispatch();
   let questionnaire = useSelector(state => state.questionnaire)  
   const navigate = useNavigate();  
-  let [header, question, preposition, button] = useSelector(state => state.languages[state.languages.current].questionnaire.text)
+  let [header, questionText, preposition, button] = useSelector(state => state.languages[state.languages.current].questionnaire.text)
   
   const questions = useSelector(state => state.languages[state.languages.current].questionnaire.questions);  
   const totalQuestions = questions.length;  
@@ -65,12 +65,13 @@ const Questionnaire = () => {
     <Container fluid>
       <div>
         <h3>{header}</h3>
-        <h4 key={'questionCount' + index}>{question} {index + 1} {preposition} {questions.length} </h4>
+        
       </div>
-      <Carousel activeIndex={index} interval={null} onSelect={handleSelect}>
+      <Carousel style={{minHeight: '60vh'}} activeIndex={index} interval={null} onSelect={handleSelect}>
         {questions.map(question => {
           return (
-            <Carousel.Item key={`citem${questions.indexOf(question)}`}>
+            <Carousel.Item style={{minHeight: "unset"}} key={`citem${questions.indexOf(question)}`}>
+              <h4 key={'questionCount' + index}>{questionText} {index + 1} {preposition} {questions.length} </h4>
               <p key={`pquest${questions.indexOf(question)}`}>{question}</p>
               <Form key={`radio${questions.indexOf(question)}`}>
                 {options.map((option, score) => (
