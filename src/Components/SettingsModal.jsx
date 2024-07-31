@@ -4,11 +4,11 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
 import GermanFlag from '../Assets/Germany-Flag-icon.png';
 import UKFlag from '../Assets/United-Kingdom-Flag-1-icon.png';
+import FranceFlag from '../Assets/France-Flag-icon.png';
 import '../Styles/Modals.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSize } from '../slices/fontSlice';
 import { setLanguage } from '../slices/languageSlice';
-import { useState } from 'react';
 
 const SettingsModal = ({ showSettingsPopup, setShowSettingsPopup }) => {
 
@@ -17,8 +17,9 @@ const SettingsModal = ({ showSettingsPopup, setShowSettingsPopup }) => {
   //const handleShow = () => setShow(true);
   let current = useSelector(state => state.languages.current);  
   let languages = {
-    german: GermanFlag,
-    english: UKFlag
+    Deutsch: GermanFlag,
+    English: UKFlag,
+    Francais: FranceFlag
   }
   let dispatch = useDispatch();
 
@@ -56,7 +57,7 @@ const SettingsModal = ({ showSettingsPopup, setShowSettingsPopup }) => {
             Language:
             <Dropdown className="d-inline mx-2" autoClose="inside">
               <Dropdown.Toggle id="dropdown-autoclose-inside">
-                {current} <img src={languages[current]} />
+                {current} <img src={languages[current]} alt={current} />
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 {Object.keys(languages).map(language => {

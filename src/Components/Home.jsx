@@ -31,7 +31,7 @@ function Home() {
       <h1 style={{ textAlign: "center", color: "#3FE03F", marginTop: "3vh", fontSize: "var(--fdm-headings-font-size)" }} >{header}</h1>
       <div className="container">
         <div className="text-container">
-          <h3 style={{ marginBottom: "10px" }}>
+          <h3>
             <span><strong>{text1Strong} </strong> {text1Header}</span>
           </h3>
           <p>
@@ -44,7 +44,7 @@ function Home() {
         </div>
 
         <div className="text-container">
-          <h3 style={{ marginBottom: "10px" }}>
+          <h3>
             <span><strong>{text2Strong} </strong>{text2Header}</span>
           </h3>
           <p>
@@ -61,7 +61,7 @@ function Home() {
         </div>
 
         <div className="text-container">
-          <h3 style={{ marginBottom: "10px" }}>
+          <h3>
             <span><strong>{text3Strong} </strong>{text3Header}</span>
           </h3>
           <p>

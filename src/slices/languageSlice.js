@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState =
 {
-    english:
+    English:
     {
         navBar:
             [
@@ -72,7 +72,7 @@ const initialState =
             ["Session End:", "Overall Score:", "Oxygen Level Impact:"],
             ["A session ends when the diver's oxygen runs out.",
                 "A score is given based on the treasures collected and penalties incurred."],
-            ["After 5 sessions, an overall score is calculated as the sum(or averga) of scores from each session.",
+            ["After 5 sessions, an overall score is calculated as the sum (or average) of scores from each session.",
                 "Players receive feedback on their overall performance."
             ],
             [`There are penalties for consuming the oxygen too fast i.e.the diver lasts less than an expected amount of time. 
@@ -108,17 +108,22 @@ const initialState =
             ["You're a Non-problem gambler", "You're experiencing a low level of gambling problems with a few or no negative consequences identified.", "You're experiencing a moderate level of gambling problems leading to some negative consequences.", "You're gambling with negative consequences and a possible lack of control."],
             ["'Non-problem gamblers' (PGSI = 0)",
                 "'Low risk' (PGSI = 1-2) experiencing a low level of gambling problems with a few or no negative consequences identified.",
-                "'Moderate Risk' (PGSI = 3-7) experiencing a moderate level of gambling problems leading to some negative consequences",
-                "'Problem gamblers' (PGSI = 8+) gambling with negative consequences and a possible lack of control"],
+                "'Moderate Risk' (PGSI = 3-7) experiencing a moderate level of gambling problems leading to some negative consequences.",
+                "'Problem gamblers' (PGSI = 8+) gambling with negative consequences and a possible lack of control."],
             "Behaviour",
+            //array of options based on questionnaire
             ["You reported engaging in gambling activities multiple times per week."],
+
             "Personal Consequences",
+            //same
             ["You admitted to frequently attempting to win back money after a loss."],
+            
             "Social Consequence",
+            //same
             ["You often feel anxious or stressed when thinking about gambling."]
         ]
     },
-    german:
+    Deutsch:
     {
         navBar: [
             "Hilfe & Beratung",
@@ -223,18 +228,138 @@ const initialState =
                 "Sie haben mäßige Probleme mit dem Glücksspiel, die zu einigen negativen Konsequenzen führen.",
                 "Sie spielen mit negativen Folgen und einem möglichen Mangel an Kontrolle."],
             ["'Unproblematischer Spieler' (PGSI = 0)",
-                "'Niedrieges Risiko' (PGSI = 1-2) experiencing a low level of gambling problems with a few or no negative consequences identified.",
+                "'Niedriges Risiko' (PGSI = 1-2) ein geringes Maß an Glücksspielproblemen mit wenigen oder keinen negativen Folgen.",
                 "'Mäßiges Risiko' (PGSI = 3-7) mit einem mäßigen Ausmaß an Spielproblemen, die zu einigen negativen Folgen führen.",
                 "'Problematische Glücksspieler' (PGSI = 8+), die mit negativen Folgen und einem möglichen Mangel an Kontrolle spielen."],
             "Verhalten:",
+            
             ["Sie gaben an, mehrmals pro Woche an Glücksspielen teilzunehmen."],
+
             "Persönliche Konsequenzen:",
+            
             ["Sie haben zugegeben, dass Sie häufig versucht haben, nach einem Verlust Geld zurückzugewinnen."],
+
             "Soziale Konsequenzen:",
+            
             ["Sie fühlen sich oft ängstlich oder gestresst, wenn Sie ans Glücksspiel denken."]
         ]
     },
-    current: "english"
+    Francais:
+    {
+        navBar:
+            [
+                "Conseils et orientation",
+                "Aider",
+                "Paramètres"
+            ]
+        ,
+        homePage:
+            [
+                "Comment fonctionne l'application Safer Gambling: ",
+                "Étape 1",
+                "Questionnaire perspicace: ",
+                `Commencez votre voyage vers un jeu plus sûr grâce à notre questionnaire perspicace. 
+                Cette étape rapide et facile vous aide à comprendre votre comportement de jeu en vous posant une série de questions soigneusement élaborées.`,
+                `Étape 2`,
+                `Jeu d'évaluation interactif: `,
+                `Plongez dans notre jeu d'évaluation interactif, où l'amusement côtoie la compréhension. Ce jeu dynamique
+                    et engageant est conçu pour évaluer vos tendances au jeu d'une manière ludique mais précise.`,
+                "Étape 3",
+                "Évaluation personnalisée: ",
+                `Après le questionnaire et le jeu interactif, vous recevrez une analyse complète de votre comportement de jeu. Nos commentaires détaillés sont 
+                    sur mesure, en vous fournissant des informations claires et des conseils pratiques pour vous aider à rester maître de la situation.`,
+                "Commençons"
+            ]
+        ,
+        questionnaire: {
+            text: ["Questionnaire", "Question", "de", "Soumettre"],
+            questions:
+                [
+                    "Avez-vous parié plus que vous ne pouviez vous permettre de perdre ?",
+                    "Avez-vous eu besoin de jouer avec des sommes d'argent plus importantes pour ressentir la même excitation?",
+                    "Lorsque vous avez joué, êtes-vous revenu un autre jour pour essayer de regagner l'argent que vous aviez perdu?",
+                    "Avez-vous emprunté de l'argent ou vendu quelque chose pour obtenir de l'argent pour jouer?",
+                    "Avez-vous déjà eu l'impression d'avoir un problème de jeu?",
+                    "Le jeu vous a-t-il causé des problèmes de santé mentale, y compris du stress ou de l'anxiété?",
+                    "Des personnes ont-elles critiqué vos paris ou vous ont-elles dit que vous aviez un problème de jeu, que vous pensiez ou non que c'était vrai?",
+                    "Le jeu a-t-il causé des problèmes financiers à vous ou à votre ménage?",
+                    "Vous êtes-vous déjà senti coupable de votre façon de jouer ou de ce qui se passe lorsque vous jouez?"
+                ],
+            options: ["Jamais", "Parfois", "La plupart du temps", "Presque toujours"]
+        },
+        gamePage: [
+            ["Aperçu du jeu: Plongeon au trésor", "Règles du jeu:", "Fin du match et score:", "Évaluation des joueurs: "],
+            "Objectif: ",
+            `Les joueurs contrôlent un plongeur qui plonge sous la mer pour collecter le plus de trésors possible dans un délai de 
+                    1 à 2 minutes. Le but est d'accumuler le score le plus élevé possible en collectant des trésors, 
+                    tout en gérant les niveaux d'oxygène et en évitant les obstacles et les menaces.`,
+            ["Durée du jeu :", "Contrôles: ", "Mécanisme de l'oxygène: ", "Collection de trésors: ", "Obstacles, menaces et éléments: ", "Système de notation: "],
+            ["Chaque session de jeu dure aussi longtemps que l'oxygène. (environ 1 à 2 minutes en moyenne).",
+                "Les joueurs peuvent jouer jusqu'à 5 sessions.",
+                "Les notes de chaque session sont enregistrées et combinées pour former une note globale après la 5e session."],
+            [
+                ["Touches fléchées / WASD: ", "Déplacez le plongeur vers le haut, le bas, la gauche et la droite."]
+            ],
+            ["Le plongeur commence avec une bouteille d'oxygène pleine.", "L'oxygène s'épuise progressivement au fil du temps et plus rapidement à mesure que le plongeur s'enfonce dans l'eau."],
+            [`Les trésors sont dispersés à différentes profondeurs, les plus précieux se trouvant plus profondément.
+                         La fréquence d'apparition des trésors est inversement corrélée à la profondeur, plus le plongeur s'enfonce dans l'eau, plus les trésors apparaissent.`],
+            [
+                ["Obstacles statiques: ", "Rochers, récifs coralliens, etc., que le plongeur doit contourner."],
+                ["Menaces mobiles: ", "Créatures marines (méduses, requins, etc.) que le plongeur doit éviter pour ne pas être pénalisé."],
+                ["Risques liés à la profondeur: ", "Au fur et à mesure que le plongeur descend en profondeur, il rencontre des créatures marines plus agressives et des dangers environnementaux."]
+            ],
+            ["Des points sont attribués en fonction des trésors collectés.",
+                "Pénalités pour les obstacles ou les menaces (perte de points ou d'oxygène).",
+                "Des primes pour durer plus longtemps que prévu."],
+            ["Fin de la session: ", "Score global: ", "Impact du niveau d'oxygène: "],
+            ["Une session se termine lorsque le plongeur n'a plus d'oxygène.",
+                "Un score est attribué en fonction des trésors collectés et des pénalités encourues."],
+            ["Après 5 sessions, une note globale est calculée comme la somme (ou la moyenne) des notes de chaque session.",
+                "Les joueurs reçoivent un retour d'information sur leurs performances globales."
+            ],
+            [`Il y a des pénalités pour une consommation trop rapide d'oxygène, c'est-à-dire que le plongeur dure moins longtemps que prévu. 
+                     (par exemple, pour - 10 points pour chaque seconde en dessous de 2 minutes).`,
+                "À l'inverse, il existe des primes pour une durée plus longue que prévu."
+            ],
+            ["Indicateurs de propension au risque: ", "Profil de risque global: "],
+            ["Plongées profondes fréquentes avec de faibles niveaux d'oxygène.",
+                "Nombre élevé d'interactions avec des menaces.",
+                "Temps passé dans des zones à haut risque où la durée de survie est inférieure à la moyenne."],
+            [
+                ["Joueur prudent :", "Des scores élevés avec des pénalités minimales."],
+                ["Joueur équilibré :", "Résultats modérés avec quelques pénalités mais utilisation équilibrée de l'oxygène."],
+                ["Preneur de risque :", "Des scores élevés pour les plongées profondes, mais une faible conservation de l'oxygène."],
+                ["Joueur téméraire :", "Faibles scores dus à des pénalités élevées et à une prise de risque fréquente sans gestion adéquate."]
+            ],
+            "Retour",
+            ["Jouer", "Rejouer"],
+            "Jouer le jeu"
+        ]
+        ,
+        evaluationPage: [
+            "Vos résultats d'évaluation personnalisés",
+            `Nous vous remercions d'avoir pris le temps de répondre à notre questionnaire et de participer à la simulation d'un jeu basé sur des pièces de monnaie.
+             L'objectif de cette évaluation est de déterminer votre comportement en matière de jeu et d'identifier les risques potentiels liés à un problème de jeu.             
+             Sur la base de vos réponses et de vos performances au jeu, nous avons rédigé le rapport suivant.`,
+            "Analyse du questionnaire: ",
+            `Le questionnaire comprenait plusieurs questions destinées à évaluer vos habitudes de jeu, vos réactions émotionnelles et vos niveaux d'autocontrôle.
+             Vos réponses indiquent ce qui suit: `,
+            "Vous avez marqué: ",
+            "dans l'ensemble.",
+            ["Vous êtes un joueur sans problème", "Vous avez peu de problèmes de jeu et peu ou pas de conséquences négatives.", "Vous avez des problèmes de jeu de niveau modéré qui entraînent des conséquences négatives.", "Vous jouez avec des conséquences négatives et un possible manque de contrôle."],
+            ["Joueurs sans problème (PGSI = 0)",
+                "'Risque faible' (PGSI = 1-2) : faible niveau de problèmes de jeu avec peu ou pas de conséquences négatives identifiées.",
+                "'Risque modéré' (PGSI = 3-7) : niveau modéré de problèmes de jeu entraînant certaines conséquences négatives.",
+                "Joueurs problématiques (PGSI = 8+) jouant avec des conséquences négatives et un possible manque de contrôle."],
+            "Comportement",
+            ["Vous avez déclaré vous livrer à des activités de jeu plusieurs fois par semaine."],
+            "Conséquences personnelles",
+            ["Vous avez admis avoir fréquemment tenté de récupérer de l'argent après une perte."],
+            "Conséquence sociale",
+            ["Vous vous sentez souvent anxieux ou stressé lorsque vous pensez au jeu."]
+        ]
+    },
+    current: "English"
 }
 
 const languages = createSlice({
