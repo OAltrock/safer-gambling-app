@@ -12,7 +12,7 @@ function Home() {
     text3, button] = useSelector(state => state.languages[state.languages.current].homePage);
   
   //console.log(header);
-  //questionnaireDone = true;
+  questionnaireDone = true;
   const evalDone = false;  
 
   const navigate = useNavigate();
