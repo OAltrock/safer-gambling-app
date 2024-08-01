@@ -67,7 +67,7 @@ const Questionnaire = () => {
         <h3>{header}</h3>
         
       </div>
-      <Carousel style={{minHeight: '60vh'}} activeIndex={index} interval={null} onSelect={handleSelect}>
+      <Carousel style={{minHeight: '60vh'}} activeIndex={index} interval={null} onSelect={handleSelect}l keyboard={true}>
         {questions.map(question => {
           return (
             <Carousel.Item style={{minHeight: "unset"}} key={`citem${questions.indexOf(question)}`}>
