@@ -62,7 +62,7 @@ const HelpModal = ({ showHelpPopup, setShowHelpPopup }) => {
         </Modal.Header>
         <Modal.Body id="helpModal">
           <>            
-            <label htmlFor="search-bar" className="search-label" style={{ scale: "65%", alignSelf: "center" }}>Search For A Topic: </label>
+            <label htmlFor="search-bar" className="search-label" style={{ scale: "85%", alignSelf: "center" }}>Search For A Topic: </label>
             <SearchBar onSearch={handleSearch} />
             <div className="linkContainerContainer">
                 {resultsFound ? (
@@ -76,18 +76,18 @@ const HelpModal = ({ showHelpPopup, setShowHelpPopup }) => {
            <p>No results found.</p>
             )}
           </div>
-            <div className='linkContainerContainer' style={{ scale: "65%", alignSelf: "center" }}>
+            <div className='linkContainerContainer' style={{ scale: "85%", alignSelf: "center" }}>
               <div className='linkContainer'>
-                <img src={Settings} alt='Technical Support' style={{ scale: "65%", alignSelf: "center" }}/>
-                <label htmlFor="technical-support" className="technical-label" style={{ scale: "65%", alignSelf: "center" }}>Technical Support</label>
+                <img src={Settings} alt='Technical Support' style={{ scale: "85%", alignSelf: "center" }}/>
+                <label htmlFor="technical-support" className="technical-label" style={{ scale: "85%", alignSelf: "center" }}>Technical Support</label>
               </div>
               <div className='linkContainer'>
-                <img src={Icon} alt='Navigation & Controls' style={{ scale: "65%", alignSelf: "center" }} />
-                <label htmlFor="navigation-controls" className="nagivation-label" style={{ scale: "65%", alignSelf: "center" }}>Navigation & Controls</label>
+                <img src={Icon} alt='Navigation & Controls' style={{ scale: "85%", alignSelf: "center" }} />
+                <label htmlFor="navigation-controls" className="nagivation-label" style={{ scale: "85%", alignSelf: "center" }}>Navigation & Controls</label>
               </div>
               <div className='linkContainer'>
-                <img src={Troubleshooting} alt='Troubleshooting' style={{ scale: "65%", alignSelf: "center" }}/>
-                <label htmlFor="troubleshooting" className="troubleshooting-label" style={{ scale: "75%", alignSelf: "center" }}>Game Troubleshooting </label>
+                <img src={Troubleshooting} alt='Troubleshooting' style={{ scale: "85%", alignSelf: "center" }}/>
+                <label htmlFor="troubleshooting" className="troubleshooting-label" style={{ scale: "90%", alignSelf: "center" }}>Game Troubleshooting </label>
               </div>
             </div>
           </>
