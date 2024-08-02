@@ -47,7 +47,7 @@ const initialState =
         },
         gamePage: [
             ["Game Overview: Treasure Dive", "Game Rules:", "End of Game and Scoring:", "Player Assessment:"],
-            "Objective:",
+            "",
             `Players control a diver who dives under the sea to collect as much treasure as possible within a time frame of 
                     1 to 2 minutes. The goal is to accumulate the highest score possible by collecting treasures, 
                     while managing oxygen levels and avoiding obstacles and threats.`,
@@ -59,15 +59,15 @@ const initialState =
                 ["Arrow Keys / WASD:", "Move the diver up, down, left, and right."]
             ],
             ["The diver starts with a full tank of oxygen.", "Oxygen depletes gradually over time and faster as the diver goes deeper."],
-            [`Treasures are scattered at different depths, with more valuable treasures found deeper.The frequency of appearance
+            [`Treasures are scattered at different depths, with more valuable treasures found deeper. The frequency of appearance
                          is inversely correlated to depth, with more treasures appearing the deeper the diver goes.`],
             [
                 ["Static Obstacles:", "Rocks, coral reefs, etc., which the diver must navigate around."],
-                ["Moving Threats:", "Sea creatures(e.g., jellyfish, sharks) that the diver must dodge to not get penalties."],
+                ["Moving Threats:", "Sea creatures (e.g., jellyfish, sharks) that the diver must dodge to not get penalties."],
                 ["Depth Hazards:", "As the diver goes deeper, they encounter more aggressive sea creatures and environmental hazards."]
             ],
             ["Points are awarded based on the treasures collected.",
-                "Penalties for hitting obstacles or getting caught by threats(lose points or oxygen).",
+                "Penalties for hitting obstacles or getting caught by threats (lose points or oxygen).",
                 "Bonuses for lasting longer than expected."],
             ["Session End:", "Overall Score:", "Oxygen Level Impact:"],
             ["A session ends when the diver's oxygen runs out.",
@@ -75,14 +75,14 @@ const initialState =
             ["After 5 sessions, an overall score is calculated as the sum (or average) of scores from each session.",
                 "Players receive feedback on their overall performance."
             ],
-            [`There are penalties for consuming the oxygen too fast i.e.the diver lasts less than an expected amount of time. 
-                     (eg.For - 10 points for every second below 2 minutes)`,
+            [`There are penalties for consuming the oxygen too fast i.e.the diver lasts less than an expected amount of time 
+                     (eg. For - 10 points for every second below 2 minutes).`,
                 "Conversely, there are bonuses for lasting longer than expected."
             ],
             ["Risk Proneness Indicators:", "Overall Risk Profile:"],
             ["Frequent deep dives with low oxygen levels.",
                 "High number of interactions with threats.",
-                "Time spent in high- risk zones where time survived is less than average."],
+                "Time spent in high-risk zones where time survived is less than average."],
             [
                 ["Cautious Player:", "High scores with minimal penalties."],
                 ["Balanced Player:", "Moderate scores with some penalties but balanced oxygen use."],
@@ -167,7 +167,7 @@ const initialState =
         },
         gamePage: [
             ["Spielübersicht: Schatztauchen", "Spielregeln:", "Spielende und Wertung:", "Spielerbewertung:"],
-            "Ziel:",
+            "",
             `Die Spieler steuern einen Taucher, der unter das Meer taucht, um so viele Schätze wie möglich innerhalb eines Zeitrahmens von 
                     1 bis 2 Minuten. Das Ziel ist es, durch das Sammeln von Schätzen die höchstmögliche Punktzahl zu erreichen, 
                     und dabei den Sauerstoffgehalt zu kontrollieren und Hindernissen und Gefahren auszuweichen.`,
@@ -289,7 +289,7 @@ const initialState =
         },
         gamePage: [
             ["Aperçu du jeu: Plongeon au trésor", "Règles du jeu:", "Fin du match et score:", "Évaluation des joueurs: "],
-            "Objectif: ",
+            "",
             `Les joueurs contrôlent un plongeur qui plonge sous la mer pour collecter le plus de trésors possible dans un délai de 
                     1 à 2 minutes. Le but est d'accumuler le score le plus élevé possible en collectant des trésors, 
                     tout en gérant les niveaux d'oxygène et en évitant les obstacles et les menaces.`,

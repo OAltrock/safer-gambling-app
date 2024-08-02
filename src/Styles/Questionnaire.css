@@ -29,6 +29,7 @@
 .carousel.slide {
   display: flex;  
   background-color: var(--fdm-background);
+  justify-content: space-evenly;
 }
 
 .carousel-indicators [data-bs-target] {

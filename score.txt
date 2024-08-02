@@ -1,1 +1,1 @@
-16
+{'score': 0, 'amountPlayed': 2}

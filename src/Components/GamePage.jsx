@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setGameScore, increaseAmountPlayed, resetAmount, setDone } from "../slices/gameSlice.js";
 import { useQuery } from "react-query";
 import { Carousel } from "react-bootstrap";
-import Image1 from '../Assets/pyGameStart.png';
 import Image2 from '../Assets/pyGameObstacle2.png';
 import Image3 from '../Assets/pyGameResult.jpeg';
 import RiskyDiving from '../Assets/shark-dive-xtreme2.jpg';
@@ -44,7 +43,7 @@ const GamePage = () => {
 
 
   const mapListItems = (listItem) => {
-    return Array.isArray(listItem) ? (<li key={listItem[0]}><strong>{listItem[0]} </strong>{listItem}</li>)
+    return Array.isArray(listItem) ? (<li key={listItem[0]}><strong>{listItem[0]} </strong>{listItem[1]}</li>)
       : (<li key={listItem}>{listItem}</li>);
   }
 
@@ -52,12 +51,11 @@ const GamePage = () => {
     <div id="gamePageContainer" >
       <div>
         <h4>{mainHeadings[0]}</h4>
-        <p className="gamePageParagraph"><strong>{paragraph1Strong}</strong>{paragraph1}</p>
+        <p style={{textAlign: 'center'}} className="gamePageParagraph"><strong>{paragraph1Strong}</strong>{paragraph1}</p>
       </div>
       <Carousel fade interval={null}>
-        <Carousel.Item>
-          
-          <img src={Image2} style={{scale: 1}}/>
+        <Carousel.Item>          
+          <img src={Image2} style={{scale: 1}} alt="obstacle2"/>
           <p><strong>{mainHeadings[1]}</strong></p>
           <ol>
             <li key={orderedList1[0]} className="headerLI">
@@ -131,7 +129,7 @@ const GamePage = () => {
 
         </Carousel.Item>
         <Carousel.Item>
-          <img src={RiskyDiving} />
+          <img src={RiskyDiving} alt="riskyDiving"/>
           <p>{mainHeadings[3]}</p>
           <ol>
             <li key={orderedList3[0]} className="headerLI">

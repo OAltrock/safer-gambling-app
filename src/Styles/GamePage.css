@@ -50,6 +50,11 @@
 
 .carousel-inner {
     height: fit-content;
+    max-width: 85vw;
+}
+
+#gamePageContainer > div.carousel.slide.carousel-fade {
+    justify-content: center;
 }
 
 .button-container {
