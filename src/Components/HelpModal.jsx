@@ -2,18 +2,16 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useState } from 'react';
 import Settings from '../Assets/Settings.png';
-import Icon from  '../Assets/Icon.png';
-import Troubleshooting from  '../Assets/troubleshooting.png';
-import '../Styles/HelpPage.css';
+import Icon from '../Assets/Icon.png';
+import Troubleshooting from '../Assets/troubleshooting.png';
 
 const SearchBar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearchChange = (event) => {
-    const searchTerm = event.target.value;
-    setSearchTerm(searchTerm);
+    setSearchTerm(event.target.value);
     if (onSearch) {
-      onSearch(searchTerm);
+      onSearch(event.target.value);
     }
   };
 
@@ -27,75 +25,62 @@ const SearchBar = ({ onSearch }) => {
   );
 };
 
-const topics = [
-  { id: 1, name: 'Technical Support' },
-  { id: 2, name: 'Navigation & Controls' },
-  { id: 3, name: 'Game Troubleshooting' },
-  // Add more topics as needed
-];
 const HelpModal = ({ showHelpPopup, setShowHelpPopup }) => {
+  const [filteredTopics, setFilteredTopics] = useState([
+    { img: Settings, label: 'Technical Support', link: '/technical-support' },
+    { img: Icon, label: 'Navigation & Controls', link: '/navigation-controls' },
+    { img: Troubleshooting, label: 'Troubleshooting', link: '/troubleshooting' },
+  ]);
+
   const handleClose = () => setShowHelpPopup(false);
-  const [filteredTopics, setFilteredTopics] = useState([]);
-  const [resultsFound, setResultsFound] = useState(true); // Initialize to true
+
   const handleSearch = (searchTerm) => {
-    if (searchTerm.trim() === '') {
-      // If search term is empty, show no topics
-      setFilteredTopics([]);
-    } else {
-      const filteredTopics = topics.filter((topic) =>
-        topic.name.toLowerCase().startsWith(searchTerm.toLowerCase())
-      );
-      setFilteredTopics(filteredTopics);
-      setResultsFound(filteredTopics.length > 0); // Set to true if any topics match
-    }
+    const topics = [
+      { img: Settings, label: 'Technical Support', link: '/technical-support' },
+      { img: Icon, label: 'Navigation & Controls', link: '/navigation-controls' },
+      { img: Troubleshooting, label: 'Troubleshooting', link: '/troubleshooting' },
+    ];
+
+    const filtered = topics.filter(topic =>
+      topic.label.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    setFilteredTopics(filtered);
   };
-  
+
   return (
     <>
       <Modal
         show={showHelpPopup}
         onHide={handleClose}
         animation={false}
+        size="lg" // Options are 'sm', 'lg', and 'xl'
       >
         <Modal.Header closeButton>
           <Modal.Title>Help</Modal.Title>
         </Modal.Header>
         <Modal.Body id="helpModal">
-          <>            
-            <label htmlFor="search-bar" className="search-label" style={{ scale: "85%", alignSelf: "center" }}>Search For A Topic: </label>
+          <>
+            <label htmlFor="search-bar" className="search-label" style={{ scale: "75%", alignSelf: "center" }} >Search For A Topic: </label>
             <SearchBar onSearch={handleSearch} />
-            <div className="linkContainerContainer">
-                {resultsFound ? (
-                filteredTopics.map((topic) => (
-             <div className="linkContainer" key={topic.id}>
-             {/* Display topic name */}
-            <span>{topic.name}</span>
-            </div>
-            ))
-            ) : (
-           <p>No results found.</p>
-            )}
-          </div>
-            <div className='linkContainerContainer' style={{ scale: "85%", alignSelf: "center" }}>
-              <div className='linkContainer'>
-                <img src={Settings} alt='Technical Support' style={{ scale: "85%", alignSelf: "center" }}/>
-                <label htmlFor="technical-support" className="technical-label" style={{ scale: "85%", alignSelf: "center" }}>Technical Support</label>
-              </div>
-              <div className='linkContainer'>
-                <img src={Icon} alt='Navigation & Controls' style={{ scale: "85%", alignSelf: "center" }} />
-                <label htmlFor="navigation-controls" className="nagivation-label" style={{ scale: "85%", alignSelf: "center" }}>Navigation & Controls</label>
-              </div>
-              <div className='linkContainer'>
-                <img src={Troubleshooting} alt='Troubleshooting' style={{ scale: "85%", alignSelf: "center" }}/>
-                <label htmlFor="troubleshooting" className="troubleshooting-label" style={{ scale: "90%", alignSelf: "center" }}>Game Troubleshooting </label>
-              </div>
+            <div className='linkContainerContainer'>
+              {filteredTopics.length > 0 ? (
+                filteredTopics.map((topic, index) => (
+                  <div className='linkContainer' key={index}>
+                    <img src={topic.img} alt={topic.label} style={{ scale: "80%", alignSelf: "center" }} />
+                    <a href={topic.link} className="topic-link" style={{ scale: "100%", alignSelf: "center" }}>{topic.label}</a>
+                  </div>
+                ))
+              ) : (
+                <p>No results found</p>
+              )}
             </div>
           </>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
-          </Button>          
+          </Button>
         </Modal.Footer>
       </Modal>
     </>
