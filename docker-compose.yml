@@ -8,4 +8,19 @@ services:
         watch:
           - action: sync
             path: ./src      
-            target: /app/src                  
+            target: /app/src              
+  safer_gambling_db:
+    image: mysql:latest
+    ports: 
+      - 3306:3306
+    expose:
+      - 3306
+    restart: always    
+    volumes:
+      - "./.mysql-data/db:/var/lib/mysql"
+    command: --init-file /var/lib/mysql/init.sql
+    environment:      
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: gamblers
+      MYSQL_USER: someOne
+      MYSQL_PASSWORD: password
