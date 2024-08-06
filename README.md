@@ -30,6 +30,8 @@
 `pip install flask`
 
 `pip install flask-cors`
+
+`pip install Flask-SQLAlchemy mysqlclient`
  
  
 ## Running the Application
