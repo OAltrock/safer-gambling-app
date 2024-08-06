@@ -32,10 +32,23 @@
 `pip install flask-cors`
 
 `pip install Flask-SQLAlchemy mysqlclient`
+
+`pip install Flask-JWT-Extended`
  
  
 ## Running the Application
 **To start the application so that the game and react work together you need to open 2 terminals (split terminal) and do the commands in this order:**
+
+**To start the database, install MySQL: https://dev.mysql.com/downloads/installer/**
+**Start the MySQL server with:**
+
+`mysqld`
+
+**Running the docker command is also starting the database. If you start the database for the first time, you should run:**
+
+`mysql -h localhost -u root -p gamblers -e "source ./.mysql-data/db/init.sql"`
+
+**to set up the root password, create the tables and populate them with 100 examples (the password in the dev environment is: 'admin').**
 
 **Terminal 1: Python - This executes Flask making the game have an API call:**
 
