@@ -18,7 +18,7 @@ services:
     restart: always    
     volumes:
       - "./.mysql-data/db:/var/lib/mysql"
-    command: --init-file /var/lib/mysql/init.sql
+    # command: --init-file /var/lib/mysql/init.sql
     environment:      
       MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: gamblers

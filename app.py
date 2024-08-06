@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 import time
 import subprocess
 
@@ -9,18 +10,23 @@ CORS(app, origins='*')
 
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:admin@localhost/gamblers'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:admin@localhost/test'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'  # Change this in production
 
 db = SQLAlchemy(app)
+jwt = JWTManager(app)
 
 class User (db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    __tablename__ = 'users'  # This explicitly sets the table name to 'users'
+    
+    user_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     surname = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
     age = db.Column(db.Integer, nullable=False)
+    games = db.relationship('Game', backref='player', lazy=True)
     
     def __init__(self, name, surname, email, password, age):        
         self.name = name
@@ -31,14 +37,38 @@ class User (db.Model):
     
     def __str__(self):
         return f"User(ID: {self.id}, Name: {self.name}, Surname: {self.surname}, Age: {self.age})"
-
+class Game (db.Model):
+    __tablename__ = 'games'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    duration = db.Column(db.Double, nullable=False)
+    score = db.Column(db.Integer)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    
+    def __init__(self, duration, score, user_id):        
+        self.duration = duration
+        self.score = score
+        self.user_id = user_id
+        
 with app.app_context():
     db.create_all()
+    
+@app.route('/login', methods=['POST'])
+def login():
+    global logged_in_user
+    data = request.get_json()
+    user = User.query.filter_by(email=data['usermail']).first()
+    if user and user.password == data['password']:  # Use hashed passwords in production
+        access_token = create_access_token(identity=user.user_id)
+        logged_in_user = user
+        return jsonify(access_token=access_token), 200
+    return jsonify({"msg": "Bad username or password"}), 401
     
 @app.route('/users', methods=['GET'])
 async def get_users():
     users = User.query.all()    
-    return jsonify([{'id': user.id, 'name': user.name, 'surname': user.surname, 'email': user.email} for user in users])
+    print(users)
+    return jsonify([{'id': user.user_id, 'name': user.name, 'surname': user.surname, 'email': user.email} for user in users])
 
 @app.route('/add_user', methods=['POST'])
 def add_user():
@@ -58,15 +88,26 @@ def delete_user(user_id):
     return jsonify({'error': 'User not found'}), 404
 
 @app.route('/start_game', methods=['GET'])
+@jwt_required()
 async def start_game():    
     try:        
+        current_user = get_jwt_identity()
+        print(get_jwt_identity())
         start_time = time.perf_counter()
         # Execute the game file (game_take_8.py)
         result = subprocess.run(['python', 'game take 14.py'], check=True, capture_output=True, text=True)
         end_time = time.perf_counter()
         amountPlayed = len(result.stdout.splitlines()[2:])
-        timePlayed = end_time - start_time
-        return jsonify({"scores": result.stdout.splitlines()[2:],
+        timePlayed = end_time - start_time     
+        games = []
+        for score in result.stdout.splitlines()[2:]:
+            new_game = Game(timePlayed, score, current_user)
+            games.append(new_game)
+        for game in games:
+            db.session.add(game)
+        db.session.commit()
+        return jsonify({"user with id: ": current_user,
+                        "scores": result.stdout.splitlines()[2:],
                         "amountPlayed": amountPlayed,
                         "timePlayed": f"{timePlayed:.1f}"}), 200
     except Exception as e:
