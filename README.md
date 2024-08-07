@@ -8,11 +8,10 @@
 
 `npm install`
 
-**if you have Docker installed, in the folder you cloned the app, you can build the image  with**
+**if you have Docker installed, in the folder you cloned the app, you can build the image  with:**
 
-`docker build -t react .`
+`docker-compose build --no-cache`
 
-**where 'react' is the name of the image**
 **and then run the image with:**
 
 `docker-compose up --watch`
@@ -47,7 +46,7 @@
 
 **Running the docker command is also starting the database. If you start the database for the first time, you should run:**
 
-`mysql -h localhost -u root -p gamblers -e "source ./.mysql-data/db/init.sql"`
+`mysql -h localhost -u root -p -e "source ./init.sql"`
 
 **to set up the root password, create the tables and populate them with 100 examples (the password in the dev environment is: 'admin').**
 
@@ -61,4 +60,4 @@
 
 **The 'start_game'-enpoint is protected in this version. For now, you need to login via Postman on the '/login'-endpoint using {"usermail": "jane.smith@example.com", "password": "password456"} as Body. With the JWT-token you get as return, you can access the '/start_game'-endpoint. For this add an 'Authorization'-key with value: 'Bearer {JWT-token}' to the Postman Headers.**
 
-**This will be added to the React-app shortly.**
+**Backend accessibility will be added to the frontend shortly.**
