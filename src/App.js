@@ -40,13 +40,12 @@ function App() {
               <Route path="/" element={<LandingPage />} />
               <Route path='/Login' element={<Login />} />
               <Route path='/Register' element={<Register />} />
-              <Route path="/Questionnaire" element={<Questionnaire />} />
-              <Route path='/Home' element={<Home />} 
-               /* path="/Home" element={<ProtectedRoute component={Home} />} */ />              
+              <Route path="/Questionnaire" element={<ProtectedRoute component={Questionnaire} />} />
+              <Route path="/Home" element={<ProtectedRoute component={Home} />} />              
               <Route path="/Guidance" element={<HelpPage />} />
-              <Route path="/GamePage" element={<GamePage />} />
+              <Route path="/GamePage" element={<ProtectedRoute component={GamePage} />} />
               <Route path="/QuizScore" element={<QuizScore />} />
-              <Route path="/Evaluation" element={<EvaluationPage />} />
+              <Route path="/Evaluation" element={<ProtectedRoute component={EvaluationPage} />} />
               <Route path="*" element={<NotFoundPage />} />            
           </Routes>
           <Footer />

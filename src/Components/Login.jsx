@@ -1,6 +1,4 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { useQuery } from "react-query";
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useLogin } from '../hooks/useLogin';
@@ -11,18 +9,28 @@ const Login = () => {
     const navigate = useNavigate();
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
-    console.log(localStorage.getItem('token'));
+    const [showPassword, setShowPassword] = useState(false);
     const handleLogin = (e) => {
         e.preventDefault();
-        mutate({email, password});        
-    }
-    useEffect(() => {
-        if (localStorage.getItem('token')) navigate ('/Home');
-    }, [localStorage.getItem('token')!='']);
+        mutate({ email, password },
+            {
+                onSuccess: () => {
+                    navigate('/Home')
+                }
+
+            });
+    };
 
     return (
         <Form onSubmit={handleLogin}>
-            <span style={{ color: "var(--fdm-font-color)" }} >{(isLoading) ? `Logging in` : (isError) ? `${error}` : 'login'}</span>
+            <span style={{ color: "var(--fdm-font-color)" }}>
+                {(isLoading) ?
+                    `Logging in` :
+                    (isError) ?
+                        error.message.includes('401') ?
+                            'Wrong email or password, try again!' :
+                            `${error}` :
+                        'login'}</span>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
@@ -38,12 +46,16 @@ const Login = () => {
             <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     placeholder="Password"
                     onChange={(e) => setPassword(e.target.value)} />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                <Form.Check type="checkbox" label="Check me out" />
+                <Form.Check style={{ display: 'flex' }}
+                    type="checkbox"
+                    label={<span style={{ fontSize: '.7rem' }}>Show Password</span>}
+                    onChange={() => setShowPassword(!showPassword)} // Toggle password visibility
+                />
             </Form.Group>
             <Button variant="primary" type="submit">
                 Submit

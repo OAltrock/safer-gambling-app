@@ -63,7 +63,10 @@ def login():
         access_token = create_access_token(identity=user.user_id)
         logged_in_user = user
         print('login: ',user)
-        return jsonify(access_token=access_token), 200    
+        return jsonify({
+            'access_token': access_token,
+            'user_name': user.name+', '+user.surname
+        }), 200    
     return jsonify({"msg": "Bad username or password"}), 401
     
 @app.route('/users', methods=['GET'])
