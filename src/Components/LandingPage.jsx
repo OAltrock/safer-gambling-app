@@ -2,15 +2,10 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Footer from "./Footer";
 import '../Styles/LandingPage.css';
+import { useNavigate } from 'react-router-dom';
 
 const LandingPage = () => {
-    const handleSignUp = () => {
-
-    }
-
-    const handleLogin = () => {
-
-    }
+    const navigate = useNavigate();
 
     return (
         <div>
@@ -18,8 +13,8 @@ const LandingPage = () => {
                 <h1>Play smart,</h1>
                 <h1>Stay safe</h1>
                 <div>
-                    <button style={{ marginRight: "30px" }} onClick={handleSignUp}>Sign Up</button>
-                    <button onClick={handleLogin}>Login</button>
+                    <button style={{ marginRight: "30px" }} onClick={()=> navigate('/Register')}>Sign Up</button>
+                    <button onClick={() => navigate('/Login')}>Login</button>
                 </div>
             </div>
             <h3 style={{ textAlign: "center", color: "#3FE03F" }} >Safer gambling app is for:</h3>

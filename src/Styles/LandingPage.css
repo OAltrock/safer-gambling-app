@@ -46,7 +46,7 @@
     height: 50%;
     width: 14%;
     text-align: center;
-    border: 1px solid #000;
+    border: 1px solid darkgreen;
     background-color: var(--fdm-background);
     border-radius: 5px;
     margin:0 2em 0 2em;

@@ -26,7 +26,11 @@ const GamePage = () => {
     playing] = useSelector(state => state.languages[state.languages.current].gamePage);
 
   async function playAgain() {
-    let promise = await axios.get('http://localhost:5000/start_game');
+    let promise = await axios.get('http://localhost:5000/start_game', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    });
     let data = promise.data;
     if (data) {
       dispatch(setDone(true))

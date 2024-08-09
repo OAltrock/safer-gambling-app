@@ -3,22 +3,26 @@ import './App.css';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import NotFoundPage from "./Components/PageNotFound";
-import Home from "./Components/Home"
-/* import Header from "./Components/Header"; */
+import LandingPage from './Components/LandingPage';
+import Login from './Components/Login';
+import Register from './Components/Register';
+import Home from "./Components/Home";
 import Questionnaire from './Components/Questionnaire';
-import QuizScore from './Components/QuizScore';
 import GamePage from './Components/GamePage';
+import EvaluationPage from './Components/EvaluationPage';
+import Footer from './Components/Footer'
+/* import Header from "./Components/Header"; */
+import QuizScore from './Components/QuizScore';
 import HelpPage from './Components/HelpPage';
 import Navbar from './Components/Navbar';
+
 
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far, faMoon, faSun } from '@fortawesome/free-regular-svg-icons';
 import { QueryClientProvider, QueryClient } from "react-query";
-import EvaluationPage from './Components/EvaluationPage';
-import Footer from './Components/Footer'
-import LandingPage from './Components/LandingPage';
+
 import ProtectedRoute from './Components/ProtectedRoute';
 
 
@@ -34,6 +38,8 @@ function App() {
           <Navbar />
           <Routes>            
               <Route path="/" element={<LandingPage />} />
+              <Route path='/Login' element={<Login />} />
+              <Route path='/Register' element={<Register />} />
               <Route path="/Questionnaire" element={<Questionnaire />} />
               <Route path='/Home' element={<Home />} 
                /* path="/Home" element={<ProtectedRoute component={Home} />} */ />              

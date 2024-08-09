@@ -36,7 +36,7 @@ class User (db.Model):
         self.age = age
     
     def __str__(self):
-        return f"User(ID: {self.id}, Name: {self.name}, Surname: {self.surname}, Age: {self.age})"
+        return f"User(ID: {self.user_id}, Name: {self.name}, Surname: {self.surname}, Age: {self.age})"
 class Game (db.Model):
     __tablename__ = 'games'
     
@@ -57,11 +57,13 @@ with app.app_context():
 def login():
     global logged_in_user
     data = request.get_json()
+    print('request: ', data)
     user = User.query.filter_by(email=data['usermail']).first()
     if user and user.password == data['password']:  # Use hashed passwords in production
         access_token = create_access_token(identity=user.user_id)
         logged_in_user = user
-        return jsonify(access_token=access_token), 200
+        print('login: ',user)
+        return jsonify(access_token=access_token), 200    
     return jsonify({"msg": "Bad username or password"}), 401
     
 @app.route('/users', methods=['GET'])

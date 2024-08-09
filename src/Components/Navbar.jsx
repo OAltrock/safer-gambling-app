@@ -54,6 +54,10 @@ function Navbar() {
         <button className="navbar-button" onClick={handleGuidanceClick} >{advice}</button>
         <button className="navbar-button" onClick={handleHelpClick}>{help}</button>
         <button className="navbar-button" onClick={handleSettingsClick}>{settings}</button>
+        {localStorage.getItem('token')!=='' && <button className="navbar-button" onClick={()=>{
+          localStorage.setItem('token', '');
+          navigate('/');          
+        }}>Log Out</button>}
       </div>      
       {showHelpPopup && <HelpModal showHelpPopup={showHelpPopup} setShowHelpPopup={setShowHelpPopup} />}
       {showSettingsPopup && <SettingsModal showSettingsPopup={showSettingsPopup} setShowSettingsPopup={setShowSettingsPopup} />}
