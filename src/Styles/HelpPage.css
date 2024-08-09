@@ -17,19 +17,3 @@
     flex-direction: row;
     justify-content: space-evenly;
 }
-
-/* CSS */
-/* .search-container {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .search-label,
-  .search-input {
-    display: block; 
-  }
-  
-  .search-label {
-    margin-bottom: 8px; 
-  } */
- 
