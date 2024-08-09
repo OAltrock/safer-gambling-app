@@ -157,7 +157,7 @@ const GamePage = () => {
 
       </div>
       <div className="button-container">
-        <button onClick={() => navigate('/')}>{back}</button>
+        <button onClick={() => navigate('/Home')}>{back}</button>
         <span style={{ color: "var(--fdm-font-color)" }} >{(isFetching) ? `${playing}` : (isError) ? `${error}` : (data) ? data.data.score : null}</span>
         <button disabled={isFetching || gameDone.amountPlayed > 5} onClick={() => refetch()}>{(gameDone.amountPlayed === 0) ? again[0] : again[1]}</button>
       </div>

@@ -58,6 +58,6 @@
 
 `npm start`
 
-**The 'start_game'-enpoint is protected in this version. For now, you need to login via Postman on the '/login'-endpoint using {"usermail": "jane.smith@example.com", "password": "password456"} as Body. With the JWT-token you get as return, you can access the '/start_game'-endpoint. For this add an 'Authorization'-key with value: 'Bearer {JWT-token}' to the Postman Headers.**
+**The 'start_game'-enpoint is protected in this version. For now, you need to login via Postman on the '/login'-endpoint (POST) using {"usermail": "jane.smith@example.com", "password": "password456"} as Body. With the JWT-token you get as return, you can access the '/start_game'-endpoint (GET). For this add an 'Authorization'-key with value: 'Bearer {JWT-token}' to the Postman Headers.**
 
 **Backend accessibility will be added to the frontend shortly.**

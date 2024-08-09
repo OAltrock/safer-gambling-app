@@ -43,7 +43,7 @@ const Questionnaire = () => {
   const handleSubmit = () => {    
     dispatch(toggle())
     console.log(questionnaire)    
-    navigate("/");
+    navigate("/Home");
   };
 
   const handleSelect = (selectedIndex, e) => {    

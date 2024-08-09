@@ -15,31 +15,35 @@ import Navbar from './Components/Navbar';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far, faMoon, faSun } from '@fortawesome/free-regular-svg-icons';
-import {QueryClientProvider, QueryClient} from "react-query";
+import { QueryClientProvider, QueryClient } from "react-query";
 import EvaluationPage from './Components/EvaluationPage';
 import Footer from './Components/Footer'
+import LandingPage from './Components/LandingPage';
+import ProtectedRoute from './Components/ProtectedRoute';
 
 
 library.add(fas, far, faMoon, faSun)
 const queryClient = new QueryClient();
 
 
-function App() {
+function App() { 
   return (
     <div className="App">
-      <Router>  
+      <Router>
         <QueryClientProvider client={queryClient}>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/Questionnaire" element={<Questionnaire />} />
-          <Route path="/Guidance" element={<HelpPage />} />
-          <Route path="/GamePage" element={<GamePage />} />
-          <Route path="/QuizScore" element={<QuizScore />} />        
-          <Route path="/Evaluation" element={<EvaluationPage />} />  
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-        <Footer />
+          <Navbar />
+          <Routes>            
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/Questionnaire" element={<Questionnaire />} />
+              <Route path='/Home' element={<Home />} 
+               /* path="/Home" element={<ProtectedRoute component={Home} />} */ />              
+              <Route path="/Guidance" element={<HelpPage />} />
+              <Route path="/GamePage" element={<GamePage />} />
+              <Route path="/QuizScore" element={<QuizScore />} />
+              <Route path="/Evaluation" element={<EvaluationPage />} />
+              <Route path="*" element={<NotFoundPage />} />            
+          </Routes>
+          <Footer />
         </QueryClientProvider>
       </Router>
     </div>

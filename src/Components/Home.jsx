@@ -4,7 +4,7 @@ import "../Styles/Home.css";
 import { useSelector } from "react-redux";
 import checkMark from '../Assets/checkMark.png';
 
-function Home() {
+function Home({component: Component, ...rest}) {
 
   let questionnaireDone = useSelector(state => state.questionnaireDone.done);
   let gameDone = useSelector(state => state.gameScores.done);
