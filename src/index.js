@@ -13,16 +13,21 @@ import languagesReducer from './slices/languageSlice.js';
 import setFontSizeReducer from './slices/fontSlice.js';
 
 
+
 const store = configureStore({
   reducer: {
     questionnaireDone: questionnaireDoneReducer,
     gameScores: gameScoresReducer,
-    questionnaire: questionnaireReducer,    
-    toggleDarkMode: darkModeReducer,
+    questionnaire: questionnaireReducer,
+    darkMode: darkModeReducer,
     languages: languagesReducer,
     setFontSize: setFontSizeReducer
   }
 })
+
+
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

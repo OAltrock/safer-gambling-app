@@ -30,17 +30,14 @@ const Login = () => {
                         error.message.includes('401') ?
                             'Wrong email or password, try again!' :
                             `${error}` :
-                        'login'}</span>
+                        ''}</span>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
+                <Form.Label>User name</Form.Label>
                 <Form.Control
-                    type="email"
-                    placeholder="Enter email"
+                    type="text"
+                    placeholder="Enter a username"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)} />
-                <Form.Text className="text-muted">
-                    We'll never share your email with anyone else.
-                </Form.Text>
+                    onChange={(e) => setEmail(e.target.value)} />                
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">

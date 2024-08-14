@@ -24,16 +24,42 @@
  
 <ins><strong>For Flask/Pygame make sure you have the python dependencies installed:</strong></ins>
 
+<ins><strong>It is strongly suggested to use Poetry (which is similar to npm) to install all python dependencies:</strong></ins>
+
+for windows: 
+`Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
+
+`Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression`
+
+then: 
+`scoop install pipx`
+
+`pipx ensurepath`
+
+then:
+`pipx install poetry`
+
+and finally: 
+
+`poetry install`
+
+If any new dependencies will be added, (only) the last command has to be executed again
+
+If you don't want to install these tools, you have to install all dependencies manually:
+
 `pip install pygame`
 
 `pip install flask`
+
+`pip install async`
 
 `pip install flask-cors`
 
 `pip install Flask-SQLAlchemy mysqlclient`
 
 `pip install Flask-JWT-Extended`
- 
+
+`pip install bcrypt`
  
 ## Running the Application
 **To start the application so that the game and react work together you need to open 2 terminals (split terminal) and do the commands in this order:**

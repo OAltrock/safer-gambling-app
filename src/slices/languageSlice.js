@@ -8,9 +8,29 @@ const initialState =
             [
                 "Advice & Guidance",
                 "Help",
-                "Settings"
+                "Settings",
+                "Log Out"
             ]
         ,
+        landingPage:
+            [
+                "Hello",
+                [
+                    "Play smart",
+                    "Stay safe"
+                ],
+                [
+                    "Sign Up",
+                    "Login",
+                    "Let's get started"
+                ],
+                "Safer gambling app is for:",
+                [
+                    "Early detection and intervention by identifying problematic gambling early.",
+                    "Enhance self awareness and control with detailded insights into their gambling insights.",
+                    "Support and resources with educational content about the risk of gambling addiction."
+                ]
+            ],
         homePage:
             [
                 "How the Safer Gambling App works:",
@@ -117,7 +137,7 @@ const initialState =
             "Personal Consequences",
             //same
             ["You admitted to frequently attempting to win back money after a loss."],
-            
+
             "Social Consequence",
             //same
             ["You often feel anxious or stressed when thinking about gambling."]
@@ -128,9 +148,29 @@ const initialState =
         navBar: [
             "Hilfe & Beratung",
             "Hilfe",
-            "Einstellungen"
+            "Einstellungen",
+            "Abmelden"
         ]
         ,
+        landingPage:
+            [
+                "Hallo",
+                [
+                    "Spiel Clever",
+                    "Bleib sicher"
+                ],
+                [
+                    "Registrieren",
+                    "Anmelden",
+                    "Los geht's"
+                ],
+                "Die Safer-gambling-Anwendung ist für:",
+                [
+                    "Frühzeitige Erkennung und Intervention durch rechtzeitige Identifizierung von problematischem Glücksspiel.",
+                    "Verbessern Sie Ihr Selbstbewusstsein und Ihre Kontrolle mit detaillierten Einblicken in Ihr Spielverhalten.",
+                    "Unterstützung und Ressourcen mit informativen Inhalten über die Gefahr der Spielsucht."
+                ]
+            ],
         homePage:
             [
                 "So funktioniert die Safer Gambling App:",
@@ -232,15 +272,15 @@ const initialState =
                 "'Mäßiges Risiko' (PGSI = 3-7) mit einem mäßigen Ausmaß an Spielproblemen, die zu einigen negativen Folgen führen.",
                 "'Problematische Glücksspieler' (PGSI = 8+), die mit negativen Folgen und einem möglichen Mangel an Kontrolle spielen."],
             "Verhalten:",
-            
+
             ["Sie gaben an, mehrmals pro Woche an Glücksspielen teilzunehmen."],
 
             "Persönliche Konsequenzen:",
-            
+
             ["Sie haben zugegeben, dass Sie häufig versucht haben, nach einem Verlust Geld zurückzugewinnen."],
 
             "Soziale Konsequenzen:",
-            
+
             ["Sie fühlen sich oft ängstlich oder gestresst, wenn Sie ans Glücksspiel denken."]
         ]
     },
@@ -250,9 +290,29 @@ const initialState =
             [
                 "Conseils et orientation",
                 "Aider",
-                "Paramètres"
+                "Paramètres",
+                "Déconnexion"
             ]
         ,
+        landingPage:
+            [
+                "Bonjour",
+                [
+                    "Jouer intelligemment",
+                    "Restez en sécurité"
+                ],
+                [
+                    "S'inscrire",
+                    "Se connecter",
+                    "Commençons"
+                ],
+                "Safer gambling app est pour:",
+                [
+                    "Détection précoce et intervention en identifiant les problèmes de jeu dès le début.",
+                    "Améliorez la conscience de soi et le contrôle avec des informations détaillées sur leurs comportements de jeu.",
+                    "Soutien et ressources avec du contenu éducatif sur le risque de dépendance au jeu."
+                ]
+            ],
         homePage:
             [
                 "Comment fonctionne l'application Safer Gambling: ",
@@ -367,7 +427,6 @@ const languages = createSlice({
     initialState,
     reducers: {
         setLanguage: (state, payload) => {
-            console.log(payload.payload)
             state.current = payload.payload
         }
     }

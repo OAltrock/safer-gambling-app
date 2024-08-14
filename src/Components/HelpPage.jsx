@@ -15,15 +15,15 @@ function HelpPage() {
             <div className='linkContainerContainer'>
                 <div className='linkContainer'>
                     <img src={nhsLogo} alt="nhs logo" />
-                    <a href="https://www.nhs.uk/live-well/addiction-support/gambling-addiction/">Gambling Awareness</a>
+                    <a href="https://www.nhs.uk/live-well/addiction-support/gambling-addiction/" target="_blank" rel="noopener noreferrer">Gambling Awareness</a>
                 </div>
                 <div className='linkContainer'>
                     <img src={addictionSupport} alt='addiction logo' style={{scale: "65%", alignSelf: "center"}}/>
-                    <a href="https://www.gamcare.org.uk/">Addiction Support</a>
+                    <a href="https://www.gamcare.org.uk/" target="_blank" rel="noopener noreferrer">Addiction Support</a>
                 </div>
                 <div className='linkContainer'>
                 <img src={gamAAIcon} alt='addiction logo' style={{scale: "71%", alignSelf: "center"}}/>
-                    <a href="https://gamblersanonymous.org.uk/">Gamblers Anonymous</a>
+                    <a href="https://gamblersanonymous.org.uk/" target="_blank" rel="noopener noreferrer">Gamblers Anonymous</a>
                 </div>                
             </div>
 
