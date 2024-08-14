@@ -74,16 +74,14 @@ If you don't want to install these tools, you have to install all dependencies m
 
 `mysql -h localhost -u root -p -e "source ./init.sql"`
 
-**to set up the root password, create the tables and populate them with 100 examples (the password in the dev environment is: 'admin').**
+**to set up the root password and create the tables (the password in the dev environment is: 'admin').**
 
 **Terminal 1: Python - This executes Flask making the game have an API call:**
 
 `python app.py`
  
-**Terminal 2: React (the docker image will start the react app automatically making this step superflous) - This opens the react app.**
+**Terminal 2: React (the docker image will start the react app automatically making this step superfluous) - This opens the react app.**
 
 `npm start`
 
-**The 'start_game'-enpoint is protected in this version. For now, you need to login via Postman on the '/login'-endpoint (POST) using {"usermail": "jane.smith@example.com", "password": "password456"} as Body. With the JWT-token you get as return, you can access the '/start_game'-endpoint (GET). For this add an 'Authorization'-key with value: 'Bearer {JWT-token}' to the Postman Headers.**
-
-**Backend accessibility will be added to the frontend shortly.**
+**To login into the app use 'provisional admin' as username and 'admin' as password.**
