@@ -70,7 +70,9 @@ If you don't want to install these tools, you have to install all dependencies m
 
 `mysqld`
 
-**Running the docker command is also starting the database. If you start the database for the first time, you should run:**
+**Running the docker command is also starting the database making the previous commad superfluous.** 
+
+**If you start the database for the first time, you should run:**
 
 `mysql -h localhost -u root -p -e "source ./init.sql"`
 
