@@ -26,26 +26,15 @@
 
 <ins><strong>It is strongly suggested to use Poetry (which is similar to npm) to install all python dependencies:</strong></ins>
 
-for windows: 
-`Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
+`pip install poetry`
 
-`Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression`
-
-then: 
-`scoop install pipx`
-
-`pipx ensurepath`
-
-then:
-`pipx install poetry`
-
-and finally: 
+and then: 
 
 `poetry install`
 
-If any new dependencies will be added, (only) the last command has to be executed again
+If any new dependencies will be added, `poetry install` has to be reentered.
 
-If you don't want to install these tools, you have to install all dependencies manually:
+If you don't want to install Poetry, you have to install all dependencies manually:
 
 `pip install pygame`
 
@@ -85,5 +74,3 @@ If you don't want to install these tools, you have to install all dependencies m
 **Terminal 2: React (the docker image will start the react app automatically making this step superfluous) - This opens the react app.**
 
 `npm start`
-
-**To login into the app use 'provisional admin' as username and 'admin' as password.**
