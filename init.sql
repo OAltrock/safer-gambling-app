@@ -6,7 +6,7 @@ CREATE USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'admin';
 CREATE TABLE IF NOT EXISTS users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,    
     name VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(100),
+    password VARCHAR(255),
     age int NOT NULL
 );
 CREATE TABLE IF NOT EXISTS games (
@@ -18,5 +18,3 @@ CREATE TABLE IF NOT EXISTS games (
         REFERENCES users (user_id)
         ON UPDATE RESTRICT ON DELETE CASCADE    
 );
-
-INSERT INTO users (name, password, age) VALUES ('provisional admin', 'admin', 28);

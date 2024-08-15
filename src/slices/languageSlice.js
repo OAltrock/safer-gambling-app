@@ -31,6 +31,23 @@ const initialState =
                     "Support and resources with educational content about the risk of gambling addiction."
                 ]
             ],
+        signUpPage: [
+            [
+                "Logging in",
+                "Wrong email or password, try again!"
+            ],
+            [
+                "User name",
+                "Enter a username",
+                "Username already taken."
+            ],
+            [
+                "Password",
+                "Show Password"
+            ],
+            "Your Age",
+            "Submit"
+        ],
         homePage:
             [
                 "How the Safer Gambling App works:",
@@ -150,8 +167,7 @@ const initialState =
             "Hilfe",
             "Einstellungen",
             "Abmelden"
-        ]
-        ,
+        ],        
         landingPage:
             [
                 "Hallo",
@@ -170,6 +186,23 @@ const initialState =
                     "Verbessern Sie Ihr Selbstbewusstsein und Ihre Kontrolle mit detaillierten Einblicken in Ihr Spielverhalten.",
                     "Unterstützung und Ressourcen mit informativen Inhalten über die Gefahr der Spielsucht."
                 ]
+            ],
+            signUpPage: [
+                [
+                    "Beim Anmelden",
+                    "Passwort und Anmeldename stimmen nicht überein!"
+                ],
+                [
+                    "Anmeldename",
+                    "Geben Sie einen Anmeldenamen ein",
+                    "Dieser Name ist schon vergeben."
+                ],
+                [
+                    "Passwort",
+                    "Passwort anzeigen"
+                ],
+                "Ihr Alter",
+                "Abschicken"
             ],
         homePage:
             [
@@ -312,6 +345,23 @@ const initialState =
                     "Améliorez la conscience de soi et le contrôle avec des informations détaillées sur leurs comportements de jeu.",
                     "Soutien et ressources avec du contenu éducatif sur le risque de dépendance au jeu."
                 ]
+            ],
+            signUpPage: [
+                [
+                    "Connexion",
+                    "Le mot de passe et le nom d'utilisateur ne correspondent pas!"
+                ],
+                [
+                    "Nom d'utilisateur",
+                    "Entrez un nom d'utilisateur",
+                    "Ce nom est déjà pris."
+                ],
+                [
+                    "Mot de passe.",
+                    "Afficher le mot de passe"
+                ],
+                "Votre âge",
+                "Soumettre"
             ],
         homePage:
             [

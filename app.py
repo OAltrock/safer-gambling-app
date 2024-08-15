@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from werkzeug.security import generate_password_hash, check_password_hash
 import time
 import subprocess
 
@@ -10,7 +11,7 @@ CORS(app, origins='*')
 
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:admin@localhost/test'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:admin@localhost:3307/test'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'  # Change this in production
 
@@ -28,7 +29,7 @@ class User (db.Model):
     
     def __init__(self, name, password, age):        
         self.name = name
-        self.password = password
+        self.password = generate_password_hash(password)
         self.age = age
     
     def __str__(self):
@@ -55,7 +56,7 @@ def login():
     data = request.get_json()
     print('request: ', data)
     user = User.query.filter_by(name=data['usermail']).first()
-    if user and user.password == data['password']:  # Use hashed passwords in production
+    if user and check_password_hash(user.password, data['password']):
         access_token = create_access_token(identity=user.user_id)
         logged_in_user = user
         print('login: ',user)
@@ -69,17 +70,24 @@ def login():
 async def get_users():
     users = User.query.all()    
     print(users)
-    return jsonify([{'id': user.user_id, 'name': user.name } for user in users])
+    return jsonify([{ 'id':user.user_id, 'name': user.name, 'age': user.age } for user in users])
 
 @app.route('/add_user', methods=['POST'])
 def add_user():
     data = request.get_json()  # Get JSON data from the request
-    new_user = User(name=data['name'], age=data['age'], password=data['password'])  # Create a new User instance
+    new_user = User(name=data['userName'], age=data['age'], password=data['password'])  # Create a new User instance
     db.session.add(new_user)  # Add the user to the session
     db.session.commit()  # Commit the session to save the user to the database
-    return jsonify({'message': 'User added successfully', 'id': new_user.id}), 201
+    access_token = create_access_token(identity=new_user.user_id)
+    logged_in_user = new_user        
+    return jsonify({
+        'access_token': access_token,
+        'user_name': new_user.name
+        }), 201
+    
 
 @app.route('/delete_user/<int:user_id>', methods=['DELETE'])
+@jwt_required()
 def delete_user(user_id):
     user = User.query.get(user_id)  # Query the user by ID
     if user:

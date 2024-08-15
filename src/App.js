@@ -15,6 +15,7 @@ import Footer from './Components/Footer'
 import QuizScore from './Components/QuizScore';
 import HelpPage from './Components/HelpPage';
 import Navbar from './Components/Navbar';
+import SignUp from './Components/SignUp.jsx';
 
 import { useDispatch } from 'react-redux';
 
@@ -65,7 +66,7 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path='/Login' element={<Login />} />
-            <Route path='/Register' element={<Register />} />
+            <Route path='/Register' element={<SignUp />} />
             <Route path="/Questionnaire" element={<ProtectedRoute component={Questionnaire} />} />
             <Route path="/Home" element={<ProtectedRoute component={Home} />} />
             <Route path="/Guidance" element={<HelpPage />} />

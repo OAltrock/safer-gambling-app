@@ -1,32 +1,49 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useLogin } from '../hooks/useLogin';
 import { useNavigate } from 'react-router-dom';
+import { useSignUp } from '../hooks/useSignUp';
+import validateUserName from '../hooks/validateUserName';
+import axios from 'axios';
 import { useSelector } from 'react-redux';
 
-const Login = () => {
-    const { mutate, isLoading, isError, error } = useLogin();
+const SignUp = () => {
+    const { mutate, isLoading, isError, error } = useSignUp();
     const navigate = useNavigate();
     const [password, setPassword] = useState('');
-    const [email, setEmail] = useState('');
+    const [userName, setUserName] = useState('');
+    const [users, setUsers] = useState([]);
     const [showPassword, setShowPassword] = useState(false);
+    const [age, setAge] = useState(0);
+    const [invalidUsername, setInvalidUsername] = useState(false);
 
     let [status, usernameMsgs, passwordMsgs, ageLabel, submit] = useSelector(state => state.languages[state.languages.current].signUpPage)
 
-    const handleLogin = (e) => {
+    const handleSignUp = (e) => {
         e.preventDefault();
-        mutate({ email, password },
+        mutate({ userName, password, age },
             {
                 onSuccess: () => {
                     navigate('/Home')
                 }
-
             });
     };
 
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/users');
+                setUsers(response.data);
+            }
+            catch (error) {
+                console.error(error);
+            }
+        };
+        fetchUsers()
+    }, []);    
+
     return (
-        <Form onSubmit={handleLogin}>
+        <Form onSubmit={handleSignUp}>
             <span style={{ color: "var(--fdm-font-color)" }}>
                 {(isLoading) ?
                     status[0] :
@@ -35,13 +52,23 @@ const Login = () => {
                             status[1] :
                             `${error}` :
                         ''}</span>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Group className="mb-3" controlId="formBasicUsername">
                 <Form.Label>{usernameMsgs[0]}</Form.Label>
                 <Form.Control
                     type="text"
                     placeholder={usernameMsgs[1]}
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)} />                
+                    value={userName}
+                    onChange={(e) => {
+                        setUserName(e.target.value);                        
+                        setInvalidUsername(validateUserName(users, e.target.value));
+                    }
+                    }
+                    required
+                    isInvalid={invalidUsername}
+                />
+                <Form.Control.Feedback type="invalid">
+                    {usernameMsgs[2]}
+                </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -49,6 +76,7 @@ const Login = () => {
                 <Form.Control
                     type={showPassword ? "text" : "password"}
                     placeholder={passwordMsgs[0]}
+                    required
                     onChange={(e) => setPassword(e.target.value)} />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
@@ -58,6 +86,14 @@ const Login = () => {
                     onChange={() => setShowPassword(!showPassword)} // Toggle password visibility
                 />
             </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicUserAge">
+                <Form.Label>{ageLabel}</Form.Label>
+                <Form.Control style={{ display: 'flex' }}
+                    type="number"                    
+                    onChange={(e) => setAge(e.target.value)}
+                    required
+                />
+            </Form.Group>
             <Button variant="primary" type="submit">
                 {submit}
             </Button>
@@ -65,4 +101,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default SignUp
