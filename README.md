@@ -51,11 +51,11 @@ If you don't want to install Poetry, you have to install all dependencies manual
 `pip install bcrypt`
  
 ## Running the Application
-**To start the application so that the game and react work together you need to open 2 terminals (split terminal) and do the commands in this order:**
+**To start the application so that the game and react work together you need to open 3 terminals (split terminal) and do the commands in this order:**
 
 **To start the database, install MySQL: https://dev.mysql.com/downloads/installer/**
 
-**Start the MySQL server with:**
+**Terminal 1: Start the MySQL server with:**
 
 `mysqld`
 
@@ -65,12 +65,12 @@ If you don't want to install Poetry, you have to install all dependencies manual
 
 `mysql -h localhost -u root -p -e "source ./init.sql"`
 
-**to set up the root password and create the tables (the password in the dev environment is: 'admin').**
+**in a new terminal to set up the root password and create the tables (the password in the dev environment is: 'admin').**
 
-**Terminal 1: Python - This executes Flask making the game have an API call:**
+**Terminal 2: Python - This executes Flask making the game have an API call:**
 
 `python app.py`
  
-**Terminal 2: React (the docker image will start the react app automatically making this step superfluous) - This opens the react app.**
+**Terminal 3: React (the docker image will start the react app automatically making this step superfluous) - This opens the react app.**
 
 `npm start`
