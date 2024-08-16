@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NotFoundPage from "./Components/PageNotFound";
 import LandingPage from './Components/LandingPage';
 import Login from './Components/Login';
-import Register from './Components/Register';
 import Home from "./Components/Home";
 import Questionnaire from './Components/Questionnaire';
 import GamePage from './Components/GamePage';
