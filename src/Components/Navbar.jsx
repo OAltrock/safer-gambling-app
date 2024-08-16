@@ -76,7 +76,7 @@ function Navbar() {
         <button className="navbar-button" onClick={handleGuidanceClick} >{advice}</button>
         <button className="navbar-button" onClick={handleHelpClick}>{help}</button>
         <button className="navbar-button" onClick={handleSettingsClick}>{settings}</button>
-        {localStorage.getItem('token') !== '' && <button className="navbar-button" onClick={() => {
+        {(localStorage.getItem('token') !== null && localStorage.getItem('token') !== '') && <button className="navbar-button" onClick={() => {
           localStorage.setItem('token', '');
           navigate('/');
         }}>{logout}</button>}
