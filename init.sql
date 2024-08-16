@@ -1,8 +1,6 @@
 CREATE DATABASE IF NOT EXISTS dev;
 CREATE DATABASE IF NOT EXISTS test;
 USE test;
-DROP USER IF EXISTS 'root'@'localhost';
-CREATE USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'admin';
 CREATE TABLE IF NOT EXISTS users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,    
     name VARCHAR(100) NOT NULL UNIQUE,
