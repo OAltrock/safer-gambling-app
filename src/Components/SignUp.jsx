@@ -59,7 +59,8 @@ const SignUp = () => {
                     placeholder={usernameMsgs[1]}
                     value={userName}
                     onChange={(e) => {
-                        setUserName(e.target.value);                        
+                        setUserName(e.target.value); 
+                        console.log(users);
                         setInvalidUsername(validateUserName(users, e.target.value));
                     }
                     }

@@ -11,7 +11,7 @@ CORS(app, origins='*')
 
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:admin@localhost:3307/test'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:admin@localhost:3306/test'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'  # Change this in production
 

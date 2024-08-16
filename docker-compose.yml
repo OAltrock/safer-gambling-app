@@ -18,8 +18,8 @@ services:
     restart: always    
     volumes:
       - "./.mysql-data/db:/var/lib/mysql"
-      - "./init.sql:/docker-entrypoint-initdb.d/init.sql"  # Mount the SQL script
-    # command: --init-file /var/lib/mysql/init.sql
+      - "./init.sql:/docker-entrypoint-initdb.d/init.sql"   
     environment:      
       MYSQL_ROOT_PASSWORD: admin  
-      MYSQL_DATABASE: test         
+      MYSQL_DATABASE: gamblers    
+    command: --init-file /docker-entrypoint-initdb.d/init.sql    
