@@ -1,40 +1,54 @@
 # <center>Safer-Gambling-App</center>
 
+## Setup Instructions
 
+### Node.js Setup
+1. Ensure `node_modules` is present after cloning the project.
+2. If not, run:
+   ```
+   npm install
+   ```
 
+### Docker Setup (Optional)
+**Note:** If you're experiencing issues with Docker installation or WSL upgrade, you can skip this section and proceed with the manual setup.
 
-##  Notes for setup 
-**Make sure node_modules is present when you clone the project, if not then run** 
+If Docker is successfully installed:
+1. Build the image:
+   ```
+   docker-compose build --no-cache
+   ```
+2. Run the image:
+   ```
+   docker-compose up --watch
+   ```
+   (`--watch` enables live updates for development)
 
-`npm install`
+### Flask/Pygame Setup
+For the Flask/Pygame component, you'll need to set up a Python environment:
 
-**if you have Docker installed, in the folder you cloned the app, you can build the image  with:**
+1. Install Poetry (recommended):
+   ```
+   (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | python -
+   ```
+   Add Poetry to your Windows PATH (restart terminal/IDE after):
+   - Search for "environment variables"
+   - Edit system environment variables
+   - Click "Environment Variables"
+   - Find "PATH" under System variables
+   - Click "Edit" > "New"
+   - Paste the Poetry installation directory
 
-`docker-compose build --no-cache`
+2. Install dependencies:
+   ```
+   poetry install
+   ```
 
-**and then run the image with:**
+3. Run the application:
+   ```
+   poetry run python app.py
+   ```
 
-`docker-compose up --watch`
-
-**make sure the docker engine is running**
-
-**`--watch` enables life update for developing**
-
-**there is no image for the flask/pygame since container can't easily access graphics output**
- 
-<ins><strong>For Flask/Pygame make sure you have the python dependencies installed:</strong></ins>
-
-<ins><strong>It is strongly suggested to use Poetry (which is similar to npm) to install all python dependencies:</strong></ins>
-
-`pip install poetry`
-
-and then: 
-
-`poetry install`
-
-If any new dependencies will be added, `poetry install` has to be reentered.
-
-If you don't want to install Poetry, you have to install all dependencies manually:
+Alternatively, if not using Poetry, install:
 
 `pip install pygame`
 
@@ -47,30 +61,23 @@ If you don't want to install Poetry, you have to install all dependencies manual
 `pip install Flask-SQLAlchemy mysqlclient`
 
 `pip install Flask-JWT-Extended`
-
-`pip install bcrypt`
  
+
 ## Running the Application
-**To start the application so that the game and react work together you need to open 3 terminals (split terminal) and do the commands in this order:**
 
-**To start the database, install MySQL: https://dev.mysql.com/downloads/installer/**
+1. Database Setup:
+   - Install MySQL: https://dev.mysql.com/downloads/installer/          
+   - In a terminal with administrator rights, run: 
+    ```
+    mysqld --init-file C:\path\to\safer-gambling-app\init.sql --console
+     ```
+     (It needs to be the absolute path; default password: 'admin')
 
-**Terminal 1: Start the MySQL server with:**
+2. Start Flask server (if not using poetry):
+   ```
+   python app.py
+   ```
 
-`mysqld`
-
-**Running the docker command is also starting the database making the previous commad superfluous.** 
-
-**If you start the database for the first time, you should run:**
-
-`mysql -h localhost -u root -p -e "source ./init.sql"`
-
-**in a new terminal to set up the root password and create the tables (the password in the dev environment is: 'admin').**
-
-**Terminal 2: Python - This executes Flask making the game have an API call:**
-
-`python app.py`
- 
-**Terminal 3: React (the docker image will start the react app automatically making this step superfluous) - This opens the react app.**
-
-`npm start`
+3. Start React app (if not using Docker):
+   ```
+   npm start
