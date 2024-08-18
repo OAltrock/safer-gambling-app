@@ -12,9 +12,9 @@ services:
   safer_gambling_db:
     image: mysql:latest
     ports: 
-      - 3307:3306
+      - 3306:3306
     expose:
-      - 3307
+      - 3306
     restart: always    
     volumes:
       - "./.mysql-data/db:/var/lib/mysql"
