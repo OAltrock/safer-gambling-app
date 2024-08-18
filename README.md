@@ -68,9 +68,9 @@ Alternatively, if not using Poetry, install:
 1. Database Setup:
    - Install MySQL: https://dev.mysql.com/downloads/installer/          
    - In a terminal with administrator rights, run: 
-    ```
+   ```
     mysqld --init-file C:\path\to\safer-gambling-app\init.sql --console
-     ```
+   ```
      (It needs to be the absolute path; default password: 'admin')
 
 2. Start Flask server (if not using poetry):
@@ -81,3 +81,4 @@ Alternatively, if not using Poetry, install:
 3. Start React app (if not using Docker):
    ```
    npm start
+   ```
