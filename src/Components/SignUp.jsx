@@ -61,7 +61,9 @@ const SignUp = () => {
                     onChange={(e) => {
                         setUserName(e.target.value); 
                         console.log(users);
+                        console.log(validateUserName(users, e.target.value));
                         setInvalidUsername(validateUserName(users, e.target.value));
+                        console.log(invalidUsername)
                     }
                     }
                     required

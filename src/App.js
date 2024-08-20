@@ -69,8 +69,8 @@ function App() {
             <Route path='/Login' element={<Login />} />
             <Route path='/Register' element={<SignUp />} />
             <Route element={<AuthWrapper />}>
-              <Route path="/Questionnaire" element={<Questionnaire />} />              
-              <Route path="/Home" element={<Home />} />
+              <Route path="/Questionnaire" element={<ProtectedRoute component={Questionnaire} />} />              
+              <Route path="/Home" element={<ProtectedRoute component={Home} />} />
               <Route path="/GamePage" element={<ProtectedRoute component={GamePage} />} />
               <Route path="/Evaluation" element={<ProtectedRoute component={EvaluationPage} />} />
             </Route>
