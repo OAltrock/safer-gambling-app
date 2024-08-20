@@ -27,6 +27,8 @@ import ProtectedRoute from './Components/ProtectedRoute';
 import { setSize } from './slices/fontSlice';
 import { setLanguage } from './slices/languageSlice';
 import { getCookie } from './hooks/getCookie.js';
+import { useTokenExpiration } from './hooks/useTokenExpiration';
+import AuthWrapper from './Components/AuthWrapper.jsx';
 
 
 library.add(fas, far, faMoon, faSun)
@@ -38,7 +40,7 @@ function App() {
   let dispatch = useDispatch();
   let fontSize = getCookie('fontSize');
   let currentLanguage = getCookie('language');
-    
+  useTokenExpiration();
 
   if (fontSize) {
     document.documentElement.style.setProperty('--fdm-normal-font-size', fontSize + 'rem');
@@ -54,7 +56,7 @@ function App() {
   if (currentLanguage) {
     dispatch(setLanguage(currentLanguage))
   }
-  
+
   /* let fontSize = useSelector(state => state.setFontSize)
   document.cookie = "fontSize=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/"; */
   return (
@@ -66,12 +68,16 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path='/Login' element={<Login />} />
             <Route path='/Register' element={<SignUp />} />
-            <Route path="/Questionnaire" element={<ProtectedRoute component={Questionnaire} />} />
-            <Route path="/Home" element={<ProtectedRoute component={Home} />} />
+            <Route element={<AuthWrapper />}>
+              <Route path="/Questionnaire" element={<Questionnaire />} />              
+              <Route path="/Home" element={<Home />} />
+              <Route path="/GamePage" element={<ProtectedRoute component={GamePage} />} />
+              <Route path="/Evaluation" element={<ProtectedRoute component={EvaluationPage} />} />
+            </Route>
             <Route path="/Guidance" element={<HelpPage />} />
-            <Route path="/GamePage" element={<ProtectedRoute component={GamePage} />} />
+
             <Route path="/QuizScore" element={<QuizScore />} />
-            <Route path="/Evaluation" element={<ProtectedRoute component={EvaluationPage} />} />
+
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
           <Footer />

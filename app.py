@@ -104,22 +104,28 @@ async def start_game():
         print(get_jwt_identity())
         start_time = time.perf_counter()
         # Execute the game file (game_take_8.py)
-        result = subprocess.run(['python', 'game take 14.py'], check=True, capture_output=True, text=True)
+        result = subprocess.run(['python', 'game_v2.6.py'], check=True, capture_output=True, text=True)
+        print('after game')
         end_time = time.perf_counter()
-        amountPlayed = len(result.stdout.splitlines()[2:])
+        """ amountPlayed = len(result.stdout.splitlines()[2:]) """
         timePlayed = end_time - start_time     
-        games = []
+        """ games = []
         for score in result.stdout.splitlines()[2:]:
             new_game = Game(timePlayed, score, current_user)
             games.append(new_game)
         for game in games:
             db.session.add(game)
-        db.session.commit()
+        db.session.commit() 
         return jsonify({"user with id: ": current_user,
                         "scores": result.stdout.splitlines()[2:],
                         "amountPlayed": amountPlayed,
-                        "timePlayed": f"{timePlayed:.1f}"}), 200
+                        "timePlayed": f"{timePlayed:.1f}"}), 200"""
+        return jsonify({"message": "played"})
+    except subprocess.CalledProcessError as e:
+        print(e)
+        return jsonify({"error": f"Game execution failed: {str(e)}"}), 500
     except Exception as e:
+        print(e)
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
