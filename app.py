@@ -104,11 +104,12 @@ async def start_game():
         print(get_jwt_identity())
         start_time = time.perf_counter()
         # Execute the game file (game_take_8.py)
-        result = subprocess.run(['python', 'game_v2.6.py'], check=True, capture_output=True, text=True)
+        result = subprocess.run(['python', 'game_v2.7.py'], capture_output=True, text=True)
         print('after game')
         end_time = time.perf_counter()
         """ amountPlayed = len(result.stdout.splitlines()[2:]) """
         timePlayed = end_time - start_time     
+        print("Error output:", result.stderr)
         """ games = []
         for score in result.stdout.splitlines()[2:]:
             new_game = Game(timePlayed, score, current_user)
