@@ -8,6 +8,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, useSelector } from 'react-redux';
 import { setDarkMode } from '../slices/darkModeSlice';
 import { setCookie, getCookie } from '../hooks/getCookie';
+import { setQuestionnaireDoneFalse } from '../slices/questionnaireDoneSlice';
+import { setFalse } from '../slices/gameDoneSlice';
+import { reset } from '../slices/questionnaireSlice';
 
 function Navbar() {
   const navigate = useNavigate();
@@ -78,6 +81,9 @@ function Navbar() {
         <button className="navbar-button" onClick={handleSettingsClick}>{settings}</button>
         {(localStorage.getItem('token') !== null && localStorage.getItem('token') !== '') && <button className="navbar-button" onClick={() => {
           localStorage.removeItem('token');
+          dispatch(setQuestionnaireDoneFalse())
+          dispatch(setFalse())
+          dispatch(reset())
           navigate('/');
         }}>{logout}</button>}
       </div>

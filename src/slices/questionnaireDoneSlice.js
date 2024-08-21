@@ -1,18 +1,21 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
-    done: false
+    questionnaireDone: false
 }
 
 const questionnaireDoneSlice= createSlice({
     name: "questionnaireDone",
     initialState,
     reducers: {
-        toggle: (state)=> {            
-            state.done = !state.done            
+        setQuestionnaireDoneFalse: (state)=> {            
+            state.questionnaireDone = false
+        },
+        setQuestionnaireDoneTrue: (state)=> {            
+            state.questionnaireDone = true
         }
     }
 })
 
-export const {toggle} = questionnaireDoneSlice.actions
+export const {setQuestionnaireDoneFalse, setQuestionnaireDoneTrue} = questionnaireDoneSlice.actions
 export default questionnaireDoneSlice.reducer

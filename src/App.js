@@ -22,13 +22,15 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far, faMoon, faSun } from '@fortawesome/free-regular-svg-icons';
 import { QueryClientProvider, QueryClient } from "react-query";
-
 import ProtectedRoute from './Components/ProtectedRoute';
 import { setSize } from './slices/fontSlice';
 import { setLanguage } from './slices/languageSlice';
 import { getCookie } from './hooks/getCookie.js';
 import { useTokenExpiration } from './hooks/useTokenExpiration';
 import AuthWrapper from './Components/AuthWrapper.jsx';
+import { setFalse } from './slices/gameDoneSlice.js';
+import { setQuestionnaireDoneFalse } from './slices/questionnaireDoneSlice.js';
+import { reset } from './slices/questionnaireSlice.js';
 
 
 library.add(fas, far, faMoon, faSun)
@@ -40,7 +42,13 @@ function App() {
   let dispatch = useDispatch();
   let fontSize = getCookie('fontSize');
   let currentLanguage = getCookie('language');
-  useTokenExpiration();
+  useTokenExpiration(() => {
+    console.log('token expired');
+    localStorage.removeItem('token');
+    dispatch(setQuestionnaireDoneFalse());
+    dispatch(setFalse());
+    dispatch(reset());
+  });
 
   if (fontSize) {
     document.documentElement.style.setProperty('--fdm-normal-font-size', fontSize + 'rem');
@@ -69,7 +77,7 @@ function App() {
             <Route path='/Login' element={<Login />} />
             <Route path='/Register' element={<SignUp />} />
             <Route element={<AuthWrapper />}>
-              <Route path="/Questionnaire" element={<ProtectedRoute component={Questionnaire} />} />              
+              <Route path="/Questionnaire" element={<ProtectedRoute component={Questionnaire} />} />
               <Route path="/Home" element={<ProtectedRoute component={Home} />} />
               <Route path="/GamePage" element={<ProtectedRoute component={GamePage} />} />
               <Route path="/Evaluation" element={<ProtectedRoute component={EvaluationPage} />} />

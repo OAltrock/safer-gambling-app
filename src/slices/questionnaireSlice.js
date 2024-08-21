@@ -54,9 +54,12 @@ const questionnaireSlice = createSlice({
     reducers: {
         setQuestion: (state, payload) => {            
             state["question" + payload.payload['id']].score = payload.payload['data']
+        },
+        reset: (state) => {
+            return initialState;
         }
     }
 })
 
-export const { setQuestion } = questionnaireSlice.actions
+export const { setQuestion, reset } = questionnaireSlice.actions
 export default questionnaireSlice.reducer

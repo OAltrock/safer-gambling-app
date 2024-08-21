@@ -6,8 +6,8 @@ import checkMark from '../Assets/checkMark.png';
 
 function Home({component: Component, ...rest}) {
 
-  let questionnaireDone = useSelector(state => state.questionnaireDone.done);
-  let gameDone = useSelector(state => state.gameScores.done);
+  let questionnaireDone = useSelector(state => state.questionnaireDone.questionnaireDone);
+  let gameDone = useSelector(state => state.gameDone.gameDone);
   let [header, text1Strong, text1Header, text1, text2Strong, text2Header, text2, text3Strong, text3Header, 
     text3, button] = useSelector(state => state.languages[state.languages.current].homePage);
   
@@ -26,6 +26,7 @@ function Home({component: Component, ...rest}) {
   const handleEval = () => 
     navigate("/Evaluation")
 
+  console.log(gameDone)
   return (
     <div id="home-page">
       <h1 style={{ textAlign: "center", color: "#3FE03F", marginTop: "3vh", fontSize: "var(--fdm-headings-font-size)" }} >{header}</h1>

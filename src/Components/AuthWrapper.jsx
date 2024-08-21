@@ -6,7 +6,7 @@ function AuthWrapper() {
   const navigate = useNavigate();
 
   const handleTokenExpired = () => {
-    navigate('/Login');
+    navigate('/');
   };
 
   useTokenExpiration(handleTokenExpired);

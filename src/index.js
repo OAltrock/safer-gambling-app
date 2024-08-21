@@ -11,12 +11,14 @@ import questionnaireReducer from './slices/questionnaireSlice.js';
 import darkModeReducer from './slices/darkModeSlice.js';
 import languagesReducer from './slices/languageSlice.js';
 import setFontSizeReducer from './slices/fontSlice.js';
+import gameDoneReducer from './slices/gameDoneSlice.js';
 
 
 
 const store = configureStore({
   reducer: {
     questionnaireDone: questionnaireDoneReducer,
+    gameDone: gameDoneReducer,
     gameScores: gameScoresReducer,
     questionnaire: questionnaireReducer,
     darkMode: darkModeReducer,

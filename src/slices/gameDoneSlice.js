@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
-    done: false
+    gameDone: false
 }
 
 const gameSlice= createSlice({
@@ -10,10 +10,10 @@ const gameSlice= createSlice({
     reducers: {
         setTrue: (state)=> {
             console.log(state);
-            state.done = true;
+            state.gameDone = true;
         },
         setFalse: (state) => {
-            state.done = false;
+            state.gameDone = false;
         }
     }
 })

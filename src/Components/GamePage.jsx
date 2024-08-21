@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setGameScore, increaseAmountPlayed, resetAmount, setDone } from "../slices/gameSlice.js";
+import { setGameScore, increaseAmountPlayed, resetAmount } from "../slices/gameSlice.js";
+import { setTrue } from '../slices/gameDoneSlice.js';
 import { useQuery } from "react-query";
 import { Carousel } from "react-bootstrap";
 import Image2 from '../Assets/pyGameObstacle2.png';
@@ -33,7 +34,7 @@ const GamePage = () => {
     });
     let data = promise.data;
     if (data) {
-      dispatch(setDone(true))
+      dispatch(setTrue())
       dispatch(setGameScore(data));
       dispatch(increaseAmountPlayed());
       console.log(gameDone);

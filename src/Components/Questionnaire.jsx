@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../Styles/Questionnaire.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setQuestion } from '../slices/questionnaireSlice.js';
-import { toggle } from '../slices/questionnaireDoneSlice.js';
+import { setQuestionnaireDoneTrue } from '../slices/questionnaireDoneSlice.js';
 import { Container } from "react-bootstrap";
 import Carousel from "react-bootstrap/Carousel";
 import Form from 'react-bootstrap/Form';
@@ -41,8 +41,8 @@ const Questionnaire = () => {
   * questions can be set by dispatch {@link handleAnswer}
   */
   const handleSubmit = () => {    
-    dispatch(toggle())
-    console.log(questionnaire)    
+    dispatch(setQuestionnaireDoneTrue())
+    //console.log(questionnaire)    
     navigate("/Home");
   };
 
