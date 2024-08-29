@@ -15,6 +15,7 @@ import { reset } from '../slices/questionnaireSlice';
 function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  
 
   const [showHelpPopup, setShowHelpPopup] = useState(false);
   const [showSettingsPopup, setShowSettingsPopup] = useState(false);

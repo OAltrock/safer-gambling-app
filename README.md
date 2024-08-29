@@ -42,8 +42,11 @@ For the Flask/Pygame component, you'll need to set up a Python environment:
    ```
    poetry install
    ```
-
-3. Run the application:
+3. Apply the virtual environment globally:
+   ```
+   poetry config virtualenvs.in-project true
+   ```
+4. Run the application:
    ```
    poetry run python app.py
    ```

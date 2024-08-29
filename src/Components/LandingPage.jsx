@@ -7,8 +7,7 @@ import { useSelector } from 'react-redux';
 
 const LandingPage = () => {
     const navigate = useNavigate();
-    const isAuthenticated = localStorage.getItem('token')!==null && localStorage.getItem('token')!=='';
-    console.log('where are you '+localStorage.getItem('token'))
+    const isAuthenticated = localStorage.getItem('token')!==null && localStorage.getItem('token')!=='';    
     const user = localStorage.getItem('user');
 
     let [hello, intro, login, paragraphHeader, textContainers] = useSelector(state => state.languages[state.languages.current].landingPage)

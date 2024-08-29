@@ -39,11 +39,12 @@ const initialState =
             [
                 "User name",
                 "Enter a username",
-                "Username already taken."
+                "Username already taken or longer than 100 characters."
             ],
             [
                 "Password",
-                "Show Password"
+                "Show Password",
+                "Enter a password of at least length 8 with at least a lower case charachter, an upper case character and a digit."
             ],
             "Your Age",
             "Submit"
@@ -195,11 +196,12 @@ const initialState =
                 [
                     "Anmeldename",
                     "Geben Sie einen Anmeldenamen ein",
-                    "Dieser Name ist schon vergeben."
+                    "Benutzername bereits vergeben oder länger als 100 Zeichen."
                 ],
                 [
                     "Passwort",
-                    "Passwort anzeigen"
+                    "Passwort anzeigen",
+                    "Geben Sie ein Passwort mit mindestens 8 Zeichen ein, das mindestens ein Kleinbuchstaben-, ein Großbuchstaben- und eine Ziffer enthält."
                 ],
                 "Ihr Alter",
                 "Abschicken"
@@ -354,11 +356,12 @@ const initialState =
                 [
                     "Nom d'utilisateur",
                     "Entrez un nom d'utilisateur",
-                    "Ce nom est déjà pris."
+                    "Nom d'utilisateur déjà pris ou plus long que 100 caractères."
                 ],
                 [
                     "Mot de passe.",
-                    "Afficher le mot de passe"
+                    "Afficher le mot de passe",
+                    "Entrez un mot de passe d'au moins 8 caractères, contenant au moins une lettre minuscule, une lettre majuscule et un chiffre."
                 ],
                 "Votre âge",
                 "Soumettre"
