@@ -253,7 +253,8 @@ class ControlPopup:
             "W - Move Up",
             "S - Move Down",
             "A - Move Left",
-            "D - Move Right"
+            "D - Move Right",
+            "ESC - Pause"
         ]
         self.display_time = 5000  # Popup will be displayed for 5 seconds
         self.start_time = 0
@@ -272,7 +273,7 @@ class ControlPopup:
 
     def draw(self, screen):
         if self.visible:
-            surface = pygame.Surface((300, 200))  # Surface for popup
+            surface = pygame.Surface((300, 250))  # Surface for popup
             surface.set_alpha(200)  # Semi-transparent background
             surface.fill((0, 0, 0))
             screen.blit(surface, (Screen_Width // 2 - 150, Screen_Height // 2 - 300))
