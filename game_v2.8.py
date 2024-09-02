@@ -23,6 +23,7 @@ Mid_Coins = []
 Deep_Coins = []
 gold_coins_count = 0
 zones = ["Shallow", "Mid", "Deep"]
+player_coordinates = []
 
 # Load images
 Beach_img = pygame.image.load('./imagefiles/Beach.png').convert()
@@ -48,6 +49,21 @@ coint_font = pygame.font.Font('./imagefiles/Pixeltype.ttf',25)
 
 # Colors
 WHITE = (255, 255, 255)
+
+# Respawn intervals (in ms)
+shallow_respawn_interval = 10000  
+mid_respawn_interval = 5500      
+deep_respawn_interval = 1000      
+
+# Respawn trackers
+shallow_respawn_timer = pygame.time.get_ticks()
+mid_respawn_timer = pygame.time.get_ticks()
+deep_respawn_timer = pygame.time.get_ticks()
+
+# Counters to track respawned coins in each zone
+shallow_respawn_count = 0
+mid_respawn_count = 0
+deep_respawn_count = 0
 
 # Define Player class (same as before)
 class Player(pygame.sprite.Sprite):
@@ -167,6 +183,32 @@ class Draw_Hud:
 # Instantiate the HUD
 hud = Draw_Hud()
 
+# Button class for screens
+class Button:
+    def __init__(self, x, y, width, height, text, color, hover_color, text_color):
+        self.rect = pygame.Rect(x, y, width, height)
+        self.text = text
+        self.color = color
+        self.hover_color = hover_color
+        self.text_color = text_color
+
+    def draw(self, screen):
+        mouse_pos = pygame.mouse.get_pos()
+        if self.rect.collidepoint(mouse_pos):
+            pygame.draw.rect(screen, self.hover_color, self.rect)
+        else:
+            pygame.draw.rect(screen, self.color, self.rect)
+
+        text_surface = font.render(self.text, True, self.text_color)
+        screen.blit(text_surface, (self.rect.x + (self.rect.width - text_surface.get_width()) // 2, self.rect.y + (self.rect.height - text_surface.get_height()) // 2))
+
+    def is_clicked(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if self.rect.collidepoint(event.pos):
+                return True
+        return False
+
+
 def draw_start_screen():
     screen.blit(background_img, (0, 0))
     title_text = font.render("Treasure Dive", True, WHITE)
@@ -174,6 +216,91 @@ def draw_start_screen():
     screen.blit(title_text, (tile_width - title_text.get_width() // 2, tile_height // 2-50))
     screen.blit(start_text, (tile_width - start_text.get_width() // 2, tile_height // 2))
     pygame.display.flip()
+
+def draw_pause_screen():
+    screen.fill("turquoise4")
+    resume_button = Button(Screen_Width // 2 - 100, Screen_Height // 2 - 50, 200, 50, "Resume", (0, 128, 128), (0, 150, 150), WHITE)
+    quit_button = Button(Screen_Width // 2 - 100, Screen_Height // 2 + 20, 200, 50, "Quit", (0, 128, 128), (0, 150, 150), WHITE)
+    
+    resume_button.draw(screen)
+    quit_button.draw(screen)
+    pygame.display.flip()
+
+    return resume_button, quit_button
+
+def draw_game_over_screen(score):
+    screen.fill("grey9")
+    game_over_text = font.render("Game Over", True, WHITE)
+    score_text = font.render(f"Score: {round(score)}", True, WHITE)
+    screen.blit(game_over_text, (Screen_Width // 2 - game_over_text.get_width() // 2, Screen_Height // 2 - 150))
+    screen.blit(score_text, (Screen_Width // 2 - score_text.get_width() // 2, Screen_Height // 2 - 100))
+
+    play_again_button = Button(Screen_Width // 2 - 100, Screen_Height // 2 - 50, 200, 50, "Play Again", (0, 128, 128), (0, 150, 150), WHITE)
+    quit_button = Button(Screen_Width // 2 - 100, Screen_Height // 2 + 20, 200, 50, "Quit", (0, 128, 128), (0, 150, 150), WHITE)
+    
+    play_again_button.draw(screen)
+    quit_button.draw(screen)
+    pygame.display.flip()
+
+    return play_again_button, quit_button
+
+
+class ControlPopup:
+    def __init__(self):
+        self.font = font
+        self.text = [
+            "Controls:",
+            "W - Move Up",
+            "S - Move Down",
+            "A - Move Left",
+            "D - Move Right",
+            "ESC - Pause"
+        ]
+        self.display_time = 5000  # Popup will be displayed for 5 seconds
+        self.start_time = 0
+        self.visible = True
+
+    def start(self):
+        self.start_time = pygame.time.get_ticks()
+        self.visible = True
+
+    def update(self):
+        if not self.visible:
+            return
+        current_time = pygame.time.get_ticks()
+        if current_time - self.start_time > self.display_time:
+            self.visible = False
+
+    def draw(self, screen):
+        if self.visible:
+            surface = pygame.Surface((300, 250))  # Surface for popup
+            surface.set_alpha(200)  # Semi-transparent background
+            surface.fill((0, 0, 0))
+            screen.blit(surface, (Screen_Width // 2 - 150, Screen_Height // 2 - 300))
+            
+            for i, line in enumerate(self.text):
+                text_surface = self.font.render(line, True, WHITE)
+                screen.blit(text_surface, (Screen_Width // 2 - text_surface.get_width() // 2, Screen_Height // 2 - 290 + i * 40))
+
+# Instantiate the controlPopup
+control_popup = ControlPopup()
+
+def reset_game():
+    global player, coin_group, hud, control_popup
+
+    # Reset player position
+    player.rect.topleft = [Screen_Width // 2, Screen_Height // 2]
+
+    # Reset HUD values
+    hud = Draw_Hud()
+
+    # Reset Control popup
+    control_popup = ControlPopup()
+    control_popup.start()
+
+    # Reset coin group
+    coin_group.empty()
+    spawn_coins_treasures(coin_group)
 
 # Coin class for sprites
 class Coin(pygame.sprite.Sprite):
@@ -237,19 +364,95 @@ def spawn_coins_treasures(coin_group):
 # Call the function to spawn coins
 spawn_coins_treasures(coin_group)
 
+# Respawn intervals (in ms)
+shallow_respawn_interval = 10000  
+mid_respawn_interval = 5500      
+deep_respawn_interval = 1000      
+
+# Respawn trackers
+shallow_respawn_timer = pygame.time.get_ticks()
+mid_respawn_timer = pygame.time.get_ticks()
+deep_respawn_timer = pygame.time.get_ticks()
+
+# Counters to track respawned coins in each zone
+shallow_respawn_count = 0
+mid_respawn_count = 0
+deep_respawn_count = 0
+
+
+# Function to respawn coins
+def respawn_coins(coin_group, dt):
+    global shallow_respawn_timer, mid_respawn_timer, deep_respawn_timer
+    global shallow_respawn_count, mid_respawn_count, deep_respawn_count 
+    current_time = pygame.time.get_ticks()
+
+    # Shallow coin respawn
+    if current_time - shallow_respawn_timer > shallow_respawn_interval and shallow_respawn_count < hud.shallow_coin_count:
+        shallow_coin_value = np.random.normal(11, 6)
+        shallow_coin_value = max(0, min(shallow_coin_value, 23))
+        x = random.randint(0, tile_width * map_cols)
+        y = random.randint(tile_height * 1, tile_height * 2)
+        coin = Coin(x, y, shallow_coin_value)
+        coin_group.add(coin)
+        shallow_respawn_timer = current_time
+        shallow_respawn_count += 1
+
+    # Mid coin respawn
+    if current_time - mid_respawn_timer > mid_respawn_interval and mid_respawn_count < hud.mid_coin_count:
+        mid_coin_value = np.random.normal(44, 8)
+        mid_coin_value = max(0, min(mid_coin_value, 53))
+        x = random.randint(0, tile_width * map_cols)
+        y = random.randint(tile_height * 5, tile_height * 7)
+        coin = Coin(x, y, mid_coin_value)
+        coin_group.add(coin)
+        mid_respawn_timer = current_time
+        mid_respawn_count += 1
+
+    # Deep coin respawn
+    if current_time - deep_respawn_timer > deep_respawn_interval and deep_respawn_count < hud.deep_coin_count:
+        deep_coin_value = np.random.normal(84, 17)
+        deep_coin_value = max(0, min(deep_coin_value, 140))
+        x = random.randint(0, tile_width * map_cols)
+        y = random.randint(tile_height * 12, tile_height * 19)
+        coin = Coin(x, y, deep_coin_value)
+        coin_group.add(coin)
+        deep_respawn_timer = current_time
+        deep_respawn_count += 1
+
+
 # Game states
 game_state = "start"
 
 # Main Game Loop
 while running:
     screen.fill((0, 0, 0))
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        elif event.type == pygame.KEYDOWN and game_state == "start":
-            if event.key == pygame.K_SPACE:
+
+        elif event.type == pygame.KEYDOWN:
+            if game_state == "start" and event.key == pygame.K_SPACE:
                 game_state = "play"
+                control_popup.start()
+            elif game_state == "play" and event.key == pygame.K_ESCAPE:
+                game_state = "paused"
+            elif game_state == "paused" and event.key == pygame.K_ESCAPE:
+                game_state = "play"
+
+        if game_state == "paused":
+            resume_button, quit_button = draw_pause_screen()
+            if resume_button.is_clicked(event):
+                game_state = "play"
+            elif quit_button.is_clicked(event):
+                running = False
+
+        elif game_state == "gameover":
+            play_again_button, quit_button = draw_game_over_screen(hud.score)
+            if play_again_button.is_clicked(event):
+                reset_game()
+                game_state = "play"
+            elif quit_button.is_clicked(event):
+                running = False
 
     if game_state == "start":
         # Draw start screen
@@ -267,7 +470,7 @@ while running:
         camera_offset_x = player.rect.centerx - Screen_Width // 2
         camera_offset_y = player.rect.centery - Screen_Height // 2
 
-        # Draw tiles
+        # Draw tiles and player
         for row in range(map_rows):
             for col in range(map_cols):
                 tile_rect = pygame.Rect(
@@ -290,18 +493,32 @@ while running:
 
                 pygame.draw.rect(screen, tile_color, tile_rect, 2)
 
-        # Draw player
         screen.blit(player.image, (player.rect.x - camera_offset_x, player.rect.y - camera_offset_y))
 
         # Draw coins
         for coin in coin_group:
             screen.blit(coin.image, (coin.rect.x - camera_offset_x, coin.rect.y - camera_offset_y))
-            coin_value_text = coint_font.render(str(coin.value), True, (250,228,130)) 
+            coin_value_text = coint_font.render(str(coin.value), True, (250, 228, 130))
             screen.blit(coin_value_text, (coin.rect.x - camera_offset_x - 10, coin.rect.y - camera_offset_y - 10))  # 5 pixels above coin
 
-
         # Draw HUD
-        hud.draw(screen, player,dt)
+        hud.draw(screen, player, dt)
+
+        # Respawn Coins
+        respawn_coins(coin_group, dt)
+
+        # Draw control Popup
+        control_popup.draw(screen)
+        control_popup.update()
+
+        if hud.oxygen_level == 0:
+            game_state = "gameover"
+
+    elif game_state == "paused":
+        resume_button, quit_button = draw_pause_screen()
+
+    elif game_state == "gameover":
+        play_again_button, quit_button = draw_game_over_screen(hud.score)
 
     pygame.display.flip()
     dt = clock.tick(60) / 1000
