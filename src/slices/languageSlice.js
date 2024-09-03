@@ -44,9 +44,12 @@ const initialState =
             [
                 "Password",
                 "Show Password",
-                "Enter a password of at least length 8 with at least a lower case charachter, an upper case character and a digit."
+                "Enter a password of at least length 8 with at least a lower case character, an upper case character and a digit."
             ],
-            "Your Age",
+            [
+                "Your Age",
+                "Enter an age between 18 and 100."
+            ],
             "Submit"
         ],
         homePage:
@@ -168,7 +171,7 @@ const initialState =
             "Hilfe",
             "Einstellungen",
             "Abmelden"
-        ],        
+        ],
         landingPage:
             [
                 "Hallo",
@@ -188,24 +191,27 @@ const initialState =
                     "Unterstützung und Ressourcen mit informativen Inhalten über die Gefahr der Spielsucht."
                 ]
             ],
-            signUpPage: [
-                [
-                    "Beim Anmelden",
-                    "Passwort und Anmeldename stimmen nicht überein!"
-                ],
-                [
-                    "Anmeldename",
-                    "Geben Sie einen Anmeldenamen ein",
-                    "Benutzername bereits vergeben oder länger als 100 Zeichen."
-                ],
-                [
-                    "Passwort",
-                    "Passwort anzeigen",
-                    "Geben Sie ein Passwort mit mindestens 8 Zeichen ein, das mindestens ein Kleinbuchstaben-, ein Großbuchstaben- und eine Ziffer enthält."
-                ],
-                "Ihr Alter",
-                "Abschicken"
+        signUpPage: [
+            [
+                "Beim Anmelden",
+                "Passwort und Anmeldename stimmen nicht überein!"
             ],
+            [
+                "Anmeldename",
+                "Geben Sie einen Anmeldenamen ein",
+                "Benutzername bereits vergeben oder länger als 100 Zeichen."
+            ],
+            [
+                "Passwort",
+                "Passwort anzeigen",
+                "Geben Sie ein Passwort mit mindestens 8 Zeichen ein, das mindestens ein Kleinbuchstaben-, ein Großbuchstaben- und eine Ziffer enthält."
+            ],
+            [
+                "Ihr Alter",
+                "Geben Sie ein Alter zwischen 18 und 100 ein."
+            ],
+            "Abschicken"
+        ],
         homePage:
             [
                 "So funktioniert die Safer Gambling App:",
@@ -348,24 +354,27 @@ const initialState =
                     "Soutien et ressources avec du contenu éducatif sur le risque de dépendance au jeu."
                 ]
             ],
-            signUpPage: [
-                [
-                    "Connexion",
-                    "Le mot de passe et le nom d'utilisateur ne correspondent pas!"
-                ],
-                [
-                    "Nom d'utilisateur",
-                    "Entrez un nom d'utilisateur",
-                    "Nom d'utilisateur déjà pris ou plus long que 100 caractères."
-                ],
-                [
-                    "Mot de passe.",
-                    "Afficher le mot de passe",
-                    "Entrez un mot de passe d'au moins 8 caractères, contenant au moins une lettre minuscule, une lettre majuscule et un chiffre."
-                ],
-                "Votre âge",
-                "Soumettre"
+        signUpPage: [
+            [
+                "Connexion",
+                "Le mot de passe et le nom d'utilisateur ne correspondent pas!"
             ],
+            [
+                "Nom d'utilisateur",
+                "Entrez un nom d'utilisateur",
+                "Nom d'utilisateur déjà pris ou plus long que 100 caractères."
+            ],
+            [
+                "Mot de passe.",
+                "Afficher le mot de passe",
+                "Entrez un mot de passe d'au moins 8 caractères, contenant au moins une lettre minuscule, une lettre majuscule et un chiffre."
+            ],
+            [
+                "Votre âge",
+                "Entrez un âge entre 18 et 100."
+            ],
+            "Soumettre"
+        ],
         homePage:
             [
                 "Comment fonctionne l'application Safer Gambling: ",
