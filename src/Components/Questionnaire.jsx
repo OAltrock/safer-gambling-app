@@ -58,7 +58,7 @@ const Questionnaire = () => {
       <div>
         <h3>{header}</h3>
       </div>
-     
+
       <Carousel style={{ minHeight: '60vh' }} activeIndex={index} interval={null} onSelect={handleSelect} keyboard={true}>
         {questions.map((question, qIndex) => (
           <Carousel.Item style={{ minHeight: "unset" }} key={`citem${qIndex}`}>
@@ -69,30 +69,30 @@ const Questionnaire = () => {
               overlay={(props) => renderTooltip(props, popups[qIndex])}
             >
               <p key={`pquest${qIndex}`}>{question}</p>
-              </OverlayTrigger>
-              <OverlayTrigger
+            </OverlayTrigger>
+            <OverlayTrigger
               placement="right"
               delay={{ show: 250, hide: 400 }}
               overlay={(props) => renderTooltip(props, popups[qIndex])}
             >
-            <Form key={`radio${qIndex}`}>
-              {options.map((option, score) => (
-                <Form.Check
-                  inline
-                  label={option}
-                  name={qIndex}
-                  type='radio'
-                  value={questionnaire[`question${index + 1}`].score !== -1 ? questionnaire[`question${index + 1}`].score : score}
-                  onChange={handleAnswer}
-                  key={`q${score}`}
-                />
-              ))}
-            </Form>
+              <Form key={`radio${qIndex}`}>
+                {options.map((option, score) => (
+                  <Form.Check
+                    inline
+                    label={option}
+                    name={qIndex}
+                    type='radio'
+                    value={questionnaire[`question${index + 1}`].score !== -1 ? questionnaire[`question${index + 1}`].score : score}
+                    onChange={handleAnswer}
+                    key={`q${score}`}
+                  />
+                ))}
+              </Form>
             </OverlayTrigger>
           </Carousel.Item>
-          
+
         ))}
-        
+
       </Carousel>
 
       <div className="progress">
