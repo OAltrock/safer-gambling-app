@@ -84,7 +84,18 @@ const initialState =
                     "Has your gambling caused any financial problems for you or your household?",
                     "Have you felt guilty about the way you gamble or what happens when you gamble?"
                 ],
-            options: ["Never", "Sometimes", "Most of the time", "Almost always"]
+            options: ["Never", "Sometimes", "Most of the time", "Almost always"],
+            popups: [
+                "Stay Within Your Limits!",
+                "Larger bets don't always mean larger wins.",
+                "Chasing losses can lead to bigger losses.",
+                "Borrowing money to gamble is a red flag.",
+                "Recognizing a problem is the first step to solving it.",
+                "Gambling should not affect your mental health.",
+                "Listen to feedback from others about your gambling.",
+                "Gambling should not cause financial problems.",
+                "Feeling guilty about gambling is a sign to reconsider."
+            ],
         },
         gamePage: [
             ["Game Overview: Treasure Dive", "Game Rules:", "End of Game and Scoring:", "Player Assessment:"],
@@ -245,6 +256,7 @@ const initialState =
                     "Hatten Sie schon einmal ein schlechtes Gewissen, weil Sie gespielt haben oder wegen den Konsequenzen Ihres Spielens?"
                 ],
             options: ["Niemals", "Manchmal", "Meistens", "Fast immer"]
+           
         },
         gamePage: [
             ["Spielübersicht: Schatztauchen", "Spielregeln:", "Spielende und Wertung:", "Spielerbewertung:"],
