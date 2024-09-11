@@ -58,18 +58,23 @@ const Questionnaire = () => {
       <div>
         <h3>{header}</h3>
       </div>
-
+     
       <Carousel style={{ minHeight: '60vh' }} activeIndex={index} interval={null} onSelect={handleSelect} keyboard={true}>
         {questions.map((question, qIndex) => (
           <Carousel.Item style={{ minHeight: "unset" }} key={`citem${qIndex}`}>
             <h4 key={`questionCount${qIndex}`}>{questionText} {index + 1} {preposition} {questions.length}</h4>
             <OverlayTrigger
-              placement="right"
+              placement="left"
               delay={{ show: 250, hide: 400 }}
               overlay={(props) => renderTooltip(props, popups[qIndex])}
             >
               <p key={`pquest${qIndex}`}>{question}</p>
-            </OverlayTrigger>
+              </OverlayTrigger>
+              <OverlayTrigger
+              placement="right"
+              delay={{ show: 250, hide: 400 }}
+              overlay={(props) => renderTooltip(props, popups[qIndex])}
+            >
             <Form key={`radio${qIndex}`}>
               {options.map((option, score) => (
                 <Form.Check
@@ -83,8 +88,11 @@ const Questionnaire = () => {
                 />
               ))}
             </Form>
+            </OverlayTrigger>
           </Carousel.Item>
+          
         ))}
+        
       </Carousel>
 
       <div className="progress">
