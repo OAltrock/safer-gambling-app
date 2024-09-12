@@ -55,8 +55,7 @@ const SignUp = () => {
         return !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(password)
     }
 
-    function validateAge(age) {
-        console.log(age);        
+    function validateAge(age) {              
         return age<18 || age>100;
     }
 

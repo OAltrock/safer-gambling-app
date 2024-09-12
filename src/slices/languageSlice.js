@@ -255,8 +255,19 @@ const initialState =
                     "Hat Ihr Glücksspiel finanzielle Probleme für Sie oder Ihren Haushalt verursacht?",
                     "Hatten Sie schon einmal ein schlechtes Gewissen, weil Sie gespielt haben oder wegen den Konsequenzen Ihres Spielens?"
                 ],
+            popups: [
+                "Bleiben Sie innerhalb Ihrer Grenzen!",
+                "Größere Einsätze bedeuten nicht immer größere Gewinne.",
+                "Der Versuch, Verluste zurückzugewinnen, kann zu größeren Verlusten führen.",
+                "Geld zu leihen, um zu spielen, ist ein Warnsignal.",
+                "Ein Problem zu erkennen ist der erste Schritt zur Lösung.",
+                "Glücksspiel sollte Ihre psychische Gesundheit nicht beeinträchtigen.",
+                "Hören Sie sich das Feedback anderer zu Ihrem Glücksspiel an.",
+                "Glücksspiel sollte keine finanziellen Probleme verursachen.",
+                "Sich schuldig zu fühlen, ist ein Zeichen, es zu überdenken."
+            ],
             options: ["Niemals", "Manchmal", "Meistens", "Fast immer"]
-           
+
         },
         gamePage: [
             ["Spielübersicht: Schatztauchen", "Spielregeln:", "Spielende und Wertung:", "Spielerbewertung:"],
@@ -419,6 +430,17 @@ const initialState =
                     "Le jeu a-t-il causé des problèmes financiers à vous ou à votre ménage?",
                     "Vous êtes-vous déjà senti coupable de votre façon de jouer ou de ce qui se passe lorsque vous jouez?"
                 ],
+            popups: [
+                "Restez dans vos limites!",
+                "Des mises plus importantes ne sont pas toujours synonymes de gains plus importants.",
+                "Poursuivre des pertes peut entraîner des pertes plus importantes.",
+                "Emprunter de l'argent pour jouer est un signal d'alarme.",
+                "Reconnaître un problème est la première étape pour le résoudre.",
+                "Le jeu ne doit pas affecter votre santé mentale.",
+                "Écoutez les retours des autres sur votre jeu.",
+                "Les jeux d'argent ne doivent pas entraîner de problèmes financiers.",
+                "Se sentir coupable de jouer est un signe qu'il faut reconsidérer la question."
+            ],
             options: ["Jamais", "Parfois", "La plupart du temps", "Presque toujours"]
         },
         gamePage: [

@@ -3,7 +3,6 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from werkzeug.security import generate_password_hash, check_password_hash
-import time
 import subprocess
 
 app = Flask(__name__)
@@ -101,14 +100,11 @@ def delete_user(user_id):
 async def start_game():    
     try:        
         current_user = get_jwt_identity()
-        print(get_jwt_identity())
-        start_time = time.perf_counter()
+        print(get_jwt_identity())        
         # Execute the game file (game_take_8.py)
         result = subprocess.run(['python', 'game_v2.8.py'], capture_output=True, text=True)
-        print('after game')
-        end_time = time.perf_counter()
-        """ amountPlayed = len(result.stdout.splitlines()[2:]) """
-        timePlayed = end_time - start_time     
+        print('after game')        
+        """ amountPlayed = len(result.stdout.splitlines()[2:]) """             
         print("Error output:", result.stderr)
         """ games = []
         for score in result.stdout.splitlines()[2:]:
