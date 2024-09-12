@@ -64,17 +64,15 @@ const Questionnaire = () => {
           <Carousel.Item style={{ minHeight: "unset" }} key={`citem${qIndex}`}>
             <h4 key={`questionCount${qIndex}`}>{questionText} {index + 1} {preposition} {questions.length}</h4>
             <OverlayTrigger
-              placement="bottom-end"
+              placement="top-end"
               delay={{ show: 250, hide: 400 }}
-              overlay={(props) => renderTooltip(props, popups[qIndex])}
-            >
+              overlay={(props) => renderTooltip(props, popups[qIndex])}>
               <p key={`pquest${qIndex}`}>{question}</p>
             </OverlayTrigger>
             <OverlayTrigger
               placement="bottom-end"
               delay={{ show: 250, hide: 400 }}
-              overlay={(props) => renderTooltip(props, popups[qIndex])}
-            >
+              overlay={(props) => renderTooltip(props, popups[qIndex])}>
               <Form key={`radio${qIndex}`}>
                 {options.map((option, score) => (
                   <Form.Check
