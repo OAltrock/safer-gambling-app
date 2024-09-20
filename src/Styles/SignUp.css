@@ -1,0 +1,66 @@
+/* SignUp.css */
+.signup-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #f0f2f5;
+}
+
+.signup-form {
+  width: 100%;
+  max-width: 500px; /* Increased max-width for the form */
+  padding: 30px; /* Increased padding for the form */
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.status-message {
+  color: var(--fdm-font-color);
+  margin-bottom: 20px; /* Increased margin-bottom for better spacing */
+  display: block;
+  text-align: center;
+}
+
+.form-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.centered-input {
+  width: 100%;
+  max-width: 350px; /* Increased max-width for input fields */
+  padding: 10px; /* Increased padding for input fields */
+  font-size: 1.1rem; /* Increased font size for input fields */
+}
+
+.bigger-input {
+  max-width: 350px; /* Increased max-width for specific input fields */
+}
+
+.smallest-input {
+  max-width: 100px; /* Further reduced width for the age input */
+}
+
+.checkbox-label {
+  font-size: 0.9rem; /* Increased font size for checkbox label */
+}
+
+.signup-button {
+  width: 100%;
+  max-width: 350px; /* Increased max-width for the button */
+  background-color: #000; /* Set the background color to black */
+  border-color: #000; /* Set the border color to black */
+  color: #fff; /* Set the text color to white for better contrast */
+  padding: 10px; /* Increased padding for the button */
+  font-size: 1.1rem; /* Increased font size for the button */
+}
+
+  
