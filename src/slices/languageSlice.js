@@ -9,7 +9,8 @@ const initialState =
                 "Advice & Guidance",
                 "Help",
                 "Settings",
-                "Log Out"
+                "Log Out",
+                "Delete Account"
             ]
         ,
         landingPage:
@@ -181,7 +182,8 @@ const initialState =
             "Hilfe & Beratung",
             "Hilfe",
             "Einstellungen",
-            "Abmelden"
+            "Abmelden",
+            "Konto löschen"
         ],
         landingPage:
             [
@@ -355,7 +357,8 @@ const initialState =
                 "Conseils et orientation",
                 "Aider",
                 "Paramètres",
-                "Déconnexion"
+                "Déconnexion",
+                "Supprimer le compte"
             ]
         ,
         landingPage:

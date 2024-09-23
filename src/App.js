@@ -15,6 +15,7 @@ import QuizScore from './Components/QuizScore';
 import HelpPage from './Components/HelpPage';
 import Navbar from './Components/Navbar';
 import SignUp from './Components/SignUp.jsx';
+import ConfirmDelete from './Components/ConfirmDelete.jsx';
 
 import { useDispatch } from 'react-redux';
 
@@ -81,6 +82,7 @@ function App() {
               <Route path="/Home" element={<ProtectedRoute component={Home} />} />
               <Route path="/GamePage" element={<ProtectedRoute component={GamePage} />} />
               <Route path="/Evaluation" element={<ProtectedRoute component={EvaluationPage} />} />
+              <Route path='/confirmDelete' element={<ProtectedRoute component={ConfirmDelete} />} />
             </Route>
             <Route path="/Guidance" element={<HelpPage />} />
 

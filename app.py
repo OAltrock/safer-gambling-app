@@ -36,7 +36,7 @@ class User (db.Model):
 class Game (db.Model):
     __tablename__ = 'games'
         
-    id = db.Column(db.Integer, primary_key=True)
+    game_id = db.Column(db.Integer, primary_key=True)
     duration = db.Column(db.Double, nullable=False)
     score = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
@@ -85,10 +85,12 @@ def add_user():
         }), 201
     
 
-@app.route('/delete_user/<int:user_id>', methods=['DELETE'])
+@app.route('/delete_user', methods=['DELETE'])
 @jwt_required()
-def delete_user(user_id):
-    user = User.query.get(user_id)  # Query the user by ID
+def delete_user():
+    current_user = get_jwt_identity()
+    print(current_user)
+    user = User.query.get(current_user)  # Query the user by ID
     if user:
         db.session.delete(user)  # Delete the user from the session
         db.session.commit()  # Commit the session to save changes
