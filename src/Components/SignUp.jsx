@@ -16,9 +16,9 @@ const SignUp = () => {
   const [users, setUsers] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
   const [age, setAge] = useState(0);
-  const [invalidUsername, setInvalidUsername] = useState(false);
-  const [invalidPassword, setInvalidPassword] = useState(false);
-  const [invalidAge, setInvalidAge] = useState(false);
+  const [invalidUsername, setInvalidUsername] = useState(true);
+  const [invalidPassword, setInvalidPassword] = useState(true);
+  const [invalidAge, setInvalidAge] = useState(true);
 
   const [status, usernameMsgs, passwordMsgs, ageLabel, submit] = useSelector(
     (state) => state.languages[state.languages.current].signUpPage
@@ -60,7 +60,7 @@ const SignUp = () => {
   }
 
   function validateAge(age) {
-    return age < 18 || age > 100;
+    return !age || age < 18 || age > 100;
   }
 
   return (
