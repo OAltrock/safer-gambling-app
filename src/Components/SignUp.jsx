@@ -60,7 +60,7 @@ const SignUp = () => {
   }
 
   function validateAge(age) {
-    return age < 18 || age > 100;
+    return !age || age < 18 || age > 100;
   }
 
   return (
