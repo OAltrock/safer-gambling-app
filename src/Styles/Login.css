@@ -1,0 +1,53 @@
+/* Login.css */
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background-color: #f0f2f5;
+  }
+  
+  .login-form {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .status-message {
+    color: var(--fdm-font-color);
+    margin-bottom: 15px;
+    display: block;
+    text-align: center;
+  }
+  
+  .form-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .centered-input {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .checkbox-label {
+    font-size: 0.7rem;
+  }
+  
+  .login-button {
+    width: 100%;
+    max-width: 300px;
+    background-color: #000; /* Set the background color to black */
+    border-color: #000; /* Set the border color to black */
+    color: #fff; /* Set the text color to white for better contrast */
+  }
+  
