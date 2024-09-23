@@ -20,6 +20,15 @@
   align-items: center;
 }
 
+#root > div > div.signup-wrapper > form > div:nth-child(3) {
+  display: flex;
+  flex-direction: column;
+}
+
+#formBasicPassword {
+  align-self: center;
+}
+
 .status-message {
   color: var(--fdm-font-color);
   margin-bottom: 20px; /* Increased margin-bottom for better spacing */
