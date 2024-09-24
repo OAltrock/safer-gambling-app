@@ -15,6 +15,10 @@ CREATE TABLE IF NOT EXISTS games (
     duration DOUBLE NOT NULL,
     user_id INT,
     score INT,
+    risk_score INT,
+    zone1_duration TIME,
+    zone2_duration TIME,
+    zone3_duration TIME
     FOREIGN KEY (user_id)
         REFERENCES users (user_id)
         ON UPDATE RESTRICT ON DELETE CASCADE    

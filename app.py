@@ -104,7 +104,7 @@ async def start_game():
         current_user = get_jwt_identity()
         print(get_jwt_identity())        
         # Execute the game file (game_take_8.py)
-        result = subprocess.run(['python', 'game_v2.9 1.py'], capture_output=True, text=True)
+        result = subprocess.run(['python', 'game_v3.0.py'], capture_output=True, text=True)
         print('after game')        
         """ amountPlayed = len(result.stdout.splitlines()[2:]) """             
         print("Error output:", result.stderr)

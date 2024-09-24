@@ -7,11 +7,10 @@ import { useDispatch } from 'react-redux';
 import { setQuestionnaireDoneFalse } from '../slices/questionnaireDoneSlice';
 import { setFalse } from '../slices/gameDoneSlice';
 import { reset } from '../slices/questionnaireSlice';
+import { useSelector } from "react-redux";
 
 const ConfirmDelete = () => {
-    const useDelete = () => {
-        return useMutation(deleteAccount);
-    }
+    const [warning ,confirm] = useSelector(state => state.languages[state.languages.current].confirmDelete);
     const dispatch = useDispatch();
     const deleteAccount = async () => {
         const response = await axios.delete('http://localhost:5000/delete_user', {
@@ -45,18 +44,18 @@ const ConfirmDelete = () => {
             {isLoading ?
 
                 <div>Deleting</div>
-                : isError ? <div>{error} </div>
+                : isError ? <div>{error.message} </div>
                     :
                     <div className="login-wrapper"
                         style={{ display: 'flex', flexDirection: 'column' }}>
-                        <p>This will delete your account and all the data connected to it.</p>
+                        <p>{warning}</p>
                         <Button
                             variant="primary"
                             type="submit"
                             className="login-button"
                             onClick={handleDelete}
                         >
-                            Confirm
+                            {confirm}
                         </Button>
                     </div>}
         </div>
