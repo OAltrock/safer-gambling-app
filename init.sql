@@ -11,14 +11,14 @@ CREATE TABLE IF NOT EXISTS users (
     age int NOT NULL
 );
 CREATE TABLE IF NOT EXISTS games (
-    game_id INT AUTO_INCREMENT PRIMARY KEY,
-    duration DOUBLE NOT NULL,
-    user_id INT,
+    game_id INT AUTO_INCREMENT PRIMARY KEY,    
+    user_id INT NOT NULL,
     score INT,
     risk_score INT,
     zone1_duration TIME,
     zone2_duration TIME,
-    zone3_duration TIME
+    zone3_duration TIME,
+    time_played DATE
     FOREIGN KEY (user_id)
         REFERENCES users (user_id)
         ON UPDATE RESTRICT ON DELETE CASCADE    

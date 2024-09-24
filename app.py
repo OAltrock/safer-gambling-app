@@ -4,9 +4,13 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from werkzeug.security import generate_password_hash, check_password_hash
 import subprocess
+import ast
 
 app = Flask(__name__)
 CORS(app, origins='*')
+BASE_OXYGEN_SHALLOWS = 0
+BASE_OXYGEN_MID = 20
+BASE_OXYGEN_DEEP = 40
 
 
 
@@ -36,15 +40,23 @@ class User (db.Model):
 class Game (db.Model):
     __tablename__ = 'games'
         
-    game_id = db.Column(db.Integer, primary_key=True)
-    duration = db.Column(db.Double, nullable=False)
+    game_id = db.Column(db.Integer, primary_key=True)    
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)    
     score = db.Column(db.Integer)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    risk_score = db.Column(db.Integer)
+    zone1_duration = db.Column(db.Time)
+    zone2_duration = db.Column(db.Time)
+    zone3_duration = db.Column(db.Time)
+    time_played = db.Column(db.Date)
     
-    def __init__(self, duration, score, user_id):        
-        self.duration = duration
+    def __init__(self, user_id, score, risk_score, zone1_duration, zone2_duration, zone3_duration, time_played):                
         self.score = score
         self.user_id = user_id
+        self.risk_score = risk_score
+        self.zone1_duration = zone1_duration
+        self.zone2_duration = zone2_duration
+        self.zone3_duration = zone3_duration
+        self.time_played = time_played
         
 with app.app_context():
     db.create_all()
@@ -67,8 +79,7 @@ def login():
     
 @app.route('/users', methods=['GET'])
 async def get_users():
-    users = User.query.all()    
-    print(users)
+    users = User.query.all() 
     return jsonify([{ 'id':user.user_id, 'name': user.name, 'age': user.age } for user in users])
 
 @app.route('/add_user', methods=['POST'])
@@ -88,8 +99,7 @@ def add_user():
 @app.route('/delete_user', methods=['DELETE'])
 @jwt_required()
 def delete_user():
-    current_user = get_jwt_identity()
-    print(current_user)
+    current_user = get_jwt_identity()    
     user = User.query.get(current_user)  # Query the user by ID
     if user:
         db.session.delete(user)  # Delete the user from the session
@@ -100,14 +110,58 @@ def delete_user():
 @app.route('/start_game', methods=['GET'])
 @jwt_required()
 async def start_game():    
-    try:        
-        current_user = get_jwt_identity()
-        print(get_jwt_identity())        
+    try:       
         # Execute the game file (game_take_8.py)
-        result = subprocess.run(['python', 'game_v3.0.py'], capture_output=True, text=True)
-        print('after game')        
-        """ amountPlayed = len(result.stdout.splitlines()[2:]) """             
-        print("Error output:", result.stderr)
+        result = subprocess.run(['python', 'game_v3.0.py'], capture_output=True, text=True) 
+        print('line114: ', result.stdout.splitlines()[2:])
+        lines = result.stdout.splitlines()
+        data = ast.literal_eval("\n".join(lines[2:]))
+        print('line117: ', data)  
+        for game in data:
+            risk_score=0
+            for zone_event in game['entered_zones']:
+                for zone_name, oxygen in zone_event.items():                    
+                    if(zone_name=='ShallowEnter'):
+                        risk_score+=100-oxygen
+                    elif(zone_name=='MidEntered'):
+                        risk_score+=2*(100-oxygen)
+                    elif(zone_name=='DeepEntered'):
+                        risk_score+=3*(100-oxygen)
+                    # base level is placeholder for a safe amount of oxygen to return to the surface
+                    elif(zone_name=='ShallowExit'):
+                        if (oxygen<BASE_OXYGEN_SHALLOWS):
+                            risk_score+=150
+                        else:
+                            risk_score+=1/((oxygen-BASE_OXYGEN_SHALLOWS)/100)
+                    elif(zone_name=='MidExit'):
+                        if (oxygen<BASE_OXYGEN_MID):
+                            risk_score+=300
+                        else:
+                            risk_score+=2/((oxygen-BASE_OXYGEN_MID)/100)
+                    else :
+                        if (oxygen<BASE_OXYGEN_MID):
+                            risk_score+=500
+                        else:
+                            risk_score+=3/((oxygen-BASE_OXYGEN_DEEP)/100)
+            print('risk_score: ', risk_score)
+            print('data["time_spent_in_zones"]["Shallow"]: ', game['time_spent_in_zones']['Shallow'])
+            print('data["time_spent_in_zones"]["Mid"]: ', game['time_spent_in_zones']['Mid'])
+            print('data["time_spent_in_zones"]["Deep"]: ', game['time_spent_in_zones']['Deep'])
+            print(get_jwt_identity())
+            current_user = get_jwt_identity()
+            new_game = Game(
+                user_id=current_user, 
+                score=game['score'], 
+                risk_score=risk_score, 
+                zone1_duration=game['time_spent_in_zones']['Shallow'], 
+                zone2_duration=game['time_spent_in_zones']['Mid'], 
+                zone3_duration=game['time_spent_in_zones']['Deep'],
+                time_played=game['time_played']
+                )
+            db.session.add(new_game)
+            db.session.commit()
+        
+        """ amountPlayed = len(result.stdout.splitlines()[2:]) """                     
         """ games = []
         for score in result.stdout.splitlines()[2:]:
             new_game = Game(timePlayed, score, current_user)
