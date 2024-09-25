@@ -6,7 +6,7 @@ import { useSignUp } from '../hooks/useSignUp';
 import validateUserName from '../hooks/validateUserName';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import '/app/src/Styles/SignUp.css';
+import '../Styles/SignUp.css';
 
 const SignUp = () => {
   const { mutate, isLoading, isError, error } = useSignUp();
