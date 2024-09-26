@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import { useLogin } from '../hooks/useLogin';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import "/app/src/Styles/Login.css"
+import "../Styles/Login.css"
 
 const Login = () => {
   const { mutate, isLoading, isError, error } = useLogin();

@@ -181,5 +181,25 @@ async def start_game():
         print(e)
         return jsonify({"error": str(e)}), 500
 
+@app.route('/add_games', methods=['POST'])
+@jwt_required()
+def add_games():
+    data = request.get_json()  # Get JSON data from the request
+    current_user = get_jwt_identity()
+    for game in data:
+        new_game = Game(user_id=current_user,
+                        score=game['score'], 
+                        risk_score=game['risk_score'], 
+                        zone1_duration=game['time_spent_in_zones']['Shallow'], 
+                        zone2_duration=game['time_spent_in_zones']['Mid'], 
+                        zone3_duration=game['time_spent_in_zones']['Deep'],
+                        time_played=game['time_played']
+                        )  # Create a new User instance
+        db.session.add(new_game)  # Add the user to the session
+        db.session.commit()
+    return jsonify({
+        "message":"games added"
+        }), 201
+    
 if __name__ == '__main__':
     app.run(debug=True)    
