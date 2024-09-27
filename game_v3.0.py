@@ -313,7 +313,7 @@ def draw_pause_screen():
 def draw_game_over_screen():
     screen.fill("grey9")
     game_over_text = font.render("Game Over", True, WHITE)
-    score_text = font.render(f"Score: 0", True, WHITE)
+    score_text = font.render(f"Score: 0", True, WHITE)    
     screen.blit(game_over_text, (Screen_Width // 2 - game_over_text.get_width() // 2, Screen_Height // 2 - 150))
     screen.blit(score_text, (Screen_Width // 2 - score_text.get_width() // 2, Screen_Height // 2 - 100))
 
@@ -639,6 +639,7 @@ def handle_endgame_events(event):
             game_state = "play"
         elif quit_button.is_clicked(event):
             global running
+            save_game_session(0)
             running = False
     elif game_state == "won":
         play_again_button, quit_button = draw_won_screen(hud.score)

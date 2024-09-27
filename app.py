@@ -100,7 +100,7 @@ def add_user():
 @jwt_required()
 def delete_user():
     current_user = get_jwt_identity()    
-    user = User.query.get(current_user)  # Query the user by ID
+    user = db.session.get(User, current_user)  # Query the user by ID
     if user:
         db.session.delete(user)  # Delete the user from the session
         db.session.commit()  # Commit the session to save changes

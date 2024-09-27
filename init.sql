@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS games (
     zone1_duration TIME,
     zone2_duration TIME,
     zone3_duration TIME,
-    time_played DATE
+    time_played DATE,
     FOREIGN KEY (user_id)
         REFERENCES users (user_id)
         ON UPDATE RESTRICT ON DELETE CASCADE    

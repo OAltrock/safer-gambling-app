@@ -55,6 +55,7 @@ const initialState =
         ],
         confirmDelete: [
             "This will delete your account and all the data connected to it. This can't be undone.",
+            "Cancel",
             "Confirm"
         ],
         homePage:
@@ -231,6 +232,7 @@ const initialState =
         ],
         confirmDelete: [
             "Mit dieser Aktion wird ihr Konto gelöscht. Dies kann nicht rückgängig gemacht werden.",
+            "Abbrechen",
             "Bestätigen"
         ],
         homePage:
@@ -411,6 +413,7 @@ const initialState =
         ],
         confirmDelete: [
             "Cette opération supprimera votre compte et toutes les données qui y sont liées. Cette opération ne peut être annulée.",
+            "Annuler",
             "Confirmer"
         ],
         homePage:

@@ -64,9 +64,9 @@ class LoginUI:
                     for zone_name, oxygen in zone_event.items():                    
                         if(zone_name=='ShallowEnter'):
                             risk_score+=100-oxygen
-                        elif(zone_name=='MidEntered'):
+                        elif(zone_name=='MidEnter'):
                             risk_score+=2*(100-oxygen)
-                        elif(zone_name=='DeepEntered'):
+                        elif(zone_name=='DeepEnter'):
                             risk_score+=3*(100-oxygen)
                         # base level is placeholder for a safe amount of oxygen to return to the surface
                         elif(zone_name=='ShallowExit'):

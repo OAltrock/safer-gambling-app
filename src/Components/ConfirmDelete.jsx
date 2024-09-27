@@ -8,9 +8,10 @@ import { setQuestionnaireDoneFalse } from '../slices/questionnaireDoneSlice';
 import { setFalse } from '../slices/gameDoneSlice';
 import { reset } from '../slices/questionnaireSlice';
 import { useSelector } from "react-redux";
+import ButtonGroup from './ButtonGroup';
 
 const ConfirmDelete = () => {
-    const [warning ,confirm] = useSelector(state => state.languages[state.languages.current].confirmDelete);
+    const [warning, cancel, confirm] = useSelector(state => state.languages[state.languages.current].confirmDelete);
     const dispatch = useDispatch();
     const deleteAccount = async () => {
         const response = await axios.delete('http://localhost:5000/delete_user', {
@@ -49,14 +50,28 @@ const ConfirmDelete = () => {
                     <div className="login-wrapper"
                         style={{ display: 'flex', flexDirection: 'column' }}>
                         <p>{warning}</p>
-                        <Button
-                            variant="primary"
-                            type="submit"
-                            className="login-button"
-                            onClick={handleDelete}
-                        >
-                            {confirm}
-                        </Button>
+                        <ButtonGroup
+                            action={handleDelete}
+                        />
+                        {/*  <div style={{display: 'flex', flexDirection: 'row'}}>
+                            <Button 
+                                style={{marginRight: '1.5em'}}
+                                variant="primary"
+                                type="submit"
+                                className="login-button"
+                                onClick={() => navigate(-1)}
+                            >
+                                {cancel}
+                            </Button>
+                            <Button
+                                variant="success"
+                                type="submit"
+                                className="login-button"
+                                onClick={handleDelete}
+                            >
+                                {confirm}
+                            </Button>
+                        </div> */}
                     </div>}
         </div>
     )

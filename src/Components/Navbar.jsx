@@ -46,11 +46,13 @@ function Navbar() {
     if (darkMode.darkMode) {
       document.documentElement.style.setProperty('--fdm-background', 'white');
       document.documentElement.style.setProperty('--fdm-font-color', 'black');
+      document.documentElement.style.setProperty('--fdm-background-bright-dark', 'rgba(224, 224, 224, 0.807)');
       dispatch(setDarkMode(false));
       setCookie('darkMode', false, 30)
     }
     else {
       document.documentElement.style.setProperty('--fdm-background', 'var(--fdm-dark-background)');
+      document.documentElement.style.setProperty('--fdm-background-bright-dark', 'rgba(55, 55, 55, 0.181)');
       document.documentElement.style.setProperty('--fdm-font-color', 'white');
       dispatch(setDarkMode(true));
       setCookie('darkMode', true, 30)
