@@ -52,6 +52,7 @@ const ConfirmDelete = () => {
                         <p>{warning}</p>
                         <ButtonGroup
                             action={handleDelete}
+                            disabled={false}
                         />
                         {/*  <div style={{display: 'flex', flexDirection: 'row'}}>
                             <Button 

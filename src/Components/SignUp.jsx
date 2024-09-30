@@ -7,6 +7,7 @@ import validateUserName from '../hooks/validateUserName';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import '../Styles/SignUp.css';
+import ButtonGroup from './ButtonGroup';
 
 const SignUp = () => {
   const { mutate, isLoading, isError, error } = useSignUp();
@@ -152,15 +153,15 @@ const SignUp = () => {
             {ageLabel[1]}
           </Form.Control.Feedback>
         </Form.Group>
-
-        <Button
+        <ButtonGroup action={handleSignUp} disabled={invalidUsername || invalidPassword || invalidAge}/>
+        {/* <Button
           variant="primary"
           type="submit"
           disabled={invalidUsername || invalidPassword || invalidAge}
           className="signup-button"
         >
           {submit}
-        </Button>
+        </Button> */}
       </Form>
     </div>
   );

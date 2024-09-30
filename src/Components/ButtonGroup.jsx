@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import { useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 
-const ButtonGroup = ({action}) => {
+const ButtonGroup = ({action, disabled}) => {
     const [_, cancel, confirm] = useSelector(state => state.languages[state.languages.current].confirmDelete);
     const navigate = useNavigate();
     return (
@@ -22,6 +22,7 @@ const ButtonGroup = ({action}) => {
                 type="submit"
                 className="login-button"
                 onClick={action}
+                disabled={disabled}
             >
                 {confirm}
             </Button>

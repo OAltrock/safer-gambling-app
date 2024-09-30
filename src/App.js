@@ -32,6 +32,7 @@ import AuthWrapper from './Components/AuthWrapper.jsx';
 import { setFalse } from './slices/gameDoneSlice.js';
 import { setQuestionnaireDoneFalse } from './slices/questionnaireDoneSlice.js';
 import { reset } from './slices/questionnaireSlice.js';
+import LoadGame from './Components/LoadGame.jsx';
 
 
 library.add(fas, far, faMoon, faSun)
@@ -83,6 +84,7 @@ function App() {
               <Route path="/GamePage" element={<ProtectedRoute component={GamePage} />} />
               <Route path="/Evaluation" element={<ProtectedRoute component={EvaluationPage} />} />
               <Route path='/confirmDelete' element={<ProtectedRoute component={ConfirmDelete} />} />
+              <Route path='/loadGame' element={<ProtectedRoute component={LoadGame} />} />
             </Route>
             <Route path="/Guidance" element={<HelpPage />} />
 

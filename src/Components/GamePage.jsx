@@ -70,8 +70,8 @@ const GamePage = () => {
   }
 
   const handlePlayGame = (e) => {
-    e.preventDefault();
-    mutate();
+    /* e.preventDefault(); */
+    navigate('/loadGame')
   }
 
   return (

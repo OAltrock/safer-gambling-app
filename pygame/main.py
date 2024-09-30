@@ -5,6 +5,8 @@ import pygame
 import random
 import datetime
 import uuid
+import js
+import json
 """ import asyncio """
 
 
@@ -12,8 +14,8 @@ import uuid
 """ Screen_Width = pygame.display.Info().current_w - 210
 Screen_Height = pygame.display.Info().current_h - 110
 screen = pygame.display.set_mode((Screen_Width, Screen_Height)) """
-Screen_Width = 800  
-Screen_Height = 600
+Screen_Width = 1280 
+Screen_Height = 720
 screen = pygame.display.set_mode((Screen_Width, Screen_Height))
 
 # Ingame Clock + Running = true , delta time
@@ -299,6 +301,20 @@ class Button:
                 return True
         return False
 
+def send_game_data():
+    # Create the data dictionary
+    data = {
+        'type': 'GAME_OVER',
+        'score': hud.score,
+        'time_played': str(time_played),
+        'max_depth': max(int(hud.get_depth(player.rect.y)) for _ in player_coordinates),
+        'zone_times': {zone: str(time) for zone, time in zone_time_spent.items()}
+    }
+    
+    # Convert the dictionary to a JSON string
+    json_data = json.dumps(data)
+    print(json_data)
+    js.window.parent.postMessage(json_data, "*")
 
 def draw_start_screen():
     screen.blit(background_img, (0, 0))
@@ -622,10 +638,11 @@ def handle_events():
                 last_zone_update_time = adjust_for_pause(pause_start_time, last_zone_update_time)
         
         # Handle clicks in paused or end-game states
-        elif game_state == "paused":
-            handle_pause_events(event)
-        elif game_state == "gameover" or game_state == "won":
-            handle_endgame_events(event)
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if game_state == "paused":
+                handle_pause_events(event)
+            elif game_state in ["gameover", "won"]:
+                handle_endgame_events(event)
 
 def handle_pause_events(event):
     resume_button, quit_button = draw_pause_screen()
@@ -637,12 +654,16 @@ def handle_pause_events(event):
         global running
         running = False
 
+def send_message_to_react(message):
+    js.postMessage(message, "*")
+
 def handle_endgame_events(event):
-    global game_state, game_over_metrics_recorded
+    global game_state, game_over_metrics_recorded, running
 
     if not game_over_metrics_recorded:
-        save_game_session(hud.score)
+        save_game_session(hud.score)        
         game_over_metrics_recorded = True
+        
     if game_state == "gameover":
         play_again_button, quit_button = draw_game_over_screen()
         if play_again_button.is_clicked(event):
@@ -652,13 +673,19 @@ def handle_endgame_events(event):
             global running
             save_game_session(0)
             running = False
+            js.postMessage({"type": "GAME_QUIT"}, "*")
     elif game_state == "won":
         play_again_button, quit_button = draw_won_screen(hud.score)
         if play_again_button.is_clicked(event):
             reset_game()
-            game_state = "play"
+            game_over_metrics_recorded = False
+            game_state = "play"            
         elif quit_button.is_clicked(event):
             running = False
+            #js.postMessage({"type": "GAME_QUIT"}, "*")
+    """ if not running:
+        send_game_data()  # Send final game data before quitting
+        pygame.quit() """
 
 def update_game_state():
     global current_zone, resurface_popup_visible, hold_e_start_time, game_state, movement_tracking_time, hud
@@ -800,14 +827,33 @@ async def main():
     
     while running:
         handle_events()
-        update_game_state()
+        if game_state == "play":
+            update_game_state()
         draw_screen()
+        
+        """ if game_state == "gameover":
+            send_message_to_react({
+                "type": "GAME_OVER",
+                "score": hud.score,
+                "time_played": str(time_played),                
+                "zone_times": {zone: str(time) for zone, time in zone_time_spent.items()}
+            }) """
+        
+        """ if game_state in ["gameover", "won"]:
+            if not game_over_metrics_recorded:
+                save_game_session(hud.score)
+                send_game_data()
+                game_over_metrics_recorded = True """                  
         await asyncio.sleep(0)  # Allow other async operations to run
         pygame.display.flip()
         dt = clock.tick(60) / 1000
-
+        """ if not running:
+                break """
     """ print(game_sessions) """
+    """ js.window.postMessage(json.dumps({"type": "GAME_QUIT"}), "*") """   
+    send_game_data()    
     pygame.quit()
+    
 asyncio.run(main())
 """ pygame.quit()
 sys.exit() """

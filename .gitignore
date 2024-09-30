@@ -5,6 +5,7 @@
 /.pnp
 /.mysql-data/*
 .pnp.js
+/img
 
 # testing
 /coverage

@@ -5,6 +5,7 @@ import { useLogin } from '../hooks/useLogin';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import "../Styles/Login.css"
+import ButtonGroup from './ButtonGroup';
 
 const Login = () => {
   const { mutate, isLoading, isError, error } = useLogin();
@@ -70,10 +71,10 @@ const Login = () => {
             onChange={() => setShowPassword(!showPassword)}
           />
         </Form.Group>
-
-        <Button variant="primary" type="submit" className="login-button">
+        <ButtonGroup action={handleLogin} disabled={false}/>
+        {/* <Button variant="primary" type="submit" className="login-button">
           {submit}
-        </Button>
+        </Button> */}
       </Form>
     </div>
   );
