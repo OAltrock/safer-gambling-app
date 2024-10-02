@@ -22,6 +22,12 @@ If Docker is successfully installed:
    docker-compose up --watch
    ```
    (`--watch` enables live updates for development)
+   (optional) 
+   ```
+   docker-compose up -d
+   ```
+   this will not occupy your terminal but disables live updates
+3. No other step necessary: app can be accessed by typing 'localhost:3000' in your browser
 
 ### Flask/Pygame Setup
 For the Flask/Pygame component, you'll need to set up a Python environment:

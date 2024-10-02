@@ -1,0 +1,10 @@
+FROM python:latest
+
+WORKDIR /app
+
+COPY ./flask/requirements.txt .
+COPY ./flask/app.py .
+
+RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
+
+CMD ["python", "/app/app.py"]
