@@ -22,17 +22,23 @@ If Docker is successfully installed:
    docker-compose up --watch
    ```
    (`--watch` enables live updates for development)
-   (optional) 
+
+   (alternatively):
    ```
    docker-compose up -d
    ```
    this will not occupy your terminal but disables live updates
-3. No other step necessary: app can be accessed by typing 'localhost:3000' in your browser
+3. No other step necessary: the app can be accessed by typing 'localhost:3000' in your browser
 
 ### Flask/Pygame Setup
 For the Flask/Pygame component, you'll need to set up a Python environment:
 
-1. Install Poetry (recommended):
+Run:
+
+`pip install --upgrade pip && pip install --no-cache-dir -r ./flask/requirements.txt`
+
+Alternatively use a python environment manager (Poetry):
+1. Install Poetry:
    ```
    (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | python -
    ```
@@ -55,22 +61,7 @@ For the Flask/Pygame component, you'll need to set up a Python environment:
 4. Run the application:
    ```
    poetry run python app.py
-   ```
-
-Alternatively, if not using Poetry, install:
-
-`pip install pygame`
-
-`pip install flask`
-
-`pip install async`
-
-`pip install flask-cors`
-
-`pip install Flask-SQLAlchemy mysqlclient`
-
-`pip install Flask-JWT-Extended`
- 
+   ``` 
 
 ## Running the Application
 

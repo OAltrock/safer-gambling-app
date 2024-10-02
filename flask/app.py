@@ -6,7 +6,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import subprocess
 import ast
 import os
-from urllib.parse import quote_plus
+from datetime import datetime
+
 
 # Access environment variables
 pma_host = os.environ.get('PMA_HOST')
@@ -188,24 +189,96 @@ async def start_game():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/add_games', methods=['POST'])
-#@jwt_required()
+@jwt_required()
 def add_games():
     data = request.get_json()  # Get JSON data from the request
     current_user = get_jwt_identity()
-    for game in data:
+    print('line 195: ',data, flush=True)
+    for game in data['data']:
+        print(game, flush=True)
+        risk_score = 0
+        risk_score_shallow = 0
+        risk_score_mid = 0
+        risk_score_deep = 0
+        deep_entered = 0
+        shallow_entered = 0
+        mid_entered = 0
+        risk_score_exited_shallow = 0
+        risk_score_exited_mid = 0
+        risk_score_exited_deep = 0
+        deep_exited = 0
+        shallow_exited = 0
+        mid_exited = 0
+        for zone_event in game['entered_zones']:
+            for zone_name, oxygen in zone_event.items():                    
+                if(zone_name=='ShallowEnter'):
+                    if (game['score']==0):
+                        risk_score+=100
+                    else:
+                        shallow_entered+=1
+                        risk_score_shallow+=(100-oxygen)                    
+                elif(zone_name=='MidEntered'):
+                    if (game['score']==0):
+                        risk_score+=200
+                    else:
+                        mid_entered+=1
+                        risk_score_mid+=2*(100-oxygen)                        
+                elif(zone_name=='DeepEntered'):                    
+                    if (game['score']==0):
+                        risk_score+=300
+                    else:
+                        deep_entered+=1
+                        risk_score_deep+=3*(100-oxygen)
+                # base level is placeholder for a safe amount of oxygen to return to the surface
+                elif(zone_name=='ShallowExit'):
+                    if (oxygen<BASE_OXYGEN_SHALLOWS):
+                        risk_score+=50
+                    else:
+                        shallow_exited+=1
+                        risk_score_exited_shallow+=1/((oxygen-BASE_OXYGEN_SHALLOWS)/100)
+                elif(zone_name=='MidExit'):
+                    if (oxygen<BASE_OXYGEN_MID):
+                        risk_score+=150
+                    else:
+                        mid_exited+=1
+                        risk_score_exited_mid+=1/((oxygen-BASE_OXYGEN_MID)/100)
+                else :
+                    if (oxygen<BASE_OXYGEN_MID):
+                        risk_score+=300
+                    else:
+                        deep_exited+=1
+                        risk_score_exited_deep+=1/((oxygen-BASE_OXYGEN_DEEP)/100)
+        risk_score += (risk_score_shallow / shallow_entered) if shallow_entered > 0 else 0
+        risk_score += (risk_score_mid / mid_entered) if mid_entered > 0 else 0
+        risk_score += (risk_score_deep / deep_entered) if deep_entered > 0 else 0
+        risk_score += (risk_score_exited_shallow / shallow_exited) if shallow_exited > 0 else 0
+        risk_score += (risk_score_exited_mid / mid_exited) if mid_exited > 0 else 0
+        risk_score += (risk_score_exited_deep / deep_exited) if deep_exited > 0 else 0
         new_game = Game(user_id=current_user,
-                        score=game['score'], 
-                        risk_score=game['risk_score'], 
-                        zone1_duration=game['time_spent_in_zones']['Shallow'], 
-                        zone2_duration=game['time_spent_in_zones']['Mid'], 
-                        zone3_duration=game['time_spent_in_zones']['Deep'],
-                        time_played=game['time_played']
-                        )  # Create a new User instance
+                score=game['score'], 
+                risk_score=risk_score, 
+                zone1_duration=game['time_spent_in_zones']['Shallow'], 
+                zone2_duration=game['time_spent_in_zones']['Mid'], 
+                zone3_duration=game['time_spent_in_zones']['Deep'],
+                time_played=game['time_played']
+                )  # Create a new User instance
         db.session.add(new_game)  # Add the user to the session
-        db.session.commit()
+        db.session.commit()    
+        
     return jsonify({
         "message":"games added"
         }), 201
+    
+@app.route('/get_games', methods=['GET'])
+@jwt_required()
+def get_games():
+    current_user_id = get_jwt_identity()
+    
+    games = Game.query.filter_by(user_id=current_user_id, time_played=datetime.now().strftime('%Y-%m-%d')).all()
+    
+    games_list = [{'game_id': game.game_id, 'score': game.score, 'risk_score': game.risk_score} for game in games]
+    print(games_list, flush=True)
+    return jsonify(games_list), 200
     
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)   

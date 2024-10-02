@@ -302,13 +302,11 @@ class Button:
         return False
 
 def send_game_data():
+    global entered_zones, game_sessions
     # Create the data dictionary
     data = {
         'type': 'GAME_OVER',
-        'score': hud.score,
-        'time_played': str(time_played),
-        'max_depth': max(int(hud.get_depth(player.rect.y)) for _ in player_coordinates),
-        'zone_times': {zone: str(time) for zone, time in zone_time_spent.items()}
+        'game_sessions': game_sessions        
     }
     
     # Convert the dictionary to a JSON string
@@ -658,31 +656,27 @@ def send_message_to_react(message):
     js.postMessage(message, "*")
 
 def handle_endgame_events(event):
-    global game_state, game_over_metrics_recorded, running
-
-    if not game_over_metrics_recorded:
-        save_game_session(hud.score)        
-        game_over_metrics_recorded = True
+    global game_state, game_over_metrics_recorded, running    
         
     if game_state == "gameover":
         play_again_button, quit_button = draw_game_over_screen()
         if play_again_button.is_clicked(event):
             reset_game()
             game_state = "play"
-        elif quit_button.is_clicked(event):
-            global running
+        elif quit_button.is_clicked(event):            
             save_game_session(0)
-            running = False
-            js.postMessage({"type": "GAME_QUIT"}, "*")
+            game_over_metrics_recorded = True
+            running = False            
     elif game_state == "won":
         play_again_button, quit_button = draw_won_screen(hud.score)
         if play_again_button.is_clicked(event):
             reset_game()
             game_over_metrics_recorded = False
             game_state = "play"            
-        elif quit_button.is_clicked(event):
+        elif quit_button.is_clicked(event):            
+            save_game_session(hud.score)
+            game_over_metrics_recorded = True
             running = False
-            #js.postMessage({"type": "GAME_QUIT"}, "*")
     """ if not running:
         send_game_data()  # Send final game data before quitting
         pygame.quit() """

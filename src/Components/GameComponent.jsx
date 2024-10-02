@@ -25,15 +25,14 @@ const GameComponent = ({ onGameOver, onGameQuit }) => {
             console.log(typeof data);
             if (data && data.type === 'GAME_OVER') {
                 console.log("Game Over received");
-                onGameOver(data);
+                onGameOver(data.game_sessions);
             } else if (data && data.type === 'GAME_QUIT') {
                 console.log("Game Quit received");
                 onGameQuit();
             }
         };
 
-        loadGame();
-        console.log(window)
+        loadGame();        
         window.addEventListener('message', handleMessage);
 
         return () => {
