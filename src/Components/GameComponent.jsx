@@ -3,40 +3,50 @@ import React, { useEffect, useRef, useState } from 'react';
 const GameComponent = ({ onGameOver, onGameQuit }) => {
     const iframeRef = useRef(null);
     const [gameStarted, setGameStarted] = useState(false);
-    
+
     const startGame = () => {
         setGameStarted(true);
         if (iframeRef.current) {
             iframeRef.current.contentWindow.postMessage('start_game', '*');
         }
     };
+    
 
     useEffect(() => {
-        const loadGame = () => {
-            if (iframeRef.current) {                
-                iframeRef.current.src = 'http://localhost:3000/build/web/index.html';
+        const loadGame = () => {            
+            if (iframeRef.current) {
+                iframeRef.current.src = 'http://localhost:3000/build/web/index.html';                
             }
         };
 
+        const handleBeforeUnload = (event) => {
+            event.preventDefault();
+            event.returnValue = ''; // This line is necessary for some browsers
+        };
+
         const handleMessage = (event) => {
-            
+            console.log("Received message:", event.data);
             let data = JSON.parse(event.data);
-            console.log("Received message:", data);
+
             console.log(typeof data);
             if (data && data.type === 'GAME_OVER') {
                 console.log("Game Over received");
                 onGameOver(data.game_sessions);
+                window.removeEventListener('beforeunload', handleBeforeUnload);
             } else if (data && data.type === 'GAME_QUIT') {
                 console.log("Game Quit received");
                 onGameQuit();
+                window.removeEventListener('beforeunload', handleBeforeUnload);
             }
         };
-
-        loadGame();        
+        
+        loadGame();
+        
         window.addEventListener('message', handleMessage);
 
         return () => {
-            window.removeEventListener('message', handleMessage);
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+            window.removeEventListener('message', handleMessage);            
         };
     }, [onGameOver, onGameQuit]);
 

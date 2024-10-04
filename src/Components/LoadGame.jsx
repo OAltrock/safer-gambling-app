@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import GameComponent from './GameComponent';
 import { useNavigate } from 'react-router-dom';
 import { useSendGameData } from '../hooks/useSendGameData';
@@ -7,7 +7,7 @@ function LoadGame() {
   const navigate = useNavigate();
   const [gameOverData, setGameOverData] = useState(null);
   const [gameActive, setGameActive] = useState(true);
-  const { mutate, isLoading, isError, error } = useSendGameData();
+  const { mutate, isLoading, isError, error } = useSendGameData();  
 
   const handleGameOver = (data)=>{
     console.log(data)
@@ -15,12 +15,15 @@ function LoadGame() {
       {data},
       {
         onSuccess: () => {
+          window.removeEventListener('beforeunload', (event) => {
+            event.preventDefault()
+          });
           navigate('/Evaluation');
         },
       }
     )
   };
-
+  
   const handleGameQuit = () => {
     setGameActive(false);
     setGameOverData(null);

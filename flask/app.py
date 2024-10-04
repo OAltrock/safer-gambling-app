@@ -10,9 +10,9 @@ from datetime import datetime
 
 
 # Access environment variables
-pma_host = os.environ.get('PMA_HOST')
-pma_port = os.environ.get('PMA_PORT')
-mysql_password = os.environ.get('MYSQL_ROOT_PASSWORD')
+pma_host = os.environ.get('PMA_HOST', 'localhost')
+pma_port = os.environ.get('PMA_PORT', 3306)
+mysql_password = os.environ.get('MYSQL_ROOT_PASSWORD', 'admin')
 
 
 
