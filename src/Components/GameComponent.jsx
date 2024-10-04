@@ -24,8 +24,9 @@ const GameComponent = ({ onGameOver, onGameQuit }) => {
             event.returnValue = ''; // This line is necessary for some browsers
         };
 
-        const handleMessage = (event) => {
+        const handleMessage = (event) => {            
             console.log("Received message:", event.data);
+            if (typeof event.data !== 'string' || event.data==='' || event.data.includes('setImmediate')) return;
             let data = JSON.parse(event.data);
 
             console.log(typeof data);

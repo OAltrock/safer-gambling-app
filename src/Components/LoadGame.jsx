@@ -14,16 +14,13 @@ function LoadGame() {
     mutate(
       {data},
       {
-        onSuccess: () => {
-          window.removeEventListener('beforeunload', (event) => {
-            event.preventDefault()
-          });
+        onSuccess: () => {          
           navigate('/Evaluation');
         },
       }
     )
   };
-  
+
   const handleGameQuit = () => {
     setGameActive(false);
     setGameOverData(null);
