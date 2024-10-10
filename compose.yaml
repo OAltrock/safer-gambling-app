@@ -22,16 +22,19 @@ services:
     volumes:
       - ./.mysql-data/db:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./entrypoint.sh:/entrypoint.sh
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 20s
       retries: 10
+    entrypoint: ["./entrypoint.sh"]
 
   python-app:
     build:
       context: .
       dockerfile: Dockerfile.python
-    image: python:latest
+    image: python-app
     environment:
       PMA_HOST: db
       PMA_PORT: 3306

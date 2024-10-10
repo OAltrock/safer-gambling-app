@@ -3,7 +3,6 @@ build
 .dockerignore
 Dockerfile
 Dockerfile.prod
-*.py
 Pixeltype.ttf
 README.md
 imagefiles
