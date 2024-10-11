@@ -1,5 +1,5 @@
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'passworD1234';
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'admin';
 CREATE DATABASE IF NOT EXISTS dev;
 CREATE DATABASE IF NOT EXISTS test;
 

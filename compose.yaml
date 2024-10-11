@@ -15,13 +15,14 @@ services:
   db:
     image: mysql:latest
     environment:
-      MYSQL_ROOT_PASSWORD: passworD1234
+      MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: db    
     ports:
       - 3307:3306
     volumes:
       - ./.mysql-data/db:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 20s
@@ -35,7 +36,7 @@ services:
     environment:
       PMA_HOST: db
       PMA_PORT: 3306
-      MYSQL_ROOT_PASSWORD: passworD1234
+      MYSQL_ROOT_PASSWORD: admin
     ports:
       - 5000:5000
     depends_on:
