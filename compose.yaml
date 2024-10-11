@@ -15,20 +15,17 @@ services:
   db:
     image: mysql:latest
     environment:
-      MYSQL_ROOT_PASSWORD: admin
-      MYSQL_DATABASE: safer-gambling-db    
+      MYSQL_ROOT_PASSWORD: passworD1234
+      MYSQL_DATABASE: db    
     ports:
       - 3307:3306
     volumes:
       - ./.mysql-data/db:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-      - ./my.cnf:/etc/mysql/conf.d/my.cnf
-      - ./entrypoint.sh:/entrypoint.sh
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 20s
-      retries: 10
-    entrypoint: ["./entrypoint.sh"]
+      retries: 10          
 
   python-app:
     build:
@@ -38,7 +35,7 @@ services:
     environment:
       PMA_HOST: db
       PMA_PORT: 3306
-      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_ROOT_PASSWORD: passworD1234
     ports:
       - 5000:5000
     depends_on:
@@ -48,7 +45,6 @@ services:
       - ./flask:/app
     working_dir: /app
     command: python /app/app.py
-
+    restart: on-failure
 volumes:
-  my-db-volume:
-  my-python-volume:
+  my-db-volume:  

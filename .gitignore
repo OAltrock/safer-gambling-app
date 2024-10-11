@@ -3,7 +3,7 @@
 # dependencies
 /node_modules
 /.pnp
-/.mysql-data/*
+/.mysql-data/db
 .pnp.js
 /img
 
