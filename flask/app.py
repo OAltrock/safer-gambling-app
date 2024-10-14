@@ -107,10 +107,16 @@ def add_user():
 @jwt_required()
 def delete_user():
     current_user = get_jwt_identity()    
+    print(current_user)
     user = db.session.get(User, current_user)  # Query the user by ID
     if current_user is None:
         return jsonify({'error': 'User not authenticated'}), 401  # Check if user is authenticated
     if user:
+        # Optionally handle related game records here if needed
+        # For example, you could delete games associated with the user if not using ON DELETE CASCADE
+        games = Game.query.filter_by(user_id=current_user).all()
+        for game in games:
+            db.session.delete(game)
         db.session.delete(user)  # Delete the user from the session
         db.session.commit()  # Commit the session to save changes
         return jsonify({'message': 'User deleted successfully'}), 200
