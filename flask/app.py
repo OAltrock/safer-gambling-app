@@ -108,6 +108,8 @@ def add_user():
 def delete_user():
     current_user = get_jwt_identity()    
     user = db.session.get(User, current_user)  # Query the user by ID
+    if current_user is None:
+        return jsonify({'error': 'User not authenticated'}), 401  # Check if user is authenticated
     if user:
         db.session.delete(user)  # Delete the user from the session
         db.session.commit()  # Commit the session to save changes
