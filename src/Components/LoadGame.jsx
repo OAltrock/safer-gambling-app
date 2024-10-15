@@ -10,6 +10,11 @@ function LoadGame() {
   const { mutate, isLoading, isError, error } = useSendGameData();  
 
   const handleGameOver = (data)=>{
+    setGameActive(false);
+    setGameOverData(null);
+  };
+
+  const handleGameQuit = (data) => {
     console.log(data)
     mutate(
       {data},
@@ -18,12 +23,7 @@ function LoadGame() {
           navigate('/Evaluation');
         },
       }
-    )
-  };
-
-  const handleGameQuit = () => {
-    setGameActive(false);
-    setGameOverData(null);
+    )    
   };
 
   const restartGame = () => {

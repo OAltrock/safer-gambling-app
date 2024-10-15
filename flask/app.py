@@ -128,10 +128,10 @@ async def start_game():
     try:       
         # Execute the game file (game_take_8.py)
         result = subprocess.run(['python', 'game_v3.0.py'], capture_output=True, text=True) 
-        print('line114: ', result.stdout.splitlines()[2:])
+        print('line131: ', result.stdout.splitlines()[2:])
         lines = result.stdout.splitlines()
         data = ast.literal_eval("\n".join(lines[2:]))
-        print('line117: ', data)  
+        print('line134: ', data)  
         for game in data:
             risk_score=0
             for zone_event in game['entered_zones']:
@@ -161,8 +161,7 @@ async def start_game():
             print('risk_score: ', risk_score)
             print('data["time_spent_in_zones"]["Shallow"]: ', game['time_spent_in_zones']['Shallow'])
             print('data["time_spent_in_zones"]["Mid"]: ', game['time_spent_in_zones']['Mid'])
-            print('data["time_spent_in_zones"]["Deep"]: ', game['time_spent_in_zones']['Deep'])
-            print(get_jwt_identity())
+            print('data["time_spent_in_zones"]["Deep"]: ', game['time_spent_in_zones']['Deep'])            
             current_user = get_jwt_identity()
             new_game = Game(
                 user_id=current_user, 
@@ -172,9 +171,9 @@ async def start_game():
                 zone2_duration=game['time_spent_in_zones']['Mid'], 
                 zone3_duration=game['time_spent_in_zones']['Deep'],
                 time_played=game['time_played']
-                )
+                )            
             db.session.add(new_game)
-            db.session.commit()
+        db.session.commit()
         
         """ amountPlayed = len(result.stdout.splitlines()[2:])                      
         games = []
@@ -201,9 +200,8 @@ async def start_game():
 def add_games():
     data = request.get_json()  # Get JSON data from the request
     current_user = get_jwt_identity()
-    print('line 195: ',data, flush=True)
-    for game in data['data']:
-        print(game, flush=True)
+    print('line 203: ',data['data'], flush=True)
+    for game in data['data']:        
         risk_score = 0
         risk_score_shallow = 0
         risk_score_mid = 0
@@ -270,8 +268,9 @@ def add_games():
                 zone3_duration=game['time_spent_in_zones']['Deep'],
                 time_played=game['time_played']
                 )  # Create a new User instance
+        print('line 272: ', new_game)
         db.session.add(new_game)  # Add the user to the session
-        db.session.commit()    
+    db.session.commit()    
         
     return jsonify({
         "message":"games added"

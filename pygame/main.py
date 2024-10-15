@@ -301,11 +301,11 @@ class Button:
                 return True
         return False
 
-def send_game_data():
-    global entered_zones, game_sessions
+def send_game_data(type, game_sessions):
+    # global entered_zones, game_sessions
     # Create the data dictionary
     data = {
-        'type': 'GAME_OVER',
+        'type': type,
         'game_sessions': game_sessions        
     }
     
@@ -452,6 +452,7 @@ def save_game_session(score):
         "player_coordinates": player_coordinates
     }
     game_sessions.append(game_session)
+    send_game_data("NEW_GAME", game_sessions)
 
 def reset_game():
     global player, coin_group, hud, control_popup, game_over_metrics_recorded, entered_zones, zone_time_spent, last_zone_update_time, player_coordinates
@@ -660,21 +661,21 @@ def handle_endgame_events(event):
         
     if game_state == "gameover":
         play_again_button, quit_button = draw_game_over_screen()
+        save_game_session(0)
         if play_again_button.is_clicked(event):
             reset_game()
             game_state = "play"
-        elif quit_button.is_clicked(event):            
-            save_game_session(0)
+        elif quit_button.is_clicked(event):
             game_over_metrics_recorded = True
             running = False            
     elif game_state == "won":
         play_again_button, quit_button = draw_won_screen(hud.score)
+        save_game_session(hud.score)
         if play_again_button.is_clicked(event):
             reset_game()
             game_over_metrics_recorded = False
             game_state = "play"            
-        elif quit_button.is_clicked(event):            
-            save_game_session(hud.score)
+        elif quit_button.is_clicked(event):
             game_over_metrics_recorded = True
             running = False
     """ if not running:
@@ -845,7 +846,7 @@ async def main():
                 break """
     """ print(game_sessions) """
     """ js.window.postMessage(json.dumps({"type": "GAME_QUIT"}), "*") """   
-    send_game_data()    
+    send_game_data("GAME_OVER", game_sessions)    
     pygame.quit()
     
 asyncio.run(main())

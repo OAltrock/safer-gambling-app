@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 const GameComponent = ({ onGameOver, onGameQuit }) => {
     const iframeRef = useRef(null);
     const [gameStarted, setGameStarted] = useState(false);
+    const [gameScores, setGameScore] = useState([]);
 
     const startGame = () => {
         setGameStarted(true);
@@ -32,11 +33,12 @@ const GameComponent = ({ onGameOver, onGameQuit }) => {
             console.log(typeof data);
             if (data && data.type === 'GAME_OVER') {
                 console.log("Game Over received");
-                onGameOver(data.game_sessions);
+                setGameScore([...gameScores, data]);
+                console.log('gameComponent line 37: ', gameScores);
                 window.removeEventListener('beforeunload', handleBeforeUnload);
             } else if (data && data.type === 'GAME_QUIT') {
                 console.log("Game Quit received");
-                onGameQuit();
+                onGameQuit(gameScores);
                 window.removeEventListener('beforeunload', handleBeforeUnload);
             }
         };
