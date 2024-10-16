@@ -34,7 +34,8 @@ const GameComponent = ({ onGameOver, onGameQuit }) => {
             if (data && data.type === 'GAME_OVER') {
                 console.log("Game Over received");
                 setGameScore([...gameScores, data]);
-                console.log('gameComponent line 37: ', gameScores);
+                console.log('gameComponent line 37: ', data);
+                onGameQuit(data.game_sessions);
                 window.removeEventListener('beforeunload', handleBeforeUnload);
             } else if (data && data.type === 'GAME_QUIT') {
                 console.log("Game Quit received");

@@ -649,8 +649,8 @@ def handle_pause_events(event):
         global game_state, last_zone_update_time
         game_state = "play"
         last_zone_update_time = adjust_for_pause(pause_start_time, last_zone_update_time)
-    elif quit_button.is_clicked(event):
-        global running
+    elif quit_button.is_clicked(event):        
+        global running        
         running = False
 
 def send_message_to_react(message):

@@ -18,8 +18,8 @@ Loading pygame from pygame.apk
 
 
 # screen pixels (real, hardware)
-WIDTH=1280  # 1280
-HEIGHT=720  # 720
+WIDTH=1024  # 1280
+HEIGHT=600  # 720
 
 # reference/idealized screen pixels
 REFX = 1980
@@ -425,6 +425,7 @@ asyncio.run( custom_site() )
         window.addEventListener('beforeunload', function (event) {
             event.stopImmediatePropagation();
         });
+
 
         async function custom_onload(debug_hidden) {
             // this is called before anything python is loaded
