@@ -3,7 +3,7 @@ services:
     build: .
     ports:
       - 3000:3000
-    command: npm start
+    command: npm install react-scripts@3.4.1 -g --silent --no-cache && npm start
     develop: 
       watch:
         - action: sync
