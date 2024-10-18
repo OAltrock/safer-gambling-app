@@ -15,6 +15,7 @@ import QuizScore from './Components/QuizScore';
 import HelpPage from './Components/HelpPage';
 import Navbar from './Components/Navbar';
 import SignUp from './Components/SignUp.jsx';
+import ConfirmDelete from './Components/ConfirmDelete.jsx';
 
 import { useDispatch } from 'react-redux';
 
@@ -31,6 +32,7 @@ import AuthWrapper from './Components/AuthWrapper.jsx';
 import { setFalse } from './slices/gameDoneSlice.js';
 import { setQuestionnaireDoneFalse } from './slices/questionnaireDoneSlice.js';
 import { reset } from './slices/questionnaireSlice.js';
+import LoadGame from './Components/LoadGame.jsx';
 
 
 library.add(fas, far, faMoon, faSun)
@@ -81,6 +83,8 @@ function App() {
               <Route path="/Home" element={<ProtectedRoute component={Home} />} />
               <Route path="/GamePage" element={<ProtectedRoute component={GamePage} />} />
               <Route path="/Evaluation" element={<ProtectedRoute component={EvaluationPage} />} />
+              <Route path='/confirmDelete' element={<ProtectedRoute component={ConfirmDelete} />} />
+              <Route path='/loadGame' element={<ProtectedRoute component={LoadGame} />} />
             </Route>
             <Route path="/Guidance" element={<HelpPage />} />
 

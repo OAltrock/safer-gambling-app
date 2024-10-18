@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../Styles/Questionnaire.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -52,6 +52,22 @@ const Questionnaire = () => {
       {popup}
     </Tooltip>
   );
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'd') {
+      setIndex((prevIndex) => (prevIndex + 1) % totalQuestions);
+    } else if (e.key === 'a') {
+      setIndex((prevIndex) => (prevIndex - 1 + totalQuestions) % totalQuestions);
+    }
+  };
+
+  // Add event listener for keydown
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
   return (
     <Container fluid>

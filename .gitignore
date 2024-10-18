@@ -3,8 +3,9 @@
 # dependencies
 /node_modules
 /.pnp
-/.mysql-data/*
+/.mysql-data
 .pnp.js
+/img
 
 # testing
 /coverage

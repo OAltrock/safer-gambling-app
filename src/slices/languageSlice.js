@@ -9,7 +9,8 @@ const initialState =
                 "Advice & Guidance",
                 "Help",
                 "Settings",
-                "Log Out"
+                "Log Out",
+                "Delete Account"
             ]
         ,
         landingPage:
@@ -51,6 +52,11 @@ const initialState =
                 "Enter an age between 18 and 100."
             ],
             "Submit"
+        ],
+        confirmDelete: [
+            "This will delete your account and all the data connected to it. This can't be undone.",
+            "Cancel",
+            "Confirm"
         ],
         homePage:
             [
@@ -181,7 +187,8 @@ const initialState =
             "Hilfe & Beratung",
             "Hilfe",
             "Einstellungen",
-            "Abmelden"
+            "Abmelden",
+            "Konto löschen"
         ],
         landingPage:
             [
@@ -222,6 +229,11 @@ const initialState =
                 "Geben Sie ein Alter zwischen 18 und 100 ein."
             ],
             "Abschicken"
+        ],
+        confirmDelete: [
+            "Mit dieser Aktion wird ihr Konto gelöscht. Dies kann nicht rückgängig gemacht werden.",
+            "Abbrechen",
+            "Bestätigen"
         ],
         homePage:
             [
@@ -273,14 +285,14 @@ const initialState =
             ["Spielübersicht: Schatztauchen", "Spielregeln:", "Spielende und Wertung:", "Spielerbewertung:"],
             "",
             `Die Spieler steuern einen Taucher, der unter das Meer taucht, um so viele Schätze wie möglich innerhalb eines Zeitrahmens von 
-                    1 bis 2 Minuten. Das Ziel ist es, durch das Sammeln von Schätzen die höchstmögliche Punktzahl zu erreichen, 
+                    1 bis 2 Minuten zu finden. Das Ziel ist es, durch das Sammeln von Schätzen die höchstmögliche Punktzahl zu erreichen, 
                     und dabei den Sauerstoffgehalt zu kontrollieren und Hindernissen und Gefahren auszuweichen.`,
             ["Spieldauer:", "Steuerung:", "Sauerstoff-Mechanismus:", "Schatzsammlung:", "Hindernisse, Bedrohungen und Gegenstände:", "Punktesystem:"],
             ["Jede Spielsitzung dauert so lange, wie der Sauerstoff reicht. (durchschnittlich etwa 1 bis 2 Minuten).",
                 "Die Spieler können bis zu 5 Sitzungen spielen.",
                 "Die Ergebnisse jeder Sitzung werden aufgezeichnet und nach der 5. Sitzung zu einem Gesamtergebnis zusammengefasst."],
             [
-                ["Pfeiltasten / WASD:", "Bewegen Sie den Taucher nach oben, unten, links und rechts."]
+                ["WASD:", "Bewegen Sie den Taucher nach oben, unten, links und rechts."]
             ],
             ["Der Taucher beginnt mit einer vollen Sauerstoffflasche", "Der Sauerstoff geht mit der Zeit allmählich zur Neige und wird schneller verbraucht, je tiefer der Taucher taucht."],
             [`Die Schätze sind in verschiedenen Tiefen verstreut, wobei die wertvolleren Schätze in der Tiefe gefunden werden.
@@ -291,7 +303,7 @@ const initialState =
                 ["Gefahren in der Tiefe:", "Je tiefer der Taucher taucht, desto aggressivere Meeresbewohner und Umweltgefahren trifft er an."]
             ],
             ["Punkte werden auf der Grundlage der gesammelten Schätze vergeben",
-                "Strafen für das Auftreffen auf Hindernisse oder das Fangen von Bedrohungen (Verlust von Punkten oder Sauerstoff).",
+                "Strafen für das Treffen auf Hindernisse oder das Fangen von Bedrohungen (Verlust von Punkten oder Sauerstoff).",
                 "Boni für längeres Durchhalten als erwartet."],
             ["Sitzungsende:", "Gesamtergebnis:", "Auswirkungen auf den Sauerstoffgehalt:"],
             ["Eine Sitzung endet, wenn der Sauerstoff des Tauchers zur Neige geht.",
@@ -355,7 +367,8 @@ const initialState =
                 "Conseils et orientation",
                 "Aider",
                 "Paramètres",
-                "Déconnexion"
+                "Déconnexion",
+                "Supprimer le compte"
             ]
         ,
         landingPage:
@@ -397,6 +410,11 @@ const initialState =
                 "Entrez un âge entre 18 et 100."
             ],
             "Soumettre"
+        ],
+        confirmDelete: [
+            "Cette opération supprimera votre compte et toutes les données qui y sont liées. Cette opération ne peut être annulée.",
+            "Annuler",
+            "Confirmer"
         ],
         homePage:
             [

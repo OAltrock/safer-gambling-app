@@ -8,8 +8,9 @@
   --fdm-headings-font-size:2rem;
   --fdm-header-background: linear-gradient(to right, #1E1E1E, #EBEBEB);
   --fdm-background: white;
+  --fdm-background-bright-dark: rgba(224, 224, 224, 0.807);
   --fdm-font-color: black;
-  --fdm-dark-background: #0d0d0d;    
+  --fdm-dark-background: #0d0d0d;     
 }
 
 div#root {

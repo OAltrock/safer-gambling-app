@@ -1,0 +1,6 @@
+[build]
+debug = true
+dependencies = [
+    "numpy",
+    "pygame",
+]

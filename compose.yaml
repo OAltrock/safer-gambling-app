@@ -1,0 +1,51 @@
+services:
+  node-server:
+    build: .
+    ports:
+      - 3000:3000
+    command: npm start
+    develop: 
+      watch:
+        - action: sync
+          path: ./src      
+          target: /app/src
+    depends_on:
+      - python-app
+
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: db    
+    ports:
+      - 3307:3306
+    volumes:
+      - ./.mysql-data/db:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10          
+
+  python-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.python
+    image: python-app
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: admin
+    ports:
+      - 5000:5000
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./flask:/app
+    working_dir: /app
+    command: python /app/app.py
+    restart: on-failure
+volumes:
+  my-db-volume:  
