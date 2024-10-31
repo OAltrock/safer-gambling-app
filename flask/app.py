@@ -19,7 +19,7 @@ mysql_password = os.environ.get('MYSQL_ROOT_PASSWORD', 'admin')
 app = Flask(__name__)
 CORS(app, origins='*')
 BASE_OXYGEN_SHALLOWS = 0
-BASE_OXYGEN_MID = 20
+BASE_OXYGEN_MID = 10
 BASE_OXYGEN_DEEP = 40
 
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql://root:{mysql_password}@{pma_host}:{pma_port}/test'
@@ -241,19 +241,19 @@ def add_games():
                         risk_score+=50
                     else:
                         shallow_exited+=1
-                        risk_score_exited_shallow+=1/((oxygen-BASE_OXYGEN_SHALLOWS)/100)
+                        risk_score_exited_shallow+=1/((oxygen-BASE_OXYGEN_SHALLOWS)/10000)
                 elif(zone_name=='MidExit'):
                     if (oxygen<BASE_OXYGEN_MID):
                         risk_score+=150
                     else:
                         mid_exited+=1
-                        risk_score_exited_mid+=1/((oxygen-BASE_OXYGEN_MID)/100)
+                        risk_score_exited_mid+=1/((oxygen-BASE_OXYGEN_MID)/10000)
                 else :
                     if (oxygen<BASE_OXYGEN_MID):
-                        risk_score+=300
+                        risk_score+=600
                     else:
                         deep_exited+=1
-                        risk_score_exited_deep+=1/((oxygen-BASE_OXYGEN_DEEP)/100)
+                        risk_score_exited_deep+=1/((oxygen-BASE_OXYGEN_DEEP)/10000)
         risk_score += (risk_score_shallow / shallow_entered) if shallow_entered > 0 else 0
         risk_score += (risk_score_mid / mid_entered) if mid_entered > 0 else 0
         risk_score += (risk_score_deep / deep_entered) if deep_entered > 0 else 0
