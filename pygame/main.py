@@ -21,7 +21,7 @@ screen = pygame.display.set_mode((Screen_Width, Screen_Height))
 # Ingame Clock + Running = true , delta time
 clock = pygame.time.Clock()
 running = True
-dt = 0
+dt = clock.tick(60) / 1000
 
 pygame.display.set_caption("Treasure Dive")
 
@@ -72,7 +72,7 @@ deep_img = pygame.image.load('img/deep.png').convert()
 coin_img = pygame.image.load('img/7.png').convert_alpha()
 ingame_img = pygame.image.load('img/background_800x711.png').convert()
 background_img = pygame.image.load('img/background.png').convert()
-
+sea_monster_img = pygame.image.load('img/sea_monster.png').convert()
 
 map_cols = 5
 map_rows = 20
@@ -126,7 +126,32 @@ class Player(pygame.sprite.Sprite):
         self.speed = [0, 0]
         self.moving = False
         self.facing_left = False
-    
+        self.invincible = False
+        self.invincible_duration = 1000  # 1 second in milliseconds
+        self.invincible_start_time = 0
+        self.blink_interval = 100  # Blink every 100ms
+        self.visible = True
+        self.original_image = None  # Store the original image before alpha changes
+
+        # Hitbox parameters
+        hitbox_scale = 0.7  
+        hitbox_width = int(self.rect.width * hitbox_scale)
+        hitbox_height = int(self.rect.height * hitbox_scale)
+
+        # Create hitbox and center it on the player rect
+        self.hitbox = pygame.Rect(
+            self.rect.centerx - hitbox_width // 2,
+            self.rect.centery - hitbox_height // 2,
+            hitbox_width,
+            hitbox_height
+        )
+
+    def set_invincible(self, duration):
+        self.invincible = True
+        self.invincible_start_time = pygame.time.get_ticks()
+        self.invincible_duration = duration * 1000  # Convert to milliseconds
+        self.visible = True
+
     def get_position(self):
         return self.rect.center
 
@@ -164,20 +189,49 @@ class Player(pygame.sprite.Sprite):
         self.rect.x = max(0, min(self.rect.x, map_width - self.rect.width))
         self.rect.y = max(0, min(self.rect.y, map_height - self.rect.height))
 
+        # Update the hitbox to follow the player's position
+        self.hitbox.centerx = self.rect.centerx
+        self.hitbox.centery = self.rect.centery
+
         self.animate()
+        self.handle_invincibility()
+
+    def handle_invincibility(self):
+        current_time = pygame.time.get_ticks()
+        
+        # Check if invincibility should end
+        if self.invincible:
+            if current_time - self.invincible_start_time >= self.invincible_duration:
+                self.invincible = False
+                self.visible = True
+                self.image.set_alpha(255)
+            else:
+                # Handle blinking
+                elapsed_time = current_time - self.invincible_start_time
+                self.visible = (elapsed_time // self.blink_interval) % 2 == 0
+                self.image.set_alpha(255 if self.visible else 64)
 
     def animate(self):
+        # Store the current alpha value
+        current_alpha = self.image.get_alpha()
+
+        # Update animation frame
         if self.moving:
             self.image = self.moving_images[self.frame_index]
         else:
             self.image = self.idle_images[self.frame_index]
 
+        # Update frame index
         if pygame.time.get_ticks() - self.update_time > 100:
             self.frame_index = (self.frame_index + 1) % len(self.idle_images)
             self.update_time = pygame.time.get_ticks()
 
+        # Handle facing direction
         if self.facing_left:
             self.image = pygame.transform.flip(self.image, True, False)
+
+        # Restore alpha value after changing image
+        self.image.set_alpha(current_alpha)
 
 """ # Initialize player
 player = Player() """
@@ -226,6 +280,117 @@ def adjust_for_pause(pause_start_time, last_zone_update_time):
 # Sprite Groups
 """ player_group = pygame.sprite.GroupSingle(player) """
 """ coin_group = pygame.sprite.Group() """
+
+class SeaMonster(pygame.sprite.Sprite):
+    def __init__(self, x, y, speed, min_distance, max_distance):
+        super().__init__()
+        # Store the original image and create scaled version
+        self.original_image = sea_monster_img
+        self.scale_factor = 1.5
+        self.image = pygame.transform.scale(
+            self.original_image, 
+            (int(self.original_image.get_width() * self.scale_factor), 
+             int(self.original_image.get_height() * self.scale_factor))
+        )
+        
+        # Create the main rect for positioning the sprite
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        
+        # Create a smaller hitbox rect for collisions
+        hitbox_scale = 0.04 
+        hitbox_width = int(self.rect.width * hitbox_scale)
+        hitbox_height = int(self.rect.height * hitbox_scale)
+        
+        # Create and position the hitbox in the center of the sprite
+        self.hitbox = pygame.Rect(
+            self.rect.centerx - hitbox_width // 2,
+            self.rect.centery - hitbox_height // 2,
+            hitbox_width,
+            hitbox_height
+        )
+        
+        self.speed = speed
+        self.min_distance = min_distance
+        self.max_distance = max_distance
+        self.direction = 1 if random.choice([True, False]) else -1
+        self.distance_traveled = 0
+        self.target_distance = random.randint(self.min_distance, self.max_distance)
+
+    def update(self):
+        # Update the main sprite image based on direction
+        if self.direction == -1:
+            self.image = pygame.transform.flip(
+                pygame.transform.scale(
+                    self.original_image,
+                    (int(self.original_image.get_width() * self.scale_factor),
+                     int(self.original_image.get_height() * self.scale_factor))
+                ),
+                True, False
+            )
+        else:
+            self.image = pygame.transform.scale(
+                self.original_image,
+                (int(self.original_image.get_width() * self.scale_factor),
+                 int(self.original_image.get_height() * self.scale_factor))
+            )
+
+        # Move the sea monster (main rect)
+        self.rect.x += self.speed * self.direction
+        self.distance_traveled += abs(self.speed)
+        
+        # Update hitbox position to follow the main rect
+        self.hitbox.centerx = self.rect.centerx
+        self.hitbox.centery = self.rect.centery
+        
+        # Boundary checking using the main rect
+        if self.rect.x < 0:
+            self.rect.x = 0
+            self.direction = 1
+        elif self.rect.right > 3850:
+            self.rect.x = 3850 - self.rect.width
+            self.direction = -1
+
+        # Handle direction changes
+        if self.distance_traveled >= self.target_distance:
+            self.direction *= -1
+            self.distance_traveled = 0
+            self.target_distance = random.randint(self.min_distance, self.max_distance)
+
+    def check_collision(self, player):
+        return self.hitbox.colliderect(player.hitbox)
+
+def spawn_sea_monsters(sea_monster_group):
+    min_distance = 400
+    max_distance = 900
+    for zone in zones:
+        if not running:
+            break
+        if zone == "Shallow":
+            for _ in range(5):
+                x = random.randint(0, tile_width * map_cols)
+                y = random.randint(tile_height * 1, tile_height * 2)
+                speed = random.uniform(1, 3)
+                sea_monster = SeaMonster(x, y, speed, min_distance, max_distance)
+                sea_monster_group.add(sea_monster)
+        elif zone == "Mid":
+            for _ in range(8):
+                x = random.randint(0, tile_width * map_cols)
+                y = random.randint(tile_height * 5, tile_height * 7)
+                speed = random.uniform(1, 4)
+                sea_monster = SeaMonster(x, y, speed, min_distance, max_distance)
+                sea_monster_group.add(sea_monster)
+        elif zone == "Deep":
+            for _ in range(15):  
+                x = random.randint(0, tile_width * map_cols)
+                y = random.randint(tile_height * 12, tile_height * 19)
+                speed = random.uniform(2, 5)
+                sea_monster = SeaMonster(x, y, speed, min_distance, max_distance)
+                sea_monster_group.add(sea_monster)
+
+
+
 
 # HUD Class
 class Draw_Hud:
@@ -301,11 +466,11 @@ class Button:
                 return True
         return False
 
-def send_game_data(type, game_sessions):
-    # global entered_zones, game_sessions
+def send_game_data():
+    global entered_zones, game_sessions
     # Create the data dictionary
     data = {
-        'type': type,
+        'type': 'GAME_OVER',
         'game_sessions': game_sessions        
     }
     
@@ -452,7 +617,6 @@ def save_game_session(score):
         "player_coordinates": player_coordinates
     }
     game_sessions.append(game_session)
-    send_game_data("NEW_GAME", game_sessions)
 
 def reset_game():
     global player, coin_group, hud, control_popup, game_over_metrics_recorded, entered_zones, zone_time_spent, last_zone_update_time, player_coordinates
@@ -486,6 +650,10 @@ def reset_game():
     # Reset coin group
     coin_group.empty()
     spawn_coins_treasures(coin_group)
+    
+    # Reset sea monster group
+    sea_monster_group.empty()
+    spawn_sea_monsters(sea_monster_group)
 
 # Coin class for sprites
 class Coin(pygame.sprite.Sprite):
@@ -649,8 +817,8 @@ def handle_pause_events(event):
         global game_state, last_zone_update_time
         game_state = "play"
         last_zone_update_time = adjust_for_pause(pause_start_time, last_zone_update_time)
-    elif quit_button.is_clicked(event):        
-        global running        
+    elif quit_button.is_clicked(event):
+        global running
         running = False
 
 def send_message_to_react(message):
@@ -661,21 +829,21 @@ def handle_endgame_events(event):
         
     if game_state == "gameover":
         play_again_button, quit_button = draw_game_over_screen()
-        save_game_session(0)
         if play_again_button.is_clicked(event):
             reset_game()
             game_state = "play"
-        elif quit_button.is_clicked(event):
+        elif quit_button.is_clicked(event):            
+            save_game_session(0)
             game_over_metrics_recorded = True
             running = False            
     elif game_state == "won":
         play_again_button, quit_button = draw_won_screen(hud.score)
-        save_game_session(hud.score)
         if play_again_button.is_clicked(event):
             reset_game()
             game_over_metrics_recorded = False
             game_state = "play"            
-        elif quit_button.is_clicked(event):
+        elif quit_button.is_clicked(event):            
+            save_game_session(hud.score)
             game_over_metrics_recorded = True
             running = False
     """ if not running:
@@ -683,10 +851,10 @@ def handle_endgame_events(event):
         pygame.quit() """
 
 def update_game_state():
-    global current_zone, resurface_popup_visible, hold_e_start_time, game_state, movement_tracking_time, hud
-    
+    global sea_monster_group, current_zone, resurface_popup_visible, hold_e_start_time, game_state, movement_tracking_time, hud
     if game_state == "play":
         player.update(dt)
+        sea_monster_group.update()
         current_zone = track_player_zone(player, current_zone, hud.oxygen_level)
         
         # Handle coin collisions
@@ -696,6 +864,12 @@ def update_game_state():
         
         respawn_coins(coin_group)
         
+        # Handle player-monster collisions
+        monster_collision = any(monster.check_collision(player) for monster in sea_monster_group)
+        if monster_collision and not player.invincible:
+            hud.oxygen_level -= 5
+            player.set_invincible(1)
+
         # Track player coordinates
         if pygame.time.get_ticks() - movement_tracking_time >= 1000:
             player_coordinates.append((player.rect.x, player.rect.y))
@@ -777,11 +951,13 @@ def draw_gameplay_screen():
         coin_value_text = coint_font.render(str(coin.value), True, (250, 228, 130))
         screen.blit(coin_value_text, (coin.rect.x - camera_offset_x - 10, coin.rect.y - camera_offset_y - 10))
 
+    # Draw sea monsters with camera offset
+    for sea_monster in sea_monster_group:
+        screen.blit(sea_monster.image, (sea_monster.rect.x - camera_offset_x, sea_monster.rect.y - camera_offset_y))
+
     # Draw HUD elements (Oxygen, depth, score)
     hud.draw(screen, player, dt)
 
-    #test_text = font.render("Hello World", True, (250, 228, 130))
-    #screen.blit(test_text,(855 - camera_offset_x, 485 -camera_offset_y))
     # Draw resurface popup if necessary
     if resurface_popup_visible:
         hold_time = pygame.time.get_ticks() - hold_e_start_time if hold_e_start_time else 0
@@ -804,19 +980,22 @@ print(game_sessions) """
 
 async def main():
     
-    global running, dt, screen, player, coin_group, hud, control_popup, game_state, font, coint_font, player_group
+    global running, dt, screen, player, coin_group, hud, control_popup, game_state, font, coint_font, player_group, sea_monster_group
     pygame.init()
     screen = pygame.display.set_mode((Screen_Width, Screen_Height))
     
     font = pygame.font.Font('img/Pixeltype.ttf', 45)
     coint_font = pygame.font.Font('img/Pixeltype.ttf', 25)    
     # Initialize other game objects    
-    player = Player()  # Assuming you have a Player class
+    player = Player() 
     player_group = pygame.sprite.GroupSingle(player)
     coin_group = pygame.sprite.Group()
+    sea_monster_group = pygame.sprite.Group()
     hud = Draw_Hud()
     control_popup = ControlPopup()
     game_state = "start"
+
+    spawn_sea_monsters(sea_monster_group)
     # Call the function to spawn coins
     spawn_coins_treasures(coin_group)
     
@@ -841,12 +1020,12 @@ async def main():
                 game_over_metrics_recorded = True """                  
         await asyncio.sleep(0)  # Allow other async operations to run
         pygame.display.flip()
-        dt = clock.tick(60) / 1000
+        #dt = clock.tick(60) / 1000
         """ if not running:
                 break """
     """ print(game_sessions) """
     """ js.window.postMessage(json.dumps({"type": "GAME_QUIT"}), "*") """   
-    send_game_data("GAME_OVER", game_sessions)    
+    send_game_data()    
     pygame.quit()
     
 asyncio.run(main())
