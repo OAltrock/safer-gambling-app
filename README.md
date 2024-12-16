@@ -2,15 +2,10 @@
 
 ## Setup Instructions
 
-### Node.js Setup
-1. Ensure `node_modules` is present after cloning the project.
-2. If not, run:
-   ```
-   npm install
-   ```
 
-### Docker Setup (Optional)
-**Note:** If you're experiencing issues with Docker installation or WSL upgrade, you can skip this section and proceed with the manual setup.
+
+### Docker Setup (Recommended)
+**Note:** Docker is the recommended setup option for this project. Please install Docker Desktop (https://www.docker.com/get-started/) . If you're experiencing issues with Docker installation or WSL upgrade, please read the troubleshooting section or you can skip Docker setup and proceed with the manual setup.
 
 If Docker is successfully installed:
 1. Build the image:
@@ -28,7 +23,16 @@ If Docker is successfully installed:
    docker-compose up -d
    ```
    this will not occupy your terminal but disables live updates
-3. No other step necessary: the app can be accessed by typing 'localhost:3000' in your browser
+3. The app can be accessed by typing 'localhost:3000' in your browser
+
+**Important:** If you've followed the Docker Setup, you can skip the rest of the setup steps.
+
+### Node.js Setup
+1. Ensure `node_modules` is present after cloning the project.
+2. If not, run:
+   ```
+   npm install
+   ```
 
 ### Flask/Pygame Setup
 For the Flask/Pygame component, you'll need to set up a Python environment:
@@ -63,7 +67,7 @@ Alternatively use a python environment manager (Poetry):
    poetry run python app.py
    ``` 
 
-## Running the Application
+## Running the Application (If not using Docker)
 
 1. Database Setup:
    - Install MySQL: https://dev.mysql.com/downloads/installer/          
@@ -82,3 +86,13 @@ Alternatively use a python environment manager (Poetry):
    ```
    npm start
    ```
+
+## Troubleshooting
+
+If you encounter an error related to WSL 2 or virtualization while installing Docker Desktop, follow these steps:
+
+1. Restart your computer and enter the BIOS/UEFI settings (usually by pressing F2, Del, or Esc during startup).
+
+2. Find the option for Intel VT-x, AMD-V, or Virtualization Technology and enable it.
+
+3. Save and exit the BIOS.
