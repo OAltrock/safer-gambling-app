@@ -75,7 +75,7 @@ def login():
     print('request: ', data)
     user = User.query.filter_by(name=data['usermail']).first()
     if user and check_password_hash(user.password, data['password']):
-        access_token = create_access_token(identity=user.user_id)
+        access_token = create_access_token(identity=str(user.user_id))
         logged_in_user = user
         print('login: ',user)
         return jsonify({
@@ -95,7 +95,7 @@ def add_user():
     new_user = User(name=data['userName'], age=data['age'], password=data['password'])  # Create a new User instance
     db.session.add(new_user)  # Add the user to the session
     db.session.commit()  # Commit the session to save the user to the database
-    access_token = create_access_token(identity=new_user.user_id)
+    access_token = create_access_token(identity=str(new_user.user_id))
     logged_in_user = new_user        
     return jsonify({
         'access_token': access_token,
@@ -121,6 +121,7 @@ def delete_user():
         db.session.commit()  # Commit the session to save changes
         return jsonify({'message': 'User deleted successfully'}), 200
     return jsonify({'error': 'User not found'}), 404
+
 
 @app.route('/start_game', methods=['GET'])
 @jwt_required()
