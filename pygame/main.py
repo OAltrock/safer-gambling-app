@@ -7,13 +7,8 @@ import datetime
 import uuid
 import js
 import json
-""" import asyncio """
 
 
-
-""" Screen_Width = pygame.display.Info().current_w - 210
-Screen_Height = pygame.display.Info().current_h - 110
-screen = pygame.display.set_mode((Screen_Width, Screen_Height)) """
 Screen_Width = 1280 
 Screen_Height = 720
 screen = pygame.display.set_mode((Screen_Width, Screen_Height))
@@ -58,13 +53,6 @@ player_coordinates = []
 movement_tracking_time = pygame.time.get_ticks()  
 
 # Load images
-""" Beach_img = pygame.image.load('./img/Beach.png').convert()
-shallow_img = pygame.image.load('./img/Shallow.png').convert()
-medium_deep_img = pygame.image.load('./img/medium_deep.png').convert()
-deep_img = pygame.image.load('./img/deep.png').convert()
-coin_img = pygame.image.load('./img/7.png').convert_alpha()
-ingame_img = pygame.image.load('./img/background_800x711.png').convert()
-background_img = pygame.image.load('./img/background.png').convert() """
 Beach_img = pygame.image.load('img/Beach.png').convert()
 shallow_img = pygame.image.load('img/Shallow.png').convert()
 medium_deep_img = pygame.image.load('img/medium_deep.png').convert()
@@ -89,10 +77,6 @@ ZONE_BOUNDARIES = {
     "Mid": (tile_height * 5, tile_height * 7),
     "Deep": (tile_height * 12, tile_height * 19)
 }
-
-# Font settings for the HUD
-""" font = pygame.font.Font('./img/Pixeltype.ttf', 45)
-coint_font = pygame.font.Font('./img/Pixeltype.ttf',25) """
 
 
 # Colors
@@ -233,8 +217,6 @@ class Player(pygame.sprite.Sprite):
         # Restore alpha value after changing image
         self.image.set_alpha(current_alpha)
 
-""" # Initialize player
-player = Player() """
 
 def track_player_zone(player, current_zone, oxygen_level):
     global last_zone_update_time
@@ -277,9 +259,6 @@ def adjust_for_pause(pause_start_time, last_zone_update_time):
         last_zone_update_time += pause_duration
     return last_zone_update_time
 
-# Sprite Groups
-""" player_group = pygame.sprite.GroupSingle(player) """
-""" coin_group = pygame.sprite.Group() """
 
 class SeaMonster(pygame.sprite.Sprite):
     def __init__(self, x, y, speed, min_distance, max_distance):
@@ -438,8 +417,6 @@ class Draw_Hud:
         screen.blit(depth_text, (50, 90))
         screen.blit(score_text, (50, 130))  # Position for score
 
-""" # Instantiate the HUD
-hud = Draw_Hud() """
 
 # Button class for screens
 class Button:
@@ -599,9 +576,6 @@ def draw_resurface_popup(screen, hold_time, hold_duration):
     screen.blit(popup_surface, (popup_x, popup_y))
 
 
-""" # Instantiate the controlPopup
-control_popup = ControlPopup() """
-
 def save_game_session(score):
     global game_sessions, entered_zones, player_coordinates
 
@@ -716,8 +690,6 @@ def spawn_coins_treasures(coin_group):
                 deep_coin_count += 1
     hud.update_coin_count(shallow_coin_count, mid_coin_count, deep_coin_count)
 
-""" # Call the function to spawn coins
-spawn_coins_treasures(coin_group) """
 
 # Respawn intervals (in ms)
 shallow_respawn_interval = 10000  
@@ -781,9 +753,6 @@ e_key_held = False
 hold_e_start_time = None
 hold_duration = 1000
 
-""" # Game states
-game_state = "start" """
-
 
 def handle_events():
     global running, game_state, pause_start_time, last_zone_update_time, hold_e_start_time
@@ -846,9 +815,7 @@ def handle_endgame_events(event):
             save_game_session(hud.score)
             game_over_metrics_recorded = True
             running = False
-    """ if not running:
-        send_game_data()  # Send final game data before quitting
-        pygame.quit() """
+    
 
 def update_game_state():
     global sea_monster_group, current_zone, resurface_popup_visible, hold_e_start_time, game_state, movement_tracking_time, hud
@@ -968,16 +935,6 @@ def draw_gameplay_screen():
     control_popup.update()
 
 
-""" # Main Game Loop
-while running:
-    handle_events()
-    update_game_state()
-    draw_screen()
-    pygame.display.flip()
-    dt = clock.tick(60) / 1000
-
-print(game_sessions) """
-
 async def main():
     
     global running, dt, screen, player, coin_group, hud, control_popup, game_state, font, coint_font, player_group, sea_monster_group
@@ -1004,30 +961,13 @@ async def main():
         if game_state == "play":
             update_game_state()
         draw_screen()
-        
-        """ if game_state == "gameover":
-            send_message_to_react({
-                "type": "GAME_OVER",
-                "score": hud.score,
-                "time_played": str(time_played),                
-                "zone_times": {zone: str(time) for zone, time in zone_time_spent.items()}
-            }) """
-        
-        """ if game_state in ["gameover", "won"]:
-            if not game_over_metrics_recorded:
-                save_game_session(hud.score)
-                send_game_data()
-                game_over_metrics_recorded = True """                  
+                      
         await asyncio.sleep(0)  # Allow other async operations to run
         pygame.display.flip()
         #dt = clock.tick(60) / 1000
-        """ if not running:
-                break """
-    """ print(game_sessions) """
-    """ js.window.postMessage(json.dumps({"type": "GAME_QUIT"}), "*") """   
+  
     send_game_data()    
     pygame.quit()
     
 asyncio.run(main())
-""" pygame.quit()
-sys.exit() """
+
