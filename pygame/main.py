@@ -598,6 +598,36 @@ def draw_resurface_popup(screen, hold_time, hold_duration):
     # Blit the popup surface onto the main screen
     screen.blit(popup_surface, (popup_x, popup_y))
 
+def draw_oxygen_warning(screen):
+    popup_width = 440
+    popup_height = 100
+    popup_x = (Screen_Width - popup_width) // 2
+    popup_y = (Screen_Height - popup_height) //4 
+
+    popup_oxygen = pygame.Surface((popup_width, popup_height))
+    popup_oxygen.set_alpha(200) 
+    popup_oxygen.fill((255, 0, 0)) # Red
+
+    pygame.draw.rect(popup_oxygen , (255, 255, 255), (0, 0, popup_width, popup_height), 2)
+
+    current_time = pygame.time.get_ticks()
+
+    if (current_time // 500) % 2 == 0:
+        text_color = (255, 255, 255)  # White
+    else:
+        text_color = (255, 255, 0)  # Yellow
+
+    line1 = font.render("Warning!", True, text_color)
+    line2 = font.render("Your oxygen level is below 20%!", True, text_color)
+
+    text_rect1 = line1.get_rect(center=(popup_width // 2, popup_height // 3))
+    text_rect2 = line2.get_rect(center=(popup_width // 2, 2 * popup_height // 3 ))
+
+    popup_oxygen.blit(line1, text_rect1)
+    popup_oxygen.blit(line2, text_rect2)
+
+    screen.blit(popup_oxygen, (popup_x, popup_y))
+
 
 """ # Instantiate the controlPopup
 control_popup = ControlPopup() """
@@ -962,6 +992,9 @@ def draw_gameplay_screen():
     if resurface_popup_visible:
         hold_time = pygame.time.get_ticks() - hold_e_start_time if hold_e_start_time else 0
         draw_resurface_popup(screen, hold_time, hold_duration)
+    
+    if hud.oxygen_level < 20:
+        draw_oxygen_warning(screen)
 
     # Draw control popup
     control_popup.draw(screen)
