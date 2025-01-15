@@ -87,6 +87,23 @@ Alternatively use a python environment manager (Poetry):
    npm start
    ```
 
+ ## Updating Pygame and Running Pygame Locally
+
+To set up your environment for Pygame development, follow these steps:
+
+1. **Install Dependencies**  
+   The required dependencies are specified in the `pygbag.toml` file. pygbag should install them automatically if run, otherwise
+   install all necessary dependencies manually either locally or within a `venv` (virtual environment) in the Pygame directory. If any dependencies are missing, check the imports in the main.py.
+
+2. **Local Development with `pygbag`**
+   For development independent of the frontend application, you can use the `pygbag` server to run your project and access it from the browser directly:
+
+   ```
+   pygbag main.py
+   ```
+
+   This command will also recompile the pygame.apk file in the pygame/public directory on every change while the server is running.
+
 ## Troubleshooting
 
 If you encounter an error related to WSL 2 or virtualization while installing Docker Desktop, follow these steps:
