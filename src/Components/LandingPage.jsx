@@ -19,9 +19,9 @@ const LandingPage = () => {
                 <h1>{intro[0]},</h1>
                 <h1>{intro[1]}</h1>
                 <div>
-                    {!isAuthenticated && <button style={{ marginRight: "30px", width: 'fit-content' }} onClick={()=> navigate('/Register')}>{login[0]}</button>}
-                    {!isAuthenticated && <button style={{width: 'fit-content'}} onClick={() => navigate('/Login')}>{login[1]}</button>}
-                    {isAuthenticated && <button style={{width: 'fit-content'}} onClick={() => navigate('/Home')}>{login[2]}</button>}
+                    {!isAuthenticated && <button role='register' style={{ marginRight: "30px", width: 'fit-content' }} onClick={()=> navigate('/Register')}>{login[0]}</button>}
+                    {!isAuthenticated && <button role='login' style={{width: 'fit-content'}} onClick={() => navigate('/Login')}>{login[1]}</button>}
+                    {isAuthenticated && <button role='start' style={{width: 'fit-content'}} onClick={() => navigate('/Home')}>{login[2]}</button>}
                 </div>
             </div>
             <h3 style={{ textAlign: "center", color: "#3FE03F" }} >{paragraphHeader}</h3>
