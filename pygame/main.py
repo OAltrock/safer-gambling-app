@@ -24,7 +24,7 @@ pygame.display.set_caption("Treasure Dive")
 Shallow_Coins = []
 Mid_Coins = []
 Deep_Coins = []
-gold_coins_count = 0
+gold_coins_count = 0 #this variable does not seem to be used anywhere
 zones = ["Shallow", "Mid", "Deep"]
 
 # Metrics
@@ -606,6 +606,87 @@ def draw_oxygen_warning(screen):
     screen.blit(popup_oxygen, (popup_x, popup_y))
 
 
+
+class CoinsCollectedPopup:
+
+    def __init__(
+        self,
+        is_active=False,
+        start_time=pygame.time.get_ticks(),
+        last_amount=50,
+        message="Wow!",
+        duration = 5000
+    ):
+        self.is_active = is_active
+        self.start_time = start_time
+        self.last_amount = last_amount
+        self.message = message
+        self.duration = duration
+    
+    def update(self, score):
+        current_time = pygame.time.get_ticks()
+        if not self.is_active and score >= self.last_amount:
+            self.is_active = True
+            self.start_time = current_time
+
+        if self.is_active and current_time - self.start_time >= self.duration:
+            self.is_active = False
+            next_threshold = score
+            message = random.choice(["Gold Rush!", "Unbelievable!", "Jackpot!"])
+
+            if next_threshold < 500:
+                next_threshold = (next_threshold // 100) * 100 + 100
+                message = random.choice(["Great Start!", "Keep Going!", "Amazing!"])
+            elif next_threshold < 1000:
+                next_threshold = 1000
+            else:
+                next_threshold = (next_threshold // 1000) * 1000 + 1000
+
+            self.last_amount = next_threshold
+            self.message = message
+
+        
+    def draw(self, screen):
+        if not self.is_active:
+            return
+        screen_offset = 10
+        popup_width = 440
+        popup_height = 100
+        popup_x = (Screen_Width - popup_width) - screen_offset
+        popup_y = 0 + screen_offset
+        outline_color = (0, 0, 0)  # Black
+        outline_offset = 2
+
+        popup_coins = pygame.Surface((popup_width, popup_height))
+        popup_coins.set_alpha(200) 
+        popup_coins.fill((255, 223, 0))  # gold
+
+        for i in range(popup_height):
+            color = (255, 223 - (i // (popup_height // 25)), 0)
+            pygame.draw.line(popup_coins, color, (0, i), (popup_width, i))
+
+        current_time = pygame.time.get_ticks()
+
+        if (current_time // 100) % 2 == 0:
+            text_color = (255, 255, 255)  # White
+        else:
+            text_color = (255, 69, 0)  # amber
+
+        def draw_text_with_outline(x, y, text):
+            for dx, dy in [(-outline_offset, -outline_offset), (-outline_offset, outline_offset), 
+                        (outline_offset, -outline_offset), (outline_offset, outline_offset)]:
+                outline_text = font.render(text, True, outline_color)
+                popup_coins.blit(outline_text, outline_text.get_rect(center=(x + dx, y + dy)))
+
+            main_text = font.render(text, True, text_color)
+            popup_coins.blit(main_text, main_text.get_rect(center=(x, y )))
+
+        draw_text_with_outline(popup_width // 2, popup_height // 3, self.message)
+        draw_text_with_outline(popup_width // 2, 2 * popup_height // 3, f"You collected {self.last_amount} coins!")
+        screen.blit(popup_coins, (popup_x, popup_y))
+
+
+
 def save_game_session(score):
     global game_sessions, entered_zones, player_coordinates
 
@@ -623,7 +704,7 @@ def save_game_session(score):
     game_sessions.append(game_session)
 
 def reset_game():
-    global player, coin_group, hud, control_popup, game_over_metrics_recorded, entered_zones, zone_time_spent, last_zone_update_time, player_coordinates
+    global player, coin_group, hud, control_popup, game_over_metrics_recorded, entered_zones, zone_time_spent, last_zone_update_time, player_coordinates, coins_collected_popup
 
     # Reset flag to track game retries
     game_over_metrics_recorded = False
@@ -658,6 +739,9 @@ def reset_game():
     # Reset sea monster group
     sea_monster_group.empty()
     spawn_sea_monsters(sea_monster_group)
+
+    # Reset coins collected popup
+    coins_collected_popup = CoinsCollectedPopup()
 
 # Coin class for sprites
 class Coin(pygame.sprite.Sprite):
@@ -960,6 +1044,7 @@ def draw_gameplay_screen():
         hold_time = pygame.time.get_ticks() - hold_e_start_time if hold_e_start_time else 0
         draw_resurface_popup(screen, hold_time, hold_duration)
     
+    # Draw Oxygen Level Warning if necessary 
     if hud.oxygen_level < 20:
         draw_oxygen_warning(screen)
 
@@ -967,10 +1052,13 @@ def draw_gameplay_screen():
     control_popup.draw(screen)
     control_popup.update()
 
+    # Draw and Update Coins collected Popup
+    coins_collected_popup.update(hud.score)
+    coins_collected_popup.draw(screen)
 
 async def main():
     
-    global running, dt, screen, player, coin_group, hud, control_popup, game_state, font, coint_font, player_group, sea_monster_group
+    global running, dt, screen, player, coin_group, hud, control_popup, game_state, font, coint_font, player_group, sea_monster_group,coins_collected_popup
     pygame.init()
     screen = pygame.display.set_mode((Screen_Width, Screen_Height))
     
@@ -983,6 +1071,7 @@ async def main():
     sea_monster_group = pygame.sprite.Group()
     hud = Draw_Hud()
     control_popup = ControlPopup()
+    coins_collected_popup = CoinsCollectedPopup()
     game_state = "start"
 
     spawn_sea_monsters(sea_monster_group)
@@ -997,7 +1086,6 @@ async def main():
                       
         await asyncio.sleep(0)  # Allow other async operations to run
         pygame.display.flip()
-        #dt = clock.tick(60) / 1000
   
     send_game_data()    
     pygame.quit()
