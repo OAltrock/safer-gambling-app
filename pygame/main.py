@@ -1,5 +1,10 @@
-
 import pygbag.aio as asyncio
+from player import Player
+from sea_monster import SeaMonster
+from draw_hud import Draw_Hud
+from button import Button
+from control_popup import ControlPopup
+from coin import Coin
 import numpy as np
 import pygame
 import random
@@ -26,8 +31,6 @@ Mid_Coins = []
 Deep_Coins = []
 gold_coins_count = 0 #this variable does not seem to be used anywhere
 zones = ["Shallow", "Mid", "Deep"]
-
-# Metrics
 
 # Tracking metrics of multiple game sessions
 game_sessions = []
@@ -78,7 +81,6 @@ ZONE_BOUNDARIES = {
     "Deep": (tile_height * 12, tile_height * 19)
 }
 
-
 # Colors
 WHITE = (255, 255, 255)
 
@@ -96,126 +98,6 @@ deep_respawn_timer = pygame.time.get_ticks()
 shallow_respawn_count = 0
 mid_respawn_count = 0
 deep_respawn_count = 0
-
-# Define Player class 
-class Player(pygame.sprite.Sprite):
-    def __init__(self):
-        super().__init__()
-        self.load_images()
-        self.image = self.idle_images[0]
-        self.rect = self.image.get_rect()
-        self.rect.topleft = [Screen_Width // 2, Screen_Height // 2]
-        self.frame_index = 0
-        self.update_time = pygame.time.get_ticks()
-        self.speed = [0, 0]
-        self.moving = False
-        self.facing_left = False
-        self.invincible = False
-        self.invincible_duration = 1000  # 1 second in milliseconds
-        self.invincible_start_time = 0
-        self.blink_interval = 100  # Blink every 100ms
-        self.visible = True
-        self.original_image = None  # Store the original image before alpha changes
-
-        # Hitbox parameters
-        hitbox_scale = 0.7  
-        hitbox_width = int(self.rect.width * hitbox_scale)
-        hitbox_height = int(self.rect.height * hitbox_scale)
-
-        # Create hitbox and center it on the player rect
-        self.hitbox = pygame.Rect(
-            self.rect.centerx - hitbox_width // 2,
-            self.rect.centery - hitbox_height // 2,
-            hitbox_width,
-            hitbox_height
-        )
-
-    def set_invincible(self, duration):
-        self.invincible = True
-        self.invincible_start_time = pygame.time.get_ticks()
-        self.invincible_duration = duration * 1000  # Convert to milliseconds
-        self.visible = True
-
-    def get_position(self):
-        return self.rect.center
-
-    def load_images(self):
-        self.idle_images = self.load_animation_images('./img/idle', 6)
-        self.moving_images = self.load_animation_images('./img/moving', 6)
-
-    def load_animation_images(self, prefix, num_frames):
-        images = []
-        for i in range(1, num_frames + 1):
-            img = pygame.image.load(f'{prefix}{i}.png').convert_alpha()
-            img = pygame.transform.scale(img, (img.get_width() * 1.5, img.get_height() * 1.5))
-            images.append(img)
-        return images
-
-    def update(self, dt):
-        self.moving = False
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_w]:
-            self.rect.y -= 220 * dt
-            self.moving = True
-        if keys[pygame.K_s]:
-            self.rect.y += 165 * dt
-            self.moving = True
-        if keys[pygame.K_a]:
-            self.rect.x -= 250 * dt
-            self.moving = True
-            self.facing_left = True
-        if keys[pygame.K_d]:
-            self.rect.x += 250 * dt
-            self.moving = True
-            self.facing_left = False
-
-        # Keep player within map bounds
-        self.rect.x = max(0, min(self.rect.x, map_width - self.rect.width))
-        self.rect.y = max(0, min(self.rect.y, map_height - self.rect.height))
-
-        # Update the hitbox to follow the player's position
-        self.hitbox.centerx = self.rect.centerx
-        self.hitbox.centery = self.rect.centery
-
-        self.animate()
-        self.handle_invincibility()
-
-    def handle_invincibility(self):
-        current_time = pygame.time.get_ticks()
-        
-        # Check if invincibility should end
-        if self.invincible:
-            if current_time - self.invincible_start_time >= self.invincible_duration:
-                self.invincible = False
-                self.visible = True
-                self.image.set_alpha(255)
-            else:
-                # Handle blinking
-                elapsed_time = current_time - self.invincible_start_time
-                self.visible = (elapsed_time // self.blink_interval) % 2 == 0
-                self.image.set_alpha(255 if self.visible else 64)
-
-    def animate(self):
-        # Store the current alpha value
-        current_alpha = self.image.get_alpha()
-
-        # Update animation frame
-        if self.moving:
-            self.image = self.moving_images[self.frame_index]
-        else:
-            self.image = self.idle_images[self.frame_index]
-
-        # Update frame index
-        if pygame.time.get_ticks() - self.update_time > 100:
-            self.frame_index = (self.frame_index + 1) % len(self.idle_images)
-            self.update_time = pygame.time.get_ticks()
-
-        # Handle facing direction
-        if self.facing_left:
-            self.image = pygame.transform.flip(self.image, True, False)
-
-        # Restore alpha value after changing image
-        self.image.set_alpha(current_alpha)
 
 
 def track_player_zone(player, current_zone, oxygen_level):
@@ -369,80 +251,6 @@ def spawn_sea_monsters(sea_monster_group):
                 sea_monster_group.add(sea_monster)
 
 
-
-
-# HUD Class
-class Draw_Hud:
-    def __init__(self):
-        self.oxygen_level = 100  # Starting oxygen level in seconds
-        self.last_update_time = pygame.time.get_ticks()
-        self.shallow_coin_count = 0
-        self.mid_coin_count = 0
-        self.deep_coin_count = 0
-        self.score = 0  # New attribute for the score
-    
-    def update_oxygen(self, player_y):
-        player_row = player_y // tile_height
-        if player_row <= 4:  
-            # depletion rate was 0.025/100
-            depletion_rate = 0.05 / 100
-        elif 5 <= player_row <= 15: 
-            # depletion rate was 0.05/100
-            depletion_rate = 0.1 / 100
-        else:
-            depletion_rate = 0.3 / 100
-            
-        self.oxygen_level = max(self.oxygen_level - depletion_rate * dt * 1000, 0)  # Ensure oxygen doesn't drop below 0%
-
-    def get_depth(self, player_y):
-        max_depth = 140
-        depth = (player_y / map_height) * max_depth
-        return f"{int(depth)}"
-
-    def update_coin_count(self, shallow_count, mid_count, deep_count):
-        self.shallow_coin_count = shallow_count
-        self.mid_coin_count = mid_count
-        self.deep_coin_count = deep_count
-
-    def update_score(self, score):
-        self.score += score
-
-    def draw(self, screen, player, dt):
-        self.update_oxygen(player.rect.y)
-        depth_value = self.get_depth(player.rect.y)
-        oxygen_text = font.render(f"Oxygen: {int(self.oxygen_level)}%", True, (250, 228, 130))
-        depth_text = font.render(f"Depth: {depth_value}m", True, (250, 228, 130))
-        score_text = font.render(f"Score: {round(self.score)}", True, (250, 228, 130))  # Display the score
-        screen.blit(oxygen_text, (50, 50))
-        screen.blit(depth_text, (50, 90))
-        screen.blit(score_text, (50, 130))  # Position for score
-
-
-# Button class for screens
-class Button:
-    def __init__(self, x, y, width, height, text, color, hover_color, text_color):
-        self.rect = pygame.Rect(x, y, width, height)
-        self.text = text
-        self.color = color
-        self.hover_color = hover_color
-        self.text_color = text_color
-
-    def draw(self, screen):
-        mouse_pos = pygame.mouse.get_pos()
-        if self.rect.collidepoint(mouse_pos):
-            pygame.draw.rect(screen, self.hover_color, self.rect)
-        else:
-            pygame.draw.rect(screen, self.color, self.rect)
-
-        text_surface = font.render(self.text, True, self.text_color)
-        screen.blit(text_surface, (self.rect.x + (self.rect.width - text_surface.get_width()) // 2, self.rect.y + (self.rect.height - text_surface.get_height()) // 2))
-
-    def is_clicked(self, event):
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if self.rect.collidepoint(event.pos):
-                return True
-        return False
-
 def send_game_data():
     global entered_zones, game_sessions
     # Create the data dictionary
@@ -508,44 +316,6 @@ def draw_won_screen(score):
     pygame.display.flip()
 
     return play_again_button, quit_button
-
-
-class ControlPopup:
-    def __init__(self):
-        self.font = font
-        self.text = [
-            "Controls:",
-            "W - Move Up",
-            "S - Move Down",
-            "A - Move Left",
-            "D - Move Right",
-            "ESC - Pause"
-        ]
-        self.display_time = 2500  # Popup will be displayed for 2.5 seconds
-        self.start_time = 0
-        self.visible = True
-
-    def start(self):
-        self.start_time = pygame.time.get_ticks()
-        self.visible = True
-
-    def update(self):
-        if not self.visible:
-            return
-        current_time = pygame.time.get_ticks()
-        if current_time - self.start_time > self.display_time:
-            self.visible = False
-
-    def draw(self, screen):
-        if self.visible:
-            surface = pygame.Surface((300, 250))  # Surface for popup
-            surface.set_alpha(200)  # Semi-transparent background
-            surface.fill((0, 0, 0))
-            screen.blit(surface, (Screen_Width // 2 - 150, Screen_Height // 2 - 300))
-            
-            for i, line in enumerate(self.text):
-                text_surface = self.font.render(line, True, WHITE)
-                screen.blit(text_surface, (Screen_Width // 2 - text_surface.get_width() // 2, Screen_Height // 2 - 290 + i * 40))
 
 
 def draw_resurface_popup(screen, hold_time, hold_duration):
@@ -740,18 +510,6 @@ def reset_game():
     sea_monster_group.empty()
     spawn_sea_monsters(sea_monster_group)
 
-    # Reset coins collected popup
-    coins_collected_popup = CoinsCollectedPopup()
-
-# Coin class for sprites
-class Coin(pygame.sprite.Sprite):
-    def __init__(self, x, y, value):
-        super().__init__()
-        self.image = coin_img
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
-        self.value = round(value)  # Store the coin's value
 
 # Spawn coins function
 def spawn_coins_treasures(coin_group):
